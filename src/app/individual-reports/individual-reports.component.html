@@ -1,0 +1,37 @@
+
+<!-- Payables Details -->
+<div class="border border-success"  style="padding:30px;margin:30px">
+  <div class="row">
+    <div class="col-sm">
+    </div>
+    <div class="col-sm"> <h1>REPORTS</h1></div>
+    <div class="col-sm">
+    </div>
+  </div>
+  <div class="row">
+    <!-- Table -->
+      <table class="table table-bordered table-hover" >
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">DATE</th>
+            <th scope="col">Total Income</th>
+            <th scope="col">Expendeture</th>
+            <th scope="col">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of reports;let i = index">
+            <td>{{i+1}}</td>
+            <td>{{data.date}}</td>
+            <td>{{data.income}}</td>
+            <td>{{data.expendeture}}</td>
+            <td>
+              <button type="button" *ngIf="data.income > data.expendeture" class="btn btn-success" name="button"></button>
+              <button type="button" *ngIf="data.income < data.expendeture" class="btn btn-danger" name="button"></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+  </div><hr>
+</div>

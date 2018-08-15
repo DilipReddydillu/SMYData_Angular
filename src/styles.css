@@ -1,0 +1,31 @@
+/* You can add global styles to this file, and also import other style files */
+@import "ng5-toastr/ng5-toastr.css";
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+
+.ng-valid[required], .ng-valid.required  {
+  border-left: 5px solid #42A948; /* green */
+}
+
+.ng-invalid:not(form)  {
+  border-left: 5px solid #a94442; /* red */
+}
+body{
+  background-color: #1abc9c; /* Green */
+       color: #ffffff;
+}
+h1{
+  text-align: center;
+}
+.bg-grey {
+    background-color: #f6f6f6;
+}
+.center20{
+  padding: 20px
+}
+.inbxTxt{
+  color: black;
+}
+.tableFlow{
+  overflow: auto;
+}

@@ -1,0 +1,67 @@
+<div class="signUp col-sm-12 col-md-6 col-md-offset-3">
+   <div [hidden]="submitted">
+      <h1>Individual Registration</h1>
+      <form (ngSubmit)="registerUser(model); signup.reset()" #signup="ngForm" class="signup-form">
+        <div *ngIf='registrationFailed' class="alert alert-danger" (click)="registrationFailed = null">
+  				<strong>{{registrationFailed}}</strong>
+  			</div>
+      <div class="form-group" *ngIf='!addNew'>
+         <label for="name">Name</label>
+         <input type="text" class="form-control" id="ownername"
+         required
+         [(ngModel)]="model.Name" name="ownername"
+         #ownername="ngModel" />
+         <div [hidden]="ownername.valid || ownername.pristine"
+            class="alert alert-danger">
+            Name is required
+         </div>
+      </div>
+      <div class="form-group" >
+         <label for="name">Mobile number</label>
+         <input type="text" class="form-control"
+         required
+         (change)="validation('pattern_mobile',mobile.value)"
+         [(ngModel)]="model.mobile" name="mobile"
+         #mobile="ngModel"/>
+         <div [hidden]="mobile.valid || mobile.pristine"
+            class="alert alert-danger">
+            <span *ngIf='!mobilecheck'>mobile number is required</span>
+                  <span *ngIf='mobilecheck'>mobile number already exist</span>
+         </div>
+      </div>
+      <div class="form-group" >
+         <label for="name">Location</label>
+         <input type="text" class="form-control"
+         required
+         [(ngModel)]="model.location" name="location"
+         #location="ngModel"/>
+         <div [hidden]="location.valid || location.pristine"
+            class="alert alert-danger">
+            <span>location is required</span>
+         </div>
+      </div>
+      <div class="form-group">
+         <label for="name">Password</label>
+         <input type="password" class="form-control" id="password"
+         required   (change)="validation('pattern_password',password.value)"
+         [(ngModel)]="model.password" name="password" placeholder="Min 6 Characters"
+         #password="ngModel"/>
+         <div [hidden]="password.valid || password.pristine"
+            class="alert alert-danger">
+            password is required
+         </div>
+      </div>
+      <div class="form-group">
+         <label for="alterEgo">Email address</label>
+         <input type="text" class="form-control" id="email"
+         (change)="validation('pattern_email',email.value)" required
+         [(ngModel)]="model.email" #email="ngModel" name="alterEgo">
+         <div [hidden]="email.valid || email.pristine"
+            class="alert alert-danger">
+            Email is required
+         </div>
+      </div>
+      <button type="submit" class="btn btn-success btn-block" [disabled]="!signup.form.valid" >Register</button>
+      </form>
+   </div>
+</div>

@@ -1,0 +1,78 @@
+<div class="container-fluid signIn center20">
+	<div [hidden]="submitted">
+		<h1>Log In</h1>
+		<form (ngSubmit)="onSubmit(); signin.reset()" #signin="ngForm" class="login-form">
+			<div *ngIf='loginFail' class="alert alert-danger" (click)="loginFail = false">
+				<strong>Invalid mobile or password</strong>
+			</div>
+			<div class="form-group">
+				<label for="name">Mobile</label>
+				<input type="text" class="form-control" id="mobile"
+               required (change)="validation()"
+               [(ngModel)]="model.mobile" name="mobile"
+               #mobile="ngModel"/>
+				<div [hidden]="mobile.valid || mobile.pristine"
+             class="alert alert-danger">
+           Mobile Number is required
+        </div>
+			</div>
+			<div class="form-group">
+				<label for="name">Password</label>
+				<input type="password" class="form-control" id="password"
+               required
+               [(ngModel)]="model.password" name="password"
+               #password="ngModel" />
+				<div [hidden]="password.valid || password.pristine"
+             class="alert alert-danger">
+          Password is required
+        </div>
+			</div>
+			<div class=""row>
+			<button  type="submit" class="btn btn-success btn-md  col-sm-6" [disabled]="!signin.form.valid" >Log In</button>
+			<button  type="button" class="btn btn-primary btn-md col-sm-6" *ngIf="userType == 'business'" routerLink="/signUp">Register</button>
+			<button  type="button" class="btn btn-primary btn-md col-sm-6" *ngIf="userType == 'individual'" routerLink="/IndividualReg">Register</button>
+		</div>
+<div>
+			<label ><input #rememberVal type="checkbox" name="rememberMe" value="true" [(ngModel)]="rememberMe"> Remember Me</label>
+			<div class="pull-right forgot-password">
+				<label class='forgotPwd' data-toggle="modal" data-target="#myModal">Forgot your password?</label>
+			</div>
+</div>
+			</form>
+		</div>
+	</div>
+<br>
+<div class="container">
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog" >
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+				<br><br>
+        <div class="modal-header">
+					  <h3 class="modal-title">Reset Password</h3>
+          <button type="button" class="close" id="modalWindow" data-dismiss="modal" #closeAddExpenseModal >&times;</button>
+        </div>
+        <div class="modal-body">
+					<form (ngSubmit)="sendOtp();" #otp="ngForm" class="otp-form">
+					<div class="form-group">
+						<label for="mobileNum">Enter Mobile Number:</label>
+						<input type="text" class="form-control" id="mobileNum"
+		               required
+		               [(ngModel)]="mobileNumVal" name="mobileNum"
+		               #mobileNum="ngModel"/>
+						<div [hidden]="mobileNum.valid || mobileNum.pristine"
+		             class="alert alert-danger">
+		           Mobile Number is required
+		        </div>
+					</div>
+					<button  type="submit" class="btn btn-primary btn-md" [disabled]="!otp.form.valid">Send OTP</button>
+
+				</form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>

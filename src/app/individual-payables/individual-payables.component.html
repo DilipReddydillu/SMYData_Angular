@@ -1,0 +1,69 @@
+
+<!-- Payables Details -->
+<div class="border border-success"  style="padding:30px;margin:30px">
+  <div class="row">
+    <div class="col-sm">
+      <!-- <h5>Name : {{name}}</h5> -->
+    </div>
+    <div class="col-sm"> <h1>PAYABLES</h1></div>
+    <div class="col-sm">
+    </div>
+  </div>
+  <div class="row">
+    <!-- Table -->
+      <table class="table table-bordered table-hover" >
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Category</th>
+            <th scope="col">Name</th>
+            <th scope="col">startDate</th>
+            <th scope="col">endDate</th>
+            <th scope="col">Due Date</th>
+            <th scope="col">Repeats</th>
+            <th scope="col">Amount</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of payableDetails;let i = index; let lastEl = last;">
+            <td>{{i+1}}</td>
+            <td>
+              <select   [(ngModel)]='data.category' >
+                  <option *ngFor="let item of categoryList" value={{item}}>
+                      {{item}}
+                  </option>
+              </select>
+            </td>
+            <td>
+              <input type="text"  [(ngModel)]='data.name' name="" value="" placeholder="Name">
+            </td>
+            <td>
+              <input type="date"  [(ngModel)]='data.startDate'placeholder="Start Date"/>
+            </td>
+            <td>
+              <input type="date"  [(ngModel)]='data.endDate'placeholder="End Date"/>
+            </td>
+            <td>
+              <input type="date"  [(ngModel)]='data.dueDate'placeholder="Due Date"/>
+            </td>
+            <td>
+              <input type="text"  [(ngModel)]='data.repeats' name="repeats" value="" placeholder="Monthly/Yearly">
+            </td>
+            <td>
+              <input type="text"  [(ngModel)]='data.amount' name="amount" value="" placeholder="Amount">
+            </td>
+            <td *ngIf='lastEl'>
+              <button type="button" (click)='addRow(i)' class="btn btn-success btn-sm">
+                <span class="glyphicon glyphicon-plus"></span>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+  </div><hr>
+   <div class="row">
+    <button type="button" class="btn btn-primary" (click)="addPayData(payableDetails)" name="button">Submit</button>
+    <hr>
+  </div>
+</div>

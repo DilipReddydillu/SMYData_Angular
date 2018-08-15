@@ -1,0 +1,177 @@
+<div class="container signUp">
+   <div [hidden]="submitted">
+      <h1>{{formTitle}}</h1>
+      <form (ngSubmit)="onSubmit(); signup.reset()" #signup="ngForm" class="signup-form">
+        <div *ngIf='registrationFailed' class="alert alert-danger" (click)="registrationFailed = null">
+  				<strong>{{registrationFailed}}</strong>
+  			</div>
+      <div class="form-group">
+         <label for="name">Company Name / Business name</label>
+         <input type="text" class="form-control" id="name"
+         required
+         [(ngModel)]="model.companyName" name="name"
+         #name="ngModel"/>
+         <div [hidden]="name.valid || name.pristine"
+            class="alert alert-danger">
+            Company Name / Business name is required
+         </div>
+      </div>
+      <div class="form-group" *ngIf='!addNew'>
+         <label for="name">Owner / Manager name</label>
+         <input type="text" class="form-control" id="ownername"
+         required
+         [(ngModel)]="model.ownerName" name="ownername"
+         #ownername="ngModel" />
+         <div [hidden]="ownername.valid || ownername.pristine"
+            class="alert alert-danger">
+            Owner / Manager name is required
+         </div>
+      </div>
+      <div class="form-group" *ngIf='!addNew'>
+         <label for="name">Mobile number</label>
+         <input type="text" class="form-control" id="mobile"
+         required
+         (keyup.enter)="doesUserExist(mobile.value);"
+         (blur)="doesUserExist(mobile.value)"
+         [(ngModel)]="model.mobile" name="mobile"
+         #mobile="ngModel"/>
+         <div [hidden]="mobile.valid || mobile.pristine"
+            class="alert alert-danger">
+            <span *ngIf='!mobilecheck'>mobile number is required</span>
+                  <span *ngIf='mobilecheck'>mobile number already exist</span>
+         </div>
+      </div>
+      <div class="form-group" *ngIf='!addNew'>
+         <label for="name">Password</label>
+         <input type="password" class="form-control" id="password"
+         required
+         [(ngModel)]="model.password" name="password"
+         #password="ngModel"/>
+         <div [hidden]="password.valid || password.pristine"
+            class="alert alert-danger">
+            password is required
+         </div>
+      </div>
+      <div class="form-group">
+         <label for="alterEgo">Email address</label>
+         <input type="text" class="form-control" id="alterEgo"
+         [(ngModel)]="model.email" name="alterEgo">
+      </div>
+      <div class="form-group">
+         <label for="name">Business address</label>
+         <input type="text" class="form-control" id="businessAddr"
+         required
+         [(ngModel)]="model.businessAddress" name="businessAddr"
+         #businessAddr="ngModel"/>
+         <div [hidden]="businessAddr.valid || businessAddr.pristine"
+            class="alert alert-danger">
+            Business Address is required
+         </div>
+      </div>
+      <div  class="flexDiv">
+      <div class="form-group flex-item-buAdd">
+         <label for="name">PIN Code</label>
+         <input type="text" class="form-control" id="pin"
+         required
+         [(ngModel)]="model.pinCode" name="pin"
+         #pin="ngModel"/>
+         <div [hidden]="pin.valid || pin.pristine"
+            class="alert alert-danger">
+            PIN Code is required
+         </div>
+      </div>
+      <div  class="form-group flex-item-getAdd">
+          <button type="button" class="btn btn-success btn-block"
+          [disabled]="!model.pinCode"
+          (click)="update(pin.value)">
+          Get Location
+        </button>
+      </div>
+    </div>
+      <div *ngIf="showAddr && model.pinCode" class="flexDiv">
+         <div class="form-group flex-item">
+            <label for="city">City</label>
+            <input type="text" class="form-control" id="city" required
+            [(ngModel)]="model.city" name="city" #city="ngModel"/>
+            <div [hidden]="city.valid || city.pristine"
+               class="alert alert-danger">
+               City is required
+            </div>
+         </div>
+         <div class="form-group flex-item flex-item-middle">
+            <label for="state">State</label>
+            <input type="text" class="form-control" id="state" required
+            [(ngModel)]="model.state" name="state" #state="ngModel"/>
+            <div [hidden]="state.valid || state.pristine"
+               class="alert alert-danger">
+               State is required
+            </div>
+         </div>
+         <div class="form-group flex-item">
+            <label for="country">Country</label>
+            <input type="text" class="form-control" id="country" required
+            [(ngModel)]="model.country" name="country" #country="ngModel"/>
+            <div [hidden]="country.valid || country.pristine"
+               class="alert alert-danger">
+               Country is required
+            </div>
+         </div>
+      </div>
+      <div class="form-group">
+         <label for="name">Website</label>
+         <input type="text" class="form-control" id="website"
+         required
+         [(ngModel)]="model.website" name="website"
+         #website="ngModel"/>
+         <div [hidden]="website.valid || website.pristine"
+            class="alert alert-danger">
+            Website Address is required
+         </div>
+      </div>
+      <div class="dropdown-flex">
+         <div class="form-group dropdown-category" >
+            <label for="name">Business Category</label>
+            <select name="state" ngModel class="form-control" id="category"
+            required
+            [(ngModel)]="model.category" name="category"
+            #category="ngModel">
+            <option value="" disabled>Select Category</option>
+            <option *ngFor="let data of categoryInfo" [ngValue]="data.id">
+            {{ data.name }}
+            </option>
+            </select>
+         </div>
+         <div class="form-group dropdown-register" >
+            <label for="name">Registration Info</label>
+            <select name="reg" ngModel class="form-control" id="reg"
+            required
+            [(ngModel)]="model.reg" name="reg"
+            #reg="ngModel">
+            <option value="" disabled>Registration Info</option>
+            <option *ngFor="let data of registerInfo" [ngValue]="data.id">
+            {{ data.name }}
+            </option>
+            </select>
+         </div>
+      </div>
+      <div class="form-group" *ngIf='model.reg'>
+         <label for="name">Enter Id Proof Number</label>
+         <input type="text" class="form-control" id="regDetails"
+         required
+         [(ngModel)]="model.regProof" name="regDetails"
+         #regDetails="ngModel"/>
+         <div [hidden]="regDetails.valid || regDetails.pristine"
+            class="alert alert-danger">
+            Proof Id  is required
+         </div>
+      </div>
+      <button type="submit" class="btn btn-success btn-block" [disabled]="!signup.form.valid" >{{formSubmitName}}</button>
+      </form>
+   </div>
+</div>
+<div [hidden]="!submitted" class="alert alert-success alert-dismissible">
+   <a href="#" class="close" data-dismiss="alert" aria-label="close" routerLink="/userData" routerLinkActive="active">&times;</a>
+   <strong style="text-align:center">Sign Up successful!!
+   <small> <a href="#" routerLink="/signIn" routerLinkActive="active">click here</a></small>to Sign In
+   </strong>
+</div>

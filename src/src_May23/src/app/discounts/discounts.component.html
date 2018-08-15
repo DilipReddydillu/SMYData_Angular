@@ -1,0 +1,70 @@
+<div class="panel panel-info">
+    <div class="panel-heading col-md-12">
+      <h3 class="col-md-4">My Poduct Discounts </h3>
+      <label class="switch col-md-2">
+        <div *ngIf="!isDataExist">
+           <input type="checkbox" [(ngModel)]='discounts.enableDiscount'>
+            <span class="slider round"></span>
+        </div>
+        <div *ngIf="isDataExist && discounts?.length > 0">
+           <input type="checkbox" [(ngModel)]='discounts[0].enableDiscount'>
+            <span class="slider round"></span>
+        </div>
+
+       </label>
+    </div>
+
+     <div class="panel-body">
+       <div class="container">
+         <table class="table table-bordered">
+           <thead>
+             <tr>
+               <th>Min Amount</th>
+               <th>Max Amount</th>
+               <th>Discount</th>
+               <th>Start Date</th>
+               <th>End Date</th>
+               <th>enable/disable</th>
+             </tr>
+           </thead>
+           <tbody>
+             <tr *ngFor="let data of discounts;let i = index; let lastEl = last; let firstEl = first">
+               <td>
+                 <input class="discount" type="number" min="0" [(ngModel)]='discounts[i].minAmount'/>
+               </td>
+               <td>
+                 <input class="discount" type="number" min="0" [(ngModel)]='discounts[i].maxAmount'/>
+               </td>
+               <td>
+                 <input class="discount" type="number" min="0" [(ngModel)]='discounts[i].discount'/>
+               </td>
+               <td>
+                 <input type="date"  [(ngModel)]='discounts[i].startDate'/>
+               </td>
+               <td>
+                 <input type="date"  [(ngModel)]='discounts[i].endDate'/>
+               </td>
+               <td>
+                 <label class="switch">
+                    <input type="checkbox" [(ngModel)]='discounts[i].enable'>
+                    <span class="slider round"></span>
+                  </label>
+               </td>
+               <td *ngIf='!firstEl'>
+                 <button type="button"  (click)='deleteRow(i)' class="btn btn-danger btn-sm">
+                   <span class="glyphicon glyphicon-minus">-</span>
+                 </button>
+               </td>
+               <td *ngIf='lastEl'>
+                 <button type="button" (click)='addRow(i)' class="btn btn-success btn-sm">
+                   <span class="glyphicon glyphicon-plus">+</span>
+                 </button>
+               </td>
+             </tr>
+           </tbody>
+         </table>
+       </div>
+        <hr>
+     </div>
+<button class="btn btn-primary btn-block"type="button" (click)='saveDiscount(discounts)' name="button">Save</button>
+</div>

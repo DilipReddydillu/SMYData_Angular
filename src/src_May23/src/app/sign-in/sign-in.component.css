@@ -1,0 +1,26 @@
+.signIn{
+  width: 40%;
+  height: auto;
+  background-color: #9EEBA1;
+  border-radius: 10px;
+  border: 1px solid;
+   box-shadow: 5px 10px #888888;
+  margin-top: 10%;
+	-webkit-box-shadow: 0 10px 6px -6px #777;
+	-moz-box-shadow: 0 10px 6px -6px #777;
+	 box-shadow: 0 10px 6px -6px #777;
+ }
+
+.btnStyle{
+  width: 230px;
+}
+
+.login-form{
+  margin: 20px;
+}
+
+.forgotPwd:hover{
+  cursor: pointer;
+  color: #1b69b6;
+  text-decoration:underline;
+}

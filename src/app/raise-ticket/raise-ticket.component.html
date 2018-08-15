@@ -1,0 +1,16 @@
+
+<div class="container border border-success">
+<h1>Raise a Request</h1>
+
+<form class="center20" #ticket="ngForm">
+  <div class="form-group">
+    <label for="subject">Subject:</label>
+    <input type="text" required class="form-control" name="subject" id="subject" [(ngModel)]="subject"  placeholder="Enter subject">
+  </div>
+  <div class="form-group">
+    <label>Description</label>
+    <textarea required class="form-control" name="description" id="Description" [(ngModel)]="description" placeholder="Description"></textarea>
+  </div>
+  <button type="submit" (click)="submit()" [disabled]="!ticket.form.valid" class="btn btn-primary">Submit</button>
+</form>
+</div>

@@ -1,0 +1,16 @@
+/* #circle {
+	width: 100px;
+	height: 100px;
+	background: red;
+	-moz-border-radius: 50px;
+	-webkit-border-radius: 50px;
+	border-radius: 50px;
+} */
+#circle {
+  width: 200px;
+	height: 100px;
+	background: #f8f8;
+}
+.rad{
+  border-radius: 25px;
+}
