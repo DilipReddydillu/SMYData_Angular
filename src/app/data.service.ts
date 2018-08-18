@@ -27,6 +27,13 @@ export class DataService {
     private showProfile = new BehaviorSubject<boolean>(false);
     profile = this.showProfile.asObservable();
 
+    private indProfile = new BehaviorSubject<boolean>(false);
+    indprofile = this.indProfile.asObservable();
+    changeindProfile(indprofile: any) {
+      console.log('indprofile:'+indprofile);
+      this.indProfile.next(indprofile);
+    }
+
     private userType = new BehaviorSubject<string>('');
     userTypeVal = this.userType.asObservable();
 

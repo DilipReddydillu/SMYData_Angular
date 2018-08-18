@@ -1,8 +1,11 @@
 <nav class="navbar fixed-top bgColor">
   <a class="navbar-brand" (click)="homePage()" routerLink="/">SMyData</a>
   <span class="navbar-text">
-   <a class="nav-link" *ngIf="!showProfile">
+   <a class="nav-link" *ngIf="!showProfile || !indProfile">
      <span class="" (click)="signInCall()">SignIn/Register</span>
+   </a>
+   <a class="nav-link" *ngIf="showProfile && indProfile">
+     <span class=""(click)="logOut()">Logout</span>
    </a>
     <li class="nav-item dropdown pr-4" *ngIf="showProfile" style="list-style:none;left:-35px;font-family: serif">
        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

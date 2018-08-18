@@ -15,6 +15,7 @@ export class AppComponent {
   title = 'SmyData';
   view = 'homePage';
   showProfile =false;
+  indProfile = false;
   allCookies;
   constructor(private _demoService: DataService,public toastr: ToastsManager, private router: Router, private cookieService: CookieService, vcr: ViewContainerRef) {
       this.toastr.setRootViewContainerRef(vcr);
@@ -22,6 +23,7 @@ export class AppComponent {
     }
        ngOnInit(): void {
          this._demoService.profile.subscribe(showProfile => this.showProfile = showProfile)
+         this._demoService.profile.subscribe(indProfile => this.indProfile = indProfile)
          this.allCookies = this.cookieService.getAll();
          console.log(this.allCookies);
          if(this.allCookies && this.allCookies.mobile){
@@ -37,6 +39,7 @@ export class AppComponent {
     logOut(){
       this._demoService.changeProfile(false);
        this.showProfile = false;
+       this.indProfile = false;
        this.cookieService.deleteAll();
     }
     homePage(){

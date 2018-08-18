@@ -89,6 +89,7 @@ messageSource:number;
               this._demoService.changeProfile('true')
               this.router.navigate(['/', 'userData']);
             }else if(type == 'individual'){
+              this._demoService.changeindProfile('true')
               this.router.navigate(['/', 'individualDetails']);
             }
               return true;
