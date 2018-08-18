@@ -5,14 +5,14 @@
      <span class="" (click)="signInCall()">SignIn/Register</span>
    </a>
     <li class="nav-item dropdown pr-4" *ngIf="showProfile" style="list-style:none;left:-35px;font-family: serif">
-       <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+       <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
          Deatils
        </a>
        <div class="dropdown-menu" style="left:-80px;text-color:black" aria-labelledby="navbarDropdownMenuLink">
-         <span class="dropdown-item" href="#">View Business</span>
-         <span class="dropdown-item" href="#">Add Business</span>
-         <span class="dropdown-item" href="#">BusinessPlan</span><hr>
-         <span class="dropdown-item" href="#">Logout</span>
+         <span class="dropdown-item" routerLink="/userData/myInfo">View Business</span>
+         <span class="dropdown-item" routerLink="/userData/addNew">Add Business</span>
+         <span class="dropdown-item" routerLink="/userData/businessPlan">BusinessPlan</span><hr>
+         <span class="dropdown-item" (click)="logOut()">Logout</span>
        </div>
      </li>
     </span>

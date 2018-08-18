@@ -37,6 +37,7 @@ export class AppComponent {
     logOut(){
       this._demoService.changeProfile(false);
        this.showProfile = false;
+       this.cookieService.deleteAll();
     }
     homePage(){
       this.view = 'homePage';
