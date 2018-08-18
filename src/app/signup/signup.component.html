@@ -7,10 +7,9 @@
   <li class="list-group-item" *ngFor="let item of businessList.businessDetails; let indexVal=index " (click)='viewBusinessDetails(indexVal)'>{{item.companyName}}</li>
 </ul>
 </div>
-<div class="" *ngIf ="formTitle == 'Registration Form'">
-<button class="btn btn-primary btn-block" routerLink="/IndividualReg">Individual Registration</button>
-</div>
-<div class="signUp col-sm-12 col-md-6 col-md-offset-3" *ngIf ='!showbusinessList'>
+
+<div class="row justify-content-center">
+<div class="signUp col-6" *ngIf ='!showbusinessList'>
    <div [hidden]="submitted">
       <h1>{{formTitle}}</h1>
       <form (ngSubmit)="onSubmit(); signup.reset()" #signup="ngForm" class="signup-form">
@@ -185,7 +184,9 @@
       <button type="submit" class="btn btn-success btn-block" [disabled]="!signup.form.valid" >{{formSubmitName}}</button>
       </form>
    </div>
+ </div>
 </div>
+
 <div [hidden]="!submitted" class="alert alert-success alert-dismissible">
    <a href="#" class="close" data-dismiss="alert" aria-label="close" routerLink="/userData" routerLinkActive="active">&times;</a>
    <strong style="text-align:center">Sign Up successful!!

@@ -1,15 +1,14 @@
-
-<div class="row" style="padding-top:10px">
-  <div class="border border-primary col-md-2" >
-    <nav class="nav flex-column">
-    <h3 class="nav-link active font-weight-bold font-italic" routerLink="/userData/invoice" >Invoice</h3>
-    <h3 class="nav-link active font-weight-bold font-italic" routerLink="/userData/payables">Payables</h3>
-    <h3 class="nav-link active font-weight-bold font-italic" routerLink="/userData/receivables">Receivables</h3>
-    <h3 class="nav-link active font-weight-bold font-italic" routerLink="/userData/salesReport">Sales Report</h3>
-    <h3 class="nav-link active font-weight-bold font-italic" routerLink="/userData/raiseTicket">Raise Ticket</h3>
-  </nav>
+<div class="row textfamily">
+  <div class="col-md-2 col-sm-4 textStyle">
+    <div class="list-group" id="list-tab" role="tablist">
+      <a class="list-group-item list-group-item-action listcss"  data-toggle="list" role="tab" routerLink="/userData/invoice">Invoice</a>
+      <a class="list-group-item list-group-item-action listcss"  data-toggle="list" role="tab" routerLink="/userData/payables">Payables</a>
+      <a class="list-group-item list-group-item-action listcss"  data-toggle="list" role="tab" routerLink="/userData/receivables">Receivables</a>
+      <a class="list-group-item list-group-item-action listcss"  data-toggle="list" role="tab" routerLink="/userData/salesReport">Sales Report</a>
+      <a class="list-group-item list-group-item-action listcss"  data-toggle="list" role="tab" routerLink="/userData/raiseTicket">Raise Ticket</a>
+    </div>
   </div>
-  <div class="col-md-10">
-    <router-outlet></router-outlet>
+  <div class="col-md-10 col-sm-8">
+      <router-outlet class="tab-pane fade"></router-outlet>
   </div>
 </div>

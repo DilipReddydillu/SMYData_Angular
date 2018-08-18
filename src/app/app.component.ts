@@ -36,8 +36,11 @@ export class AppComponent {
 
     logOut(){
       this._demoService.changeProfile(false);
-      this.view = 'homePage';
        this.showProfile = false;
+    }
+    homePage(){
+      this.view = 'homePage';
+      this.router.navigate(['/']);
     }
 
 }

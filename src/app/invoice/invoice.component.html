@@ -1,83 +1,94 @@
-<div class="border border-success center20">
-  <h1> My businessPlan </h1>
-<nav>
-  <div class="nav nav-tabs" id="nav-tab" role="tablist" style="font-size:20px">
-  <span class="nav-item nav-link" id="nav-home-tab" data-toggle="tab" routerLink="/userData/businessPlan" role="tab" aria-controls="nav-home" aria-selected="true">Rewards</span>
-  <span class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" routerLink="/userData/discounts" role="tab" aria-controls="nav-profile" aria-selected="false">Discounts</span>
-  <span class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab"routerLink="/userData/invoiceTemplate" role="tab" aria-controls="nav-contact" aria-selected="false">Invoice</span>
+<div class="row cstyle justify-content-center">
+ <div class="">
+   <h2> My BusinessPlan </h2>
   </div>
-</nav>
-<div class="">
-<button type="button" class="btn btn-success" routerLink="/userData/invoice" name="button">Create Invoice</button>
 </div>
-  <div class="top row">
+<div class="row justify-content-center">
+  <ul class="nav nav-tabs">
+  <li class="nav-item">
+    <span class="nav-link listcss" id="nav-home-tab" data-toggle="tab" routerLink="/userData/businessPlan" role="tab" aria-controls="nav-home" aria-selected="true">Rewards</span>
+  </li>
+  <li class="nav-item">
+    <span class="nav-link listcss" id="nav-profile-tab" data-toggle="tab" routerLink="/userData/discounts" role="tab" aria-controls="nav-profile" aria-selected="false">Discounts</span>
+  </li>
+  <li class="nav-item ">
+    <span class="nav-link listcss active" id="nav-contact-tab" data-toggle="tab"routerLink="/userData/invoiceTemplate" role="tab" aria-controls="nav-contact" aria-selected="false">Invoice</span>
+  </li>
+</ul>
+</div>
+<div class="row cstyle p-3">
+<!-- <div class="row col-12">
+<button type="button" class="btn btn-success listcssBtn" routerLink="/userData/invoice" name="button">Create Invoice</button>
+</div> -->
+<hr>
+  <div class="row col-12">
     <div class="col-md-4">
       <h5>David</h5>
       <h5>9671324421</h5>
       <h5>david@gmail.com</h5>
     </div>
-    <div class="col-md-4">
+    <div class="col">
     </div>
-    <div class="float-right col-md-4">
+    <div class="col-md-4">
       <h5>Total BV:55123</h5>
-      <h5>Total points:526</h5>
+      <h5>Total Points:526</h5>
     </div>
   </div>
-  <div class="invoice" *ngIf='!invoiceGenerate'>
+  <div class="invoice row col-12" *ngIf='!invoiceGenerate'>
   <!-- Table -->
-  <div class="inbxTxt tableFlow">
+  <div class="inbxTxt tableFlow col-12">
     <table class="table" >
       <thead class="thead-light">
-        <tr>
+        <tr class="fntcss">
           <th scope="col">#</th>
           <th scope="col">Item Name</th>
           <th scope="col">Quantity</th>
           <th scope="col">Rate</th>
-          <th scope="col">total Amount</th>
+          <th scope="col">Total Amount</th>
+          <th>
+            <button type="button" disabled  class="btn btn-success btn-sm">
+              <span>+</span>
+            </button>
+          </th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let data of invoice;let i = index; let lastEl = last; let firstEl = first">
-          <td>{{i+1}}</td>
-          <td>
-            <select [(ngModel)]='invoice[i].item' disabled>
+          <td style="width:30px">{{i+1}}</td>
+          <td class="thsize">
+            <select [(ngModel)]='invoice[i].item' class="tablecss" disabled>
                 <option *ngFor="let item of items" value={{item}}>
                     {{item}}
                 </option>
             </select>
             <!-- <input class="discount" type="number" min="0" [(ngModel)]='discounts[i].minAmount'/> -->
           </td>
-          <td>
-            <input class="quantity" readonly type="number" min="0" [(ngModel)]='invoice[i].quantity'/>
+          <td class="thsize">
+            <input class="quantity tablecss" readonly type="number" min="0" [(ngModel)]='invoice[i].quantity'/>
           </td>
-          <td>
-            <input class="rate" readonly type="number" min="0" [(ngModel)]='invoice[i].rate'/>
+          <td class="thsize">
+            <input class="rate tablecss" readonly type="number" min="0" [(ngModel)]='invoice[i].rate'/>
           </td>
-          <td>
-            <input readonly value="{{invoice[i].rate  * invoice[i].quantity | currency:'RS '}}">
+          <td class="thsize">
+            <input readonly class="tablecss" value="{{invoice[i].rate  * invoice[i].quantity | currency:'RS '}}">
           </td>
-          <td *ngIf='!firstEl'>
+          <td class="thsize" *ngIf='!firstEl'>
             <button type="button" disabled  (click)='deleteRow(i)' class="btn btn-danger btn-sm">
-              <span class="glyphicon glyphicon-minus"></span>
-            </button>
-          </td>
-          <td *ngIf='lastEl'>
-            <button type="button" disabled (click)='addRow(i)' class="btn btn-success btn-sm">
-              <span class="glyphicon glyphicon-plus"></span>
+              <span>-</span>
             </button>
           </td>
         </tr>
       </tbody>
     </table>
   </div><hr>
-  <div class="discount">
+  <div class="discount pl-4">
     <h5>Sub-Total: 7350 </h5>
-    <h5>Discount: <input type="number" readonly min="0" max="50"  name="discount" value="20">%</h5>
-    <h5>Rewards: <input type="number" readonly min="0" max="500" name="reward" value="200"></h5>
-    <h5>Total: 5880 </h5>
+    <h5>Discount: <input  readonly class="inbox"  name="discount" value="20">%</h5>
+    <h5>Rewards: <input  readonly class="inbox" name="reward" value="200"></h5>
+    <h5>Total:  5880 </h5>
   </div>
-  <div class="">
-    <button type="button" name="button" disabled class="btn btn-block btn-primary" (click)="submitInvoice()">Submit</button>
+  <div class="row col-12">
+    <button type="button" name="button" disabled class="btn btn-block btn-success fntcss" (click)="submitInvoice()">Submit</button>
   </div>
 </div>
 

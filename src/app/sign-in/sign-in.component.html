@@ -27,16 +27,25 @@
           Password is required
         </div>
 			</div>
-			<div class=""row>
-			<button  type="submit" class="btn btn-success btn-md  col-sm-6" [disabled]="!signin.form.valid" >Log In</button>
-			<button  type="button" class="btn btn-primary btn-md col-sm-6" *ngIf="userType == 'business'" routerLink="/signUp">Register</button>
-			<button  type="button" class="btn btn-primary btn-md col-sm-6" *ngIf="userType == 'individual'" routerLink="/IndividualReg">Register</button>
+		<div class="row  justify-content-between">
+			<div class="col-6">
+			<button  type="submit" class="btn btn-success btn-block" [disabled]="!signin.form.valid" >Log In</button>
 		</div>
+		<div class="col-6">
+			<button  type="button" class="btn btn-primary btn-block " *ngIf="userType == 'business'" routerLink="/signUp">Register</button>
+			<button  type="button" class="btn btn-primary btn-block " *ngIf="userType == 'individual'" routerLink="/IndividualReg">Register</button>
+		</div>
+		</div>
+
 <div>
-			<label ><input #rememberVal type="checkbox" name="rememberMe" value="true" [(ngModel)]="rememberMe"> Remember Me</label>
-			<div class="pull-right forgot-password">
-				<label class='forgotPwd' data-toggle="modal" data-target="#myModal">Forgot your password?</label>
-			</div>
+	<div class="row justify-content-between">
+	 <div class="col-4">
+		 <label><input #rememberVal type="checkbox" name="rememberMe" value="true" [(ngModel)]="rememberMe"> Remember Me</label>
+	 </div>
+	 <div class="col-5">
+		 <label class='forgotPwd' data-toggle="modal" data-target="#myModal">Forgot your password?</label>
+	 </div>
+ </div>
 </div>
 			</form>
 		</div>
@@ -50,7 +59,7 @@
       <div class="modal-content">
 				<br><br>
         <div class="modal-header">
-					  <h3 class="modal-title">Reset Password</h3>
+					  <h2 class="modal-title">Reset Password</h2>
           <button type="button" class="close" id="modalWindow" data-dismiss="modal" #closeAddExpenseModal >&times;</button>
         </div>
         <div class="modal-body">
@@ -58,12 +67,12 @@
 					<div class="form-group">
 						<label for="mobileNum">Enter Mobile Number:</label>
 						<input type="text" class="form-control" id="mobileNum"
-		               required
+		               required  pattern="[0-9][0-9]{9}"
 		               [(ngModel)]="mobileNumVal" name="mobileNum"
 		               #mobileNum="ngModel"/>
 						<div [hidden]="mobileNum.valid || mobileNum.pristine"
 		             class="alert alert-danger">
-		           Mobile Number is required
+		           Enter valid mobile number
 		        </div>
 					</div>
 					<button  type="submit" class="btn btn-primary btn-md" [disabled]="!otp.form.valid">Send OTP</button>

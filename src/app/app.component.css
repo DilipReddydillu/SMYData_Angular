@@ -5,6 +5,10 @@
   /* background-image: url('http://hdimages.org/wp-content/uploads/2016/11/image-line-HD5.jpg'); */
   background-repeat: no-repeat;
   height: 700px;
+  margin-bottom: 0px;
+}
+.bgColor{
+  background-color: #563d7c !important;
 }
 h2 {
     font-size: 24px;

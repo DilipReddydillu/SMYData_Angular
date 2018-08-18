@@ -6,6 +6,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
+const urlProvider = window.location.origin;
 
 
 @Injectable()
@@ -16,30 +17,30 @@ export class IndividualService {
   addPayData(data) {
       let body = JSON.stringify(data);
       console.log(data)
-      let url = 'http://localhost:8585/api/payable/add';
+      let url =  urlProvider + '/api/payable/add';
       console.log(url)
       return this.http.post(url, body, httpOptions);
   }
 
   viewMyData(){
- let url = 'http://localhost:8585/api/viewMyData';
+ let url =  urlProvider + '/api/viewMyData';
   return this.http.get(url)
 }
 
   addReceiveData(data) {
       let body = JSON.stringify(data);
       console.log(data)
-      let url = 'http://localhost:8585/api/receivable/add';
+      let url =  urlProvider + '/api/receivable/add';
       console.log(url)
       return this.http.post(url, body, httpOptions);
   }
 
   getReceiveData(){
- let url = 'http://localhost:8585/api/getReceiveData';
+ let url =  urlProvider + '/api/getReceiveData';
   return this.http.get(url)
 }
   getReports(){
- let url = 'http://localhost:8585/api/getReports';
+ let url =  urlProvider + '/api/getReports';
   return this.http.get(url)
 }
 

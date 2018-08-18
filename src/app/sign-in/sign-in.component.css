@@ -1,7 +1,7 @@
 .signIn{
   width: 40%;
   height: auto;
-  background-color: #1abc9c;
+  background-color: #ffffff;
   border-radius: 10px;
   border: 1px solid;
    box-shadow: 5px 10px #888888;
@@ -9,6 +9,7 @@
 	-webkit-box-shadow: 0 10px 6px -6px #777;
 	-moz-box-shadow: 0 10px 6px -6px #777;
 	 box-shadow: 0 10px 6px -6px #777;
+   word-wrap: break-word;
  }
 
 .btnStyle{

@@ -7,7 +7,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
-
+const urlProvider = window.location.origin;
 const key = 'AIzaSyBFcZOIYqk_s0-qilRmve1TjMCXhYxUP3c';
 
 @Injectable()
@@ -57,7 +57,7 @@ export class DataService {
     registerUser(data) {
         let body = JSON.stringify(data);
         console.log(data)
-        let url = 'http://localhost:8585/api/saveUser/registration';
+        let url =  urlProvider + '/api/saveUser/registration';
         console.log(url)
         return this.http.post(url, body, httpOptions);
     }
@@ -65,7 +65,7 @@ export class DataService {
     registerIndividual(data) {
         let body = JSON.stringify(data);
         console.log(data)
-        let url = 'http://localhost:8585/api/saveUser/registration';
+        let url =  urlProvider + '/api/saveUser/registration';
         console.log(url)
         return this.http.post(url, body, httpOptions);
     }
@@ -73,25 +73,25 @@ export class DataService {
     addingNewBusiness(data) {
         let body = JSON.stringify(data);
         console.log(data)
-        let url = 'http://localhost:8585/api/saveUser/add';
+        let url =  urlProvider + '/api/saveUser/add';
         console.log(url)
         return this.http.post(url, body, httpOptions);
     }
 
     editBusinessService(editData){
       console.log(editData)
-      let url = 'http://localhost:8585/api/saveUser/edit';
+      let url =  urlProvider + '/api/saveUser/edit';
       return this.http.post(url, editData)
     }
 
     viewMyBusiness(){
-   let url = 'http://localhost:8585/api/viewMyBusiness';
+   let url =  urlProvider + '/api/viewMyBusiness';
     return this.http.get(url)
   }
 
     logInUser(data,type) {
         console.log(data)
-        let url = 'http://localhost:8585/api/loginUser/'+type;
+        let url =  urlProvider + '/api/loginUser/'+type;
         return this.http.post(url, data)
     }
 
@@ -103,40 +103,40 @@ export class DataService {
 
     sendOtp(number){
     console.log('In service sendOtp:: '+number)
-      let url = 'http://localhost:8585/api/sendOtp/'+number;
+      let url =  urlProvider + '/api/sendOtp/'+number;
       return this.http.get(url)
     }
 
     resetpassword(pwd,mobile){
       console.log(pwd + mobile)
-      let url = 'http://localhost:8585/api/resetPwd/'+pwd;
+      let url =  urlProvider + '/api/resetPwd/'+pwd;
       return this.http.get(url, pwd )
     }
     doesUserExist(mobile){
-      var url = 'http://localhost:8585/api/loginUser';
+      var url =  urlProvider + '/api/loginUser';
       return this.http.get(url,mobile);
     }
 
     customerExist(mobile){
       console.log(mobile)
-      var url = 'http://localhost:8585/api/getUserDetail/'+mobile;
+      var url =  urlProvider + '/api/getUserDetail/'+mobile;
       return this.http.get(url,mobile);
     }
 
     createUser(data){
       console.log(data)
-      var url = 'http://localhost:8585/api/saveUser';
+      var url =  urlProvider + '/api/saveUser';
       return this.http.post(url,data);
     }
     createTicket(data){
       console.log(data)
-      var url = 'http://localhost:8585/api/createTicket';
+      var url =  urlProvider + '/api/createTicket';
       return this.http.post(url,data);
     }
     requestReport(data,type){
     console.log('Innn service strtDate: '+data.startDate +' endDate:'+data.endDate);
       console.log(data)
-      var url = 'http://localhost:8585/api/'+type+'/'+data.startDate+'/'+data.endDate;
+      var url =  urlProvider + '/api/'+type+'/'+data.startDate+'/'+data.endDate;
       console.log(url)
       return this.http.get(url,data);
     }

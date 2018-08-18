@@ -1,31 +1,33 @@
-<div class="container-fluid  border border-success inbxTxt"  style="padding:5px">
-  <h1> Sales-Report </h1>
-  <div class="row">
-    <div class="col-md-3">
+<div class="row cstyle justify-content-center">
+ <div class="">
+   <h2>Sales Report</h2>
+  </div>
+</div>
+  <div class="row cstyle">
+    <div class="col-md-3 my-3">
         <label>Start Date:</label>
        <input type="date"  [(ngModel)]='startDate'/>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-3 my-3">
       <label>End Date:</label>
      <input type="date"  [(ngModel)]='endDate'/></div>
   </div>
-<div class="row" style="margin-top:15px">
+<div class="row cstyle">
   <div class="col-md-2" >
     <div class="list-group">
       <button type="button" class="list-group-item list-group-item-action font-weight-bold font-italic" (click)="request('getUserDetails','report')">Customer List</button>
       <button type="button" class="list-group-item list-group-item-action font-weight-bold font-italic" (click)="request('getTopCustomer','topCustomer')">Top Customer's
       </button>
-      <button type="button" class="list-group-item list-group-item-action font-weight-bold font-italic" (click)="request('payable','payable_receivable')">Payables List</button>
-      <button type="button" class="list-group-item list-group-item-action font-weight-bold font-italic" (click)="request('receivable','payable_receivable')">Receivables List</button>
+      <button type="button" class="list-group-item list-group-item-action font-weight-bold font-italic" (click)="request('payable','payable_receivable')">Payable List</button>
+      <button type="button" class="list-group-item list-group-item-action font-weight-bold font-italic" (click)="request('receivable','payable_receivable')">Receivable List</button>
       <button type="button" class="list-group-item list-group-item-action font-weight-bold font-italic" (click)="request('getInvoice','invoiceData')">Invoice List</button>
       <button type="button" class="list-group-item list-group-item-action font-weight-bold font-italic" (click)="request('getTickets','tickets')">Raised Tickets</button>
     </div>
   </div>
-  <div class="col-md-10">
-    <!-- <router-outlet></router-outlet> -->
+  <div class="col-md-10 tableFlow">
   <table class="table table-hover" *ngIf="report">
   <thead>
-    <tr>
+    <tr class="fntcss">
       <th scope="col">#</th>
       <th scope="col">Name</th>
       <th scope="col">Email</th>
@@ -33,7 +35,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let data of report;let i = index">
+     <tr *ngFor="let data of report;let i = index">
       <td>{{i+1}}</td>
       <td>{{data.userName}}</td>
       <td>{{data.email}}</td>
@@ -44,7 +46,7 @@
 
   <table class="table table-hover" *ngIf="payable_receivable">
   <thead>
-    <tr>
+    <tr class="fntcss">
       <th scope="col">#</th>
       <th scope="col">Invoice</th>
       <th scope="col">Mobile</th>
@@ -63,12 +65,12 @@
 
   <table class="table table-hover" *ngIf="tickets">
   <thead>
-    <tr>
+    <tr class="fntcss">
       <th scope="col">#</th>
       <th scope="col">Ticket Id</th>
       <th scope="col">Subject</th>
       <th scope="col">Description</th>
-      <th scope="col">CreatedDate</th>
+      <th scope="col">Created Date</th>
     </tr>
   </thead>
   <tbody>
@@ -84,7 +86,7 @@
 
   <table class="table table-hover" *ngIf="invoiceData">
   <thead>
-    <tr>
+    <tr class="fntcss">
       <th scope="col">#</th>
       <th scope="col">Invoice Id</th>
       <th scope="col">Total</th>
@@ -103,10 +105,10 @@
   </tbody>
   </table>
 
-  <input type="number" [(ngModel)]="topCustomerRecords"  placeholder="No of records" *ngIf="topCustomer">
+  <span *ngIf="topCustomer"> Number Of Records:<input type="number" [(ngModel)]="topCustomerRecords"  placeholder="No of records" style="width:50px"></span>
   <table class="table table-hover" *ngIf="topCustomer">
   <thead>
-    <tr>
+    <tr class="fntcss">
       <th scope="col">#</th>
       <th scope="col">Name</th>
       <th scope="col">Mobile</th>
@@ -124,5 +126,3 @@
   </table>
   </div>
 </div>
-</div>
-<!-- routerLink="/userData/invoice" -->

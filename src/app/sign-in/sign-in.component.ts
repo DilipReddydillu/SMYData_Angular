@@ -28,6 +28,7 @@ messageSource:number;
     view = true;
     showProfile;
     userType;
+    validMobile = false;
     public pattern_mobile = /([0-9]){10}/g;
 
 
@@ -97,7 +98,7 @@ messageSource:number;
             }
             },
             error => {
-              console.error("not registered!");    
+              console.error("not registered!");
               this.loginFail =true;
               //this._demoService.changeProfile('true')
               return Observable.throw(error);

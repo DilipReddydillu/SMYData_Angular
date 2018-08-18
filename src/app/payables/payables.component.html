@@ -1,54 +1,58 @@
-<div class="container-fluid border border-success center20">
-<h1>
-  Payables
-</h1>
-<div class="col-md-4 col-md-offset-4">
-  <div class="input-group" *ngIf='!userEntry'>
-  <input type="text" class="form-control" [(ngModel)]='mobile' placeholder="Enter Mobile Number" aria-label="Recipient's username" aria-describedby="basic-addon2">
-  <div class="input-group-append">
-    <button class="btn btn-outline-secondary" (click)="verifyUser()" type="button">Submit</button>
+<div class="row cstyle justify-content-center">
+ <div class="">
+   <h2>Payables</h2>
   </div>
 </div>
-
-
-<form *ngIf='userEntry'>
-  <div class="form-group row">
-    <label  class="col-sm-2 col-form-label col-form-label-sm">Name</label>
-    <div class="col-sm-10">
-      <input type="text" class="form-control form-control-sm" name='username'  [(ngModel)]="userName" placeholder="Name">
+<div class="row cstyle dataBox">
+  <div class="col"> </div>
+  <div class="col-md-5 col-sm-12">
+    <div class="input-group col align-self-center" style="margin-top:50px" *ngIf='!userEntry'>
+      <input type="text" class="form-control" [(ngModel)]='mobile' placeholder="Enter Mobile Number" style="height:50px">
+      <div class="input-group-append">
+        <button class="btn btn-success fntcss" (click)="verifyUser()" type="button">Submit</button>
+      </div>
     </div>
+    <form *ngIf='userEntry'>
+      <div class="form-group">
+        <label  class="col-form-label">Name</label>
+        <div class="">
+          <input type="text" class="form-control form-control-sm usrInpt" name='username'  [(ngModel)]="userName" placeholder="Name">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="colFormLabelSm" class="col-form-label">Email</label>
+        <div class="">
+          <input type="email" class="form-control form-control-sm usrInpt" name='mail' [(ngModel)]='email' placeholder="Email">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="colFormLabelSm" class="col-form-label col-form-label-sm">Address</label>
+        <div class="">
+          <input type="text" class="form-control form-control-sm usrInpt" name='addr' [(ngModel)]='address'  placeholder="Address">
+        </div>
+      </div>
+      <button class="btn btn-success btn-block fntcss" type="button" (click)='userDetails(userName,email,address)' name="button">Submit</button>
+    </form>
   </div>
-  <div class="form-group row">
-    <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Email</label>
-    <div class="col-sm-10">
-      <input type="email" class="form-control form-control-sm" name='mail' [(ngModel)]='email' placeholder="Email">
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Address</label>
-    <div class="col-sm-10">
-      <input type="text" class="form-control form-control-sm" name='addr' [(ngModel)]='address'  placeholder="Address">
-    </div>
-  </div>
-  <button class="btn btn-success" type="button" (click)='userDetails(userName,email,address)' name="button">Submit</button>
-</form>
-
+  <div class="col"></div>
+</div>
 <!-- Payables Details -->
-<div class="border border-success"  style="padding:30px;margin:30px" *ngIf = "model">
-  <div class="row">
-    <div class="col-sm">
+<div class="cstyle dataBox p-3" *ngIf = "model">
+  <div class="row justify-content-around">
+    <div class="col-4 mt-2">
       <h5>Name : {{name}}</h5>
+      <h5>Mobile : {{mobile}}</h5>
     </div>
-    <div class="col-sm"></div>
-    <div class="col-sm">
+    <div class="col-4 mt-2">
       <h5>Balance Amount To Pay : {{model.balAmount}}</h5>
     </div>
   </div>
-  <div class="row">
+  <div class="row mt-2">
     <!-- Table -->
-      <table class="table table-bordered table-hover" >
+    <div class="col-md-12 col-sm-11 tableFlow">
+      <table class="table table-bordered table-hover">
         <thead class="thead-light">
-          <tr>
+          <tr class="fntcss">
             <th scope="col">#</th>
             <th scope="col">Date</th>
             <th scope="col">Invoice</th>
@@ -58,7 +62,6 @@
         </thead>
         <tbody>
           <tr *ngFor="let data of model.paybleReceivables;let i = index">
-          <!-- *ngFor="let data of model;"> -->
             <td>{{i+1}}</td>
             <td>
               {{data.date}}
@@ -71,27 +74,38 @@
             </td>
             <td style="width:250px">
               <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Amount" [(ngModel)]="data.received">
+                <input  class="form-control fntcss" placeholder="Amount" [(ngModel)]="data.received">
                 <div class="input-group-append">
-                  <button class="btn btn-outline-secondary" (click)='payAmount(data)' type="button">PayOff</button>
+                  <button class="btn btn-success " (click)='payAmount(data)' type="button">PayOff</button>
                 </div>
               </div>
             </td>
           </tr>
         </tbody>
       </table>
-  </div><hr>
-  <div class="row">
-    <button type="button" class="btn btn-primary" (click)="addNewFun()" name="button">Add New Payable</button>
-    <hr>
-    <div class="input-group mb-3" *ngIf="addNew">
-      <input type="text" class="form-control" placeholder="Invoice" [(ngModel)]="newPayable.invoiceNumber"><br><br>
-      <input type="text" class="form-control" placeholder="Amount" [(ngModel)]="newPayable.amount"><br><br>
-      <input type="text" class="form-control" placeholder="Description" [(ngModel)]="newPayable.desc">
-      <div class="input-group-append">
-        <button class="btn btn-outline-secondary" (click)='addPayable(newPayable)' type="button">Submit</button>
-      </div>
     </div>
   </div>
-</div>
+  <hr>
+  <div class="row mt-2">
+    <div class="col"></div>
+    <div class="col-12">
+      <button class="btn btn-success fntcss btn-block" type="button" (click)="addNewFun()" name="button">Add New Payable</button>
+    </div>
+    <div class="col"></div>
+  </div>
+  <hr>
+  <div class="row mt-2" *ngIf="addNew">
+    <div class="col"></div>
+    <div class="col-8">
+     <div class="input-group">
+        <input  class="inps" placeholder="Enter Invoice" [(ngModel)]="newPayable.invoiceNumber"><br><br>
+        <input  class="inps" placeholder="Enter Amount" [(ngModel)]="newPayable.amount"><br><br>
+        <input  class="inps" placeholder="Enter Description" [(ngModel)]="newPayable.desc">
+        <div class="input-group-append">
+          <button class="btn btn-success fntcss btn-block inps" (click)='addPayable(newPayable)' type="button">Submit</button>
+        </div>
+      </div>
+    </div>
+    <div class="col"></div>
+  </div>
 </div>

@@ -65,9 +65,9 @@ const appRoutes: Routes = [
       {path: 'addNew', component: SignupComponent},
     ]},
   { path: 'otpVerification', component: OtpAuthenticationComponent },
-  { path: 'myRewards', component: RewardsComponent },
+  // { path: 'myRewards', component: RewardsComponent },
   { path: '',
-    redirectTo: '/signIn',
+    redirectTo: '/',
     pathMatch: 'full'
   }
 ];

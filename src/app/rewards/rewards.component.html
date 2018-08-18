@@ -1,67 +1,84 @@
-<div class="border border-success center20 inbxTxt" >
-  <h1> My businessPlan </h1>
-<nav>
-  <div class="nav nav-tabs" id="nav-tab" role="tablist" style="font-size:20px">
-  <span class="nav-item nav-link" id="nav-home-tab" data-toggle="tab" routerLink="/userData/businessPlan" role="tab" aria-controls="nav-home" aria-selected="true">Rewards</span>
-  <span class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" routerLink="/userData/discounts" role="tab" aria-controls="nav-profile" aria-selected="false">Discounts</span>
-  <span class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab"routerLink="/userData/invoiceTemplate" role="tab" aria-controls="nav-contact" aria-selected="false">Invoice</span>
+<div class="row cstyle justify-content-center">
+ <div class="">
+   <h2> My BusinessPlan </h2>
   </div>
-</nav>
-<div class="panel panel-info">
-    <div class="panel-heading col-md-12">
-      <h3 class="col-md-4">My Reward System</h3>
-      <label class="switch col-md-2">
-         <input type="checkbox" [(ngModel)]='rewards.enable'>
-         <span class="slider round"></span>
-       </label>
-    </div>
-
-     <div class="panel-body">
-       <div class="">
-       <dl>
-          <dt class=""> <h5>1.Rewards points value</h5> </dt>
-          <dd>
-            <span>
-              Rewards effective amount-<input class="rewardAmount" type="number" min="0" [(ngModel)]='rewards.effectiveAmount' />
-              cash Value of <input class="rewardAmount" type="number" min="100" [(ngModel)]='rewards.cashValue' /> Rupees = <b>1 Reward</b>
-            </span>
-            <label class="switch">
-               <input type="checkbox" [(ngModel)]='rewards.rewardPointEnable'>
-               <span class="slider round"></span>
-             </label>
-            </dd>
-            <br>
-            <dt>
-              Start Date: <input type="date"  [(ngModel)]='rewards.rewardStartDate'/>
-              End Date:  <input type="date"  [(ngModel)]='rewards.rewardEndDate'/>
-            </dt>
-
-        </dl>
-        </div>
-
-        <hr>
-
-        <div class="">
-        <dl>
-           <dt> <h5>2.Sign up Bonus Reward Points</h5> </dt>
-           <dd>
-             <span>
-              New customer welcome points <input class="rewardAmount" type="number" min="0"  [(ngModel)]='rewards.bonusPoints' />
-              </span>
-              Start Date: <input type="date"  [(ngModel)]='rewards.bonusStartDate'/>
-              End Date:  <input type="date"  [(ngModel)]='rewards.bonusEndDate'/>
-              <label class="switch">
-                 <input type="checkbox"  [(ngModel)]='rewards.bonusPointEnale'>
-                 <span class="slider round"></span>
-               </label>
-             </dd>
-
-             <dd>
-
-             </dd>
-         </dl>
-       </div>
-     </div>
-<button class="btn btn-primary btn-block"type="button" (click)='saveReward(rewards)' name="button">Save</button>
 </div>
+<div class="row justify-content-center">
+  <ul class="nav nav-tabs">
+  <li class="nav-item">
+    <span class="nav-link listcss active" id="nav-home-tab" data-toggle="tab" routerLink="/userData/businessPlan" role="tab" aria-controls="nav-home" aria-selected="true">Rewards</span>
+  </li>
+  <li class="nav-item">
+    <span class="nav-link listcss " id="nav-profile-tab" data-toggle="tab" routerLink="/userData/discounts" role="tab" aria-controls="nav-profile" aria-selected="false">Discounts</span>
+  </li>
+  <li class="nav-item ">
+    <span class="nav-link listcss" id="nav-contact-tab" data-toggle="tab"routerLink="/userData/invoiceTemplate" role="tab" aria-controls="nav-contact" aria-selected="false">Invoice</span>
+  </li>
+</ul>
+</div>
+  <div class="row cstyle pt-2">
+  <div class="col-4"></div>
+    <div class="col-3">
+      <h4>My Reward System</h4>
+    </div>
+    <div class="col-2">
+      <label class="switch">
+        <input type="checkbox" [(ngModel)]='rewards.enable'>
+        <span class="slider round"></span>
+      </label>
+    </div>
+    <div class="col"></div>
+  </div>
+
+  <div class="row cstyle pt-2">
+      <div class="col"></div>
+      <div class="panel panel-info col-md-12">
+           <div class="panel-body">
+             <div class="">
+             <dl>
+                <dt class=""> <h5 style="color:red">1.Rewards Points Value</h5> </dt>
+                <dd>
+                  <span>
+                    Rewards effective amount-<input class="rewardAmount" [(ngModel)]='rewards.effectiveAmount' />
+                    cash value of <input class="rewardAmount" [(ngModel)]='rewards.cashValue' /> rupees = <b>1 Reward</b>
+                  </span>
+                  <label class="switch">
+                     <input type="checkbox" [(ngModel)]='rewards.rewardPointEnable'>
+                     <span class="slider round"></span>
+                   </label>
+                  </dd>
+                  <br>
+                  <dt>
+                    Start Date: <input type="date"  [(ngModel)]='rewards.rewardStartDate'/>
+                    End Date:  <input type="date"  [(ngModel)]='rewards.rewardEndDate'/>
+                  </dt>
+
+              </dl>
+              </div>
+
+              <hr>
+
+              <div class="">
+              <dl>
+                 <dt> <h5 style="color:red">2.Sign Up Bonus Reward Points</h5> </dt>
+                 <dd>
+                   <span>
+                    New customer welcome points <input class="rewardAmount" [(ngModel)]='rewards.bonusPoints' />
+                    </span>
+                   </dd>
+                   <br>
+                   <dt>
+                     Start Date: <input type="date"  [(ngModel)]='rewards.bonusStartDate'/>
+                     End Date:  <input type="date"  [(ngModel)]='rewards.bonusEndDate'/>
+                     <label class="switch">
+                        <input type="checkbox"  [(ngModel)]='rewards.bonusPointEnale'>
+                        <span class="slider round"></span>
+                      </label>
+                   </dt>
+               </dl>
+             </div>
+           </div>
+      <button class="btn btn-success btn-block fntcss"type="button" (click)='saveReward(rewards)' name="button">Save</button>
+      </div>
+      <div class="col"></div>
 </div>
