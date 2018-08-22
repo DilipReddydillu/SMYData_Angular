@@ -23,7 +23,7 @@ export class BillingService {
 
 //get rewards method
 getReward(){
-  let url = urlProvider + urlProvider +'/api/getRewards';
+  let url =urlProvider +'/api/getRewards';
    return this.http.get(url)
  }
 

@@ -10,7 +10,7 @@
          <label for="name">Name</label>
          <input type="text" class="form-control" id="ownername"
          required
-         [(ngModel)]="model.Name" name="ownername"
+         [(ngModel)]="model.userName" name="ownername"
          #ownername="ngModel" />
          <div [hidden]="ownername.valid || ownername.pristine"
             class="alert alert-danger">
@@ -22,7 +22,7 @@
          <input type="text" class="form-control"
          required
          (change)="validation('pattern_mobile',mobile.value)"
-         [(ngModel)]="model.mobile" name="mobile"
+         [(ngModel)]="model.userMobile" name="mobile"
          #mobile="ngModel"/>
          <div [hidden]="mobile.valid || mobile.pristine"
             class="alert alert-danger">

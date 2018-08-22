@@ -26,7 +26,7 @@
             <tr *ngFor="let data of payableDetails;let i = index; let lastEl = last;">
               <td>{{i+1}}</td>
               <td>
-                <select   [(ngModel)]='data.category' class="class="tablecss"" >
+                <select   [(ngModel)]='data.category' class="tablecss" >
                     <option *ngFor="let item of categoryList" value={{item}}>
                         {{item}}
                     </option>

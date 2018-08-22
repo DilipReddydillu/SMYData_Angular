@@ -1,14 +1,20 @@
 
 .imgBg{
-  /* background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQixAQVHWc72Tcbtk4G4OFbOmQCbHw5dqIMSTzuYbbQoc4TFEzBiQ'); */
   background-image: url('https://i.ytimg.com/vi/9MjVs8XjJoI/maxresdefault.jpg');
-  /* background-image: url('http://hdimages.org/wp-content/uploads/2016/11/image-line-HD5.jpg'); */
   background-repeat: no-repeat;
   height: 700px;
   margin-bottom: 0px;
 }
 .bgColor{
   background-color: #563d7c !important;
+}
+.login{
+  cursor: pointer;
+}
+.login:hover{
+  font-size: 0.9rem;
+  text-decoration: underline;
+  transition: 0.2s;
 }
 h2 {
     font-size: 24px;

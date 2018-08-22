@@ -17,56 +17,55 @@
   				<strong>{{registrationFailed}}</strong>
   			</div>
       <div class="form-group">
-         <label for="name">Company Name / Business name</label>
+         <label for="name">Company Name / Business Name</label>
          <input type="text" class="form-control" id="name"
          required
          [(ngModel)]="model.businessDetails[0].companyName" name="name"
          #name="ngModel"/>
          <div [hidden]="name.valid || name.pristine"
             class="alert alert-danger">
-            Company Name / Business name is required
+            Company Name / Business Name is required
          </div>
       </div>
       <div class="form-group" *ngIf='!addNew'>
-         <label for="name">Owner / Manager name</label>
+         <label for="name">Owner Name / Manager Name</label>
          <input type="text" class="form-control" id="ownername"
          required
          [(ngModel)]="model.ownerName" name="ownername"
          #ownername="ngModel" />
          <div [hidden]="ownername.valid || ownername.pristine"
             class="alert alert-danger">
-            Owner / Manager name is required
+            Owner Name / Manager Name is required
          </div>
       </div>
       <div class="form-group" *ngIf='!addNew'>
-         <label for="name">Mobile number</label>
+         <label for="name">Mobile Number</label>
          <input type="text" class="form-control"
          required [readonly]="businessEditableForm"
-         (keyup.enter)="doesUserExist(mobile.value);"
-         (change)="doesUserExist(mobile.value);validation('pattern_mobile',mobile.value)"
+         (blur)="doesUserExist(mobile.value);validation('pattern_mobile',mobile.value)"
          [(ngModel)]="model.mobile" name="mobile"
          #mobile="ngModel"/>
          <div [hidden]="mobile.valid || mobile.pristine"
             class="alert alert-danger">
-            <span *ngIf='!mobilecheck'>mobile number is required</span>
-                  <span *ngIf='mobilecheck'>mobile number already exist</span>
+            <span *ngIf='!mobilecheck'>Mobile Number is required</span>
+                  <span *ngIf='mobilecheck'>Mobile Number already exist</span>
          </div>
       </div>
       <div class="form-group" *ngIf='!addNew'>
          <label for="name">Password</label>
          <input type="password" class="form-control" id="password" [readonly]="businessEditableForm"
-         required   (change)="validation('pattern_password',password.value)"
+         required   (blur)="validation('pattern_password',password.value)"
          [(ngModel)]="model.password" name="password" placeholder="Min 6 Characters"
          #password="ngModel"/>
          <div [hidden]="password.valid || password.pristine"
             class="alert alert-danger">
-            password is required
+            Password is required
          </div>
       </div>
       <div class="form-group" *ngIf='!addNew'>
-         <label for="alterEgo">Email address</label>
+         <label for="alterEgo">Email Address</label>
          <input type="text" class="form-control" id="email" [readonly]="businessEditableForm"
-         (change)="validation('pattern_email',email.value)" required
+         (blur)="validation('pattern_email',email.value)" required
          [(ngModel)]="model.email" #email="ngModel" name="alterEgo">
          <div [hidden]="email.valid || email.pristine"
             class="alert alert-danger">
@@ -74,7 +73,7 @@
          </div>
       </div>
       <div class="form-group">
-         <label for="name">Business address</label>
+         <label for="name">Business Address</label>
          <input type="text" class="form-control" id="businessAddr"
          required
          [(ngModel)]="model.businessDetails[0].businessAddress" name="businessAddr"
@@ -88,7 +87,7 @@
       <div class="form-group flex-item-buAdd">
          <label for="name">PIN Code</label>
          <input type="text" class="form-control" id="pin"
-         required  (change)="validation('pattern_pinCode',pin.value)"
+         required  (blur)="validation('pattern_pinCode',pin.value)"
          [(ngModel)]="model.businessDetails[0].pinCode" name="pin"
          #pin="ngModel"/>
          <div [hidden]="pin.valid || pin.pristine"
@@ -136,13 +135,8 @@
       <div class="form-group">
          <label for="name">Website</label>
          <input type="text" class="form-control" id="website"
-         required
          [(ngModel)]="model.businessDetails[0].website" name="website"
          #website="ngModel"/>
-         <div [hidden]="website.valid || website.pristine"
-            class="alert alert-danger">
-            Website Address is required
-         </div>
       </div>
       <div class="dropdown-flex">
          <div class="form-group dropdown-category" >
@@ -186,10 +180,10 @@
    </div>
  </div>
 </div>
-
+<!-- 
 <div [hidden]="!submitted" class="alert alert-success alert-dismissible">
    <a href="#" class="close" data-dismiss="alert" aria-label="close" routerLink="/userData" routerLinkActive="active">&times;</a>
    <strong style="text-align:center">Sign Up successful!!
    <small> <a href="#" routerLink="/signIn" routerLinkActive="active">click here</a></small>to Sign In
    </strong>
-</div>
+</div> -->

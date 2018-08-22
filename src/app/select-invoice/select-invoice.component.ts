@@ -29,6 +29,7 @@ discountList;
 InvGen:boolean;
 gst;
 invoiceid;
+public pattern_mobile = /^\d{10}$/;
 
   constructor(private _demoService: DataService,private _billingService: BillingService,private toastr:ToastsManager) {
 }
@@ -74,6 +75,11 @@ invoiceid;
     }
   }
   verifyUser(){
+    if (!this.pattern_mobile.test(this.mobile)) {
+            this.toastr.error("Please enter valid mobile number", 'Error',[{toastLife: '2000'},{dismiss: 'click'},{maxShown:'1'}]);
+            this.mobile = '';
+      }else{
+        this.toastr.clearAllToasts();
     this._demoService.customerExist(this.mobile).subscribe(
        data => {
          if(data != null && Object.keys(data).length<=0){
@@ -93,6 +99,7 @@ invoiceid;
         this.toastr.info("Could Not Fetch Data!! Try Again..",'Error',{toastLife: '5000'});
        }
     );
+  }
   }
 
   userDetails(){

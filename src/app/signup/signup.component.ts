@@ -22,7 +22,7 @@ export class SignupComponent {
             id: '2'
         },
         {
-            name: 'Fashion jewellery',
+            name: 'Fashion Jewellery',
             id: '3'
         },
         {
@@ -71,9 +71,9 @@ export class SignupComponent {
     showbusinessList:boolean;
     businessList:any;
     public pattern_email = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
-    public pattern_mobile = /([0-9]){10}/g;
-    public pattern_pinCode = /([0-9]){6}/g;
-    public pattern_password = /([0-9a-zA-Z]){6,20}/g;
+    public pattern_mobile = /^\d{10}$/;
+    public pattern_pinCode = /^\d{3,7}$/;
+    public pattern_password = /([0-9a-zA-Z]){6,20}/;
 
     //public model={"companyName":"","ownerName":"","mobile":"","password":"","email":"","businessAddress":"","pinCode":"","city":"","state":"","country":"","website":"","category":"","regProof":"","reg":""};
     public model = {
@@ -122,9 +122,13 @@ export class SignupComponent {
     validation(check,value){
       console.log("invalidation method:"+check+":"+value)
       if (!this[check].test(value)) {
-              this.model[check.slice(8)] = '';
-              this.toastr.error("Please enter valid "+ check.slice(8), null,{toastLife: '3000'});
-              //this.toastr.error("Please enter valid "+ check.slice(8), null,{dismiss: 'click'});
+        if(check == 'pattern_pinCode'){
+          this.model.businessDetails[0].pinCode = ''
+        }else{
+          this.model[check.slice(8)] = '';
+        }
+        this.toastr.error
+              this.toastr.error("Please enter valid "+ check.slice(8), null,{dismiss: 'click',toastLife: '3000'});
         }
       }
 
@@ -132,7 +136,6 @@ export class SignupComponent {
       if (this.addNewBusinessForm) {
           console.log('newBusinessVal::'+this.addNewBusinessForm);
           console.log(this.model)
-            console.log('addNew comp.ts')
       this.addNewBusiness(this.model)
     }else if(this.businessEditableForm){
       console.log(this.model)
@@ -143,7 +146,7 @@ export class SignupComponent {
       console.log('register comp.ts')
       console.log(JSON.stringify(this.model));
       }
-      this.getLocation();
+      //this.getLocation();
     }
     update(value: string) {
         if (value != null)
@@ -162,12 +165,13 @@ export class SignupComponent {
 
     registerUser(dataJson) {
           this.mobileOTP = dataJson.mobile;
+          this._demoService.changeMobile(this.mobileOTP);
         this._demoService.registerUser(dataJson).subscribe(
             data => {
                 console.log(data)
                   console.log("Data saved successfully!");
                   if (data[0] == 'success') {
-                    this.sendOtp(  this.mobileOTP )
+                    this.sendOtp(this.mobileOTP )
                     return true;
                   }else{
                     this.toastr.error(data[0], 'Error',{toastLife: '5000'});

@@ -21,6 +21,7 @@ address;
 newPayable;
 model;
 addNew;
+public pattern_mobile = /^\d{10}$/;
 
   constructor(private _demoService: DataService,private billingService: BillingService,private toastr:ToastsManager) {
     this.newPayable={invoiceNumber:'',amount:'',desc:'',mobile:''};
@@ -29,26 +30,31 @@ addNew;
   ngOnInit() {
   }
   verifyUser(){
-    this._demoService.customerExist(this.mobile).subscribe(
-      data => {
-        if(data != null && Object.keys(data).length<=0){
-           this.userEntry = true;
-        }else{
-          this.name = data[0].userName;
-           this.getPayablesData(this.mobile);
-         }
-      },
-      error => {
-        this.toastr.info("Could Not Fetch Data!! Try Again..",'Error',{toastLife: '5000'});
-      }
-    );
+    if (!this.pattern_mobile.test(this.mobile)) {
+            this.toastr.error("Please enter valid mobile number", 'Error',[{toastLife: '2000'},{dismiss: 'click'},{maxShown:'1'}]);
+            this.mobile = '';
+      }else{
+        this.toastr.clearAllToasts();
+        this._demoService.customerExist(this.mobile).subscribe(
+          data => {
+            if(data != null && Object.keys(data).length<=0){
+              this.userEntry = true;
+            }else{
+              this.name = data[0].userName;
+              this.getPayablesData(this.mobile);
+            }
+          },
+          error => {
+            this.toastr.info("Could Not Fetch Data!! Try Again..",'Error',[{toastLife: '2000'},{dismiss: 'click'}]);
+          }
+        );
+  }
   }
 
   userDetails(name,mail,address){
     this._demoService.createUser({userName:this.userName,email:this.email,address:this.address,userMobile:this.mobile}).subscribe(
       data => {
         this.userEntry = false;
-        this.model = true;
       },
       error => {
         this.toastr.error("Could Not Save Data!! Try Again..",'Error',{toastLife: '5000'});
@@ -75,6 +81,7 @@ addNew;
   }
 
   getPayablesData(mobile){
+    this.model = true;
     this.billingService.getPayables(mobile).subscribe(data => {
       console.log('getPayablesData:'+ data)
       if(data != null && Object.keys(data).length>=0){

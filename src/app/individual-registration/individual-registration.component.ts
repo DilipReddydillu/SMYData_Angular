@@ -13,12 +13,12 @@ export class IndividualRegistrationComponent implements OnInit {
   public pattern_mobile = /([0-9]){10}/g;
   public pattern_password = /([0-9a-zA-Z]){6,20}/g;
   public model = {
-      "Name": "",
-      "mobile": "",
-      "password": "",
-      "email": "",
-      "role":"individual"
-    }
+       "userName": "",
+       "userMobile": "",
+       "password": "",
+       "email": "",
+       "role":"individual"
+     }
   constructor(  private toastr:ToastsManager,private _demoService: DataService, private router: Router) { }
 
   ngOnInit() {

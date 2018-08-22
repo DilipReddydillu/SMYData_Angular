@@ -34,6 +34,13 @@ export class DataService {
       this.indProfile.next(indprofile);
     }
 
+    private mobileVal = new BehaviorSubject<number>(null);
+    mobileTemp = this.mobileVal.asObservable();
+    changeMobile(mobileTemp: any) {
+      console.log('mobileTemp:'+mobileTemp);
+      this.mobileVal.next(mobileTemp);
+    }
+
     private userType = new BehaviorSubject<string>('');
     userTypeVal = this.userType.asObservable();
 
@@ -72,7 +79,7 @@ export class DataService {
     registerIndividual(data) {
         let body = JSON.stringify(data);
         console.log(data)
-        let url =  urlProvider + '/api/saveUser/registration';
+        let url =  urlProvider + '/api/saveCustomer';
         console.log(url)
         return this.http.post(url, body, httpOptions);
     }

@@ -3,7 +3,7 @@
    <h2>Payables</h2>
   </div>
 </div>
-<div class="row cstyle dataBox">
+<div class="row cstyle dataBox" *ngIf = "!model">
   <div class="col"> </div>
   <div class="col-md-5 col-sm-12">
     <div class="input-group col align-self-center" style="margin-top:50px" *ngIf='!userEntry'>
@@ -12,17 +12,17 @@
         <button class="btn btn-success fntcss" (click)="verifyUser()" type="button">Submit</button>
       </div>
     </div>
-    <form *ngIf='userEntry'>
+    <form *ngIf='userEntry' #userForm="ngForm">
       <div class="form-group">
         <label  class="col-form-label">Name</label>
         <div class="">
-          <input type="text" class="form-control form-control-sm usrInpt" name='username'  [(ngModel)]="userName" placeholder="Name">
+          <input type="text" required class="form-control form-control-sm usrInpt" name='username'  [(ngModel)]="userName" placeholder="Name">
         </div>
       </div>
       <div class="form-group">
-        <label for="colFormLabelSm" class="col-form-label">Email</label>
+        <label for="colFormLabelSm"  class="col-form-label">Email</label>
         <div class="">
-          <input type="email" class="form-control form-control-sm usrInpt" name='mail' [(ngModel)]='email' placeholder="Email">
+          <input type="email" required class="form-control form-control-sm usrInpt" name='mail' [(ngModel)]='email' placeholder="Email">
         </div>
       </div>
       <div class="form-group">
@@ -31,7 +31,7 @@
           <input type="text" class="form-control form-control-sm usrInpt" name='addr' [(ngModel)]='address'  placeholder="Address">
         </div>
       </div>
-      <button class="btn btn-success btn-block fntcss" type="button" (click)='userDetails(userName,email,address)' name="button">Submit</button>
+      <button class="btn btn-success btn-block fntcss" [disabled]="!userForm.form.valid" type="button" (click)='userDetails(userName,email,address)' name="button">Submit</button>
     </form>
   </div>
   <div class="col"></div>
@@ -43,7 +43,7 @@
       <h5>Name : {{name}}</h5>
       <h5>Mobile : {{mobile}}</h5>
     </div>
-    <div class="col-4 mt-2">
+    <div class="col-4 mt-2" *ngIf = "model">
       <h5>Balance Amount To Pay : {{model.balAmount}}</h5>
     </div>
   </div>
@@ -60,7 +60,7 @@
             <th scope="col">PayOff</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody *ngIf="model && model.paybleReceivables">
           <tr *ngFor="let data of model.paybleReceivables;let i = index">
             <td>{{i+1}}</td>
             <td>

@@ -1,15 +1,15 @@
 <nav class="navbar fixed-top bgColor">
-  <a class="navbar-brand" (click)="homePage()" routerLink="/">SMyData</a>
-  <span class="navbar-text">
-   <a class="nav-link" *ngIf="!showProfile || !indProfile">
-     <span class="" (click)="signInCall()">SignIn/Register</span>
+  <a class="navbar-brand">SMyData</a>
+  <span class="navbar-text" class="login">
+   <a class="nav-link" *ngIf="!showProfile && !indProfile">
+     <span  (click)="signInCall()">SignIn/Register</span>
    </a>
-   <a class="nav-link" *ngIf="showProfile && indProfile">
-     <span class=""(click)="logOut()">Logout</span>
+   <a class="nav-link" *ngIf="indProfile">
+     <span class="" (click)="logOut()"><a>Logout</a></span>
    </a>
     <li class="nav-item dropdown pr-4" *ngIf="showProfile" style="list-style:none;left:-35px;font-family: serif">
-       <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-         Deatils
+       <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown">
+         Profile
        </a>
        <div class="dropdown-menu" style="left:-80px;text-color:black" aria-labelledby="navbarDropdownMenuLink">
          <span class="dropdown-item" routerLink="/userData/myInfo">View Business</span>
@@ -22,11 +22,9 @@
 </nav>
 
 <div class="">
-<!-- <div class="" *ngIf="view != 'homePage'"> -->
-<div class="" *ngIf="view == 'homePage'">
+<div class="" *ngIf="view !== 'homePage'">
 <div class="jumbotron text-center imgBg">
   <h1>SMY DATA</h1>
-
 </div>
 
 <!-- Container (About Section) -->
@@ -94,10 +92,10 @@
     <!-- Wrapper for slides -->
     <div class="carousel-inner" role="listbox">
       <div class="item">
-        <h4>"Success usually comes to those who are too busy to be looking for it."<br><span>Dilip, Developer</span></h4>
+        <h4>"Success usually comes to those who are too busy to be looking for it."<br><span>Dani, Developer</span></h4>
       </div>
       <div class="item">
-        <h4>"The only limit to our realization of tomorrow will be our doubts of today.<br><span>Parthiya, Dev, Inc</span></h4>
+        <h4>"The only limit to our realization of tomorrow will be our doubts of today.<br><span>Mike, Dev, Inc</span></h4>
       </div>
       <div class="item active">
         <h4>"In order to succeed, your desire for success should be greater than your fear of failure."<br><span>Viswa, BU</span></h4>
@@ -136,13 +134,8 @@
   </div>
 </div>
 </div>
-<!-- <footer class="container-fluid text-center">
-
-</footer> -->
 </div>
 <hr>
-<div class="" *ngIf="view != 'homePage'" style="margin-top:65px;color:black">
-<!-- <div class="" *ngIf="view != 'homePage'" style="margin-top:65px;color:black"> -->
+<div class="" *ngIf="view == 'homePage'" style="margin-top:65px;color:black">
   <router-outlet></router-outlet>
 </div>
-<!-- Routed views go here -->

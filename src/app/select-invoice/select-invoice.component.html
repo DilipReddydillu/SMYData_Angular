@@ -12,17 +12,17 @@
         <button class="btn btn-success fntcss" (click)="verifyUser()" type="button">Submit</button>
       </div>
     </div>
-    <form *ngIf='userEntry'>
+    <form *ngIf='userEntry' #userForm="ngForm">
       <div class="form-group">
         <label  class="col-form-label">Name</label>
         <div class="">
-          <input type="text" class="form-control form-control-sm usrInpt" name='username'  [(ngModel)]="userName" placeholder="Name">
+          <input type="text" required class="form-control form-control-sm usrInpt" name='username'  [(ngModel)]="userName" placeholder="Name">
         </div>
       </div>
       <div class="form-group">
         <label for="colFormLabelSm" class="col-form-label">Email</label>
         <div class="">
-          <input type="email" class="form-control form-control-sm usrInpt" name='mail' [(ngModel)]='email' placeholder="Email">
+          <input type="email" required class="form-control form-control-sm usrInpt" name='mail' [(ngModel)]='email' placeholder="Email">
         </div>
       </div>
       <div class="form-group">
@@ -31,7 +31,7 @@
           <input type="text" class="form-control form-control-sm usrInpt" name='addr' [(ngModel)]='address'  placeholder="Address">
         </div>
       </div>
-      <button class="btn btn-success btn-block fntcss" type="button" (click)='userDetails(userName,email,address)' name="button">Submit</button>
+      <button class="btn btn-success btn-block fntcss" [disabled]="!userForm.form.valid" type="button" (click)='userDetails(userName,email,address)' name="button">Submit</button>
     </form>
   </div>
   <div class="col"></div>

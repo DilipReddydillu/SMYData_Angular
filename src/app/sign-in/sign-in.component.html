@@ -8,7 +8,7 @@
 			<div class="form-group">
 				<label for="name">Mobile</label>
 				<input type="text" class="form-control" id="mobile"
-               required (change)="validation()"
+               required (blur)="validation()"
                [(ngModel)]="model.mobile" name="mobile"
                #mobile="ngModel"/>
 				<div [hidden]="mobile.valid || mobile.pristine"
@@ -43,7 +43,7 @@
 		 <label><input #rememberVal type="checkbox" name="rememberMe" value="true" [(ngModel)]="rememberMe"> Remember Me</label>
 	 </div>
 	 <div class="col-5">
-		 <label class='forgotPwd' data-toggle="modal" data-target="#myModal">Forgot your password?</label>
+		 <label class='forgotPwd' data-toggle="modal" data-target="#myModal">Forgot Your Password?</label>
 	 </div>
  </div>
 </div>
@@ -67,7 +67,7 @@
 					<div class="form-group">
 						<label for="mobileNum">Enter Mobile Number:</label>
 						<input type="text" class="form-control" id="mobileNum"
-		               required  pattern="[0-9][0-9]{9}"
+		               required  pattern="[0-9]{10}"
 		               [(ngModel)]="mobileNumVal" name="mobileNum"
 		               #mobileNum="ngModel"/>
 						<div [hidden]="mobileNum.valid || mobileNum.pristine"

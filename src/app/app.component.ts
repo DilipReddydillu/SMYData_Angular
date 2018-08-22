@@ -23,7 +23,7 @@ export class AppComponent {
     }
        ngOnInit(): void {
          this._demoService.profile.subscribe(showProfile => this.showProfile = showProfile)
-         this._demoService.profile.subscribe(indProfile => this.indProfile = indProfile)
+         this._demoService.indprofile.subscribe(indProfile => this.indProfile = indProfile)
          this.allCookies = this.cookieService.getAll();
          console.log(this.allCookies);
          if(this.allCookies && this.allCookies.mobile){
@@ -38,13 +38,16 @@ export class AppComponent {
 
     logOut(){
       this._demoService.changeProfile(false);
+      this._demoService.changeindProfile(false);
+      this.view = 'homePage';
        this.showProfile = false;
        this.indProfile = false;
        this.cookieService.deleteAll();
+       this.router.navigate(['']);
     }
     homePage(){
-      this.view = 'homePage';
-      this.router.navigate(['/']);
+      //this.view = 'homePage';
+    //  this.router.navigate(['/']);
     }
 
 }

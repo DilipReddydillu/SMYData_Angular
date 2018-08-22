@@ -29,7 +29,7 @@ messageSource:number;
     showProfile;
     userType;
     validMobile = false;
-    public pattern_mobile = /([0-9]){10}/g;
+    public pattern_mobile = /^\d{10}$/;
 
 
     constructor(private _demoService: DataService, private router: Router, private cookieService: CookieService,  private toastr:ToastsManager) { }

@@ -1,19 +1,24 @@
-<div  *ngIf='!resetPwd' class="col-md-3 col-md-offset-4 otp-box signIn inbxTxt" >
+<div class="row justify-content-center" *ngIf='!resetPwd && !regSuccess'>
+<div class="cstyle">
   <form (ngSubmit)="verifyOtp(); otpVerify.reset()" #otpVerify="ngForm" class="otp-verify">
     <div *ngIf='invalidOtp' class="alert alert-danger" (click)="invalidOtp = false">
       <strong>Invalid OTP</strong>
     </div>
   <div class="form-group">
-    <label for="otp">Enter The One time password (OTP) that was sent to your mobile device:</label>
+    <label for="otp">Enter the one time password (OTP) that was sent to your mobile:</label>
     <input type="text" class="form-control" id="otp"
            required
            [(ngModel)]="otpValue" name="otp"
            #otp="ngModel"/>
   </div>
-  <button type="submit" class="btn btn-primary btn-md" >Submit</button>
-  <!-- <button type="submit" [disabled]='clicked' (click)="clicked = true" class="btn btn-primary btn-md" >Resend OTP</button> -->
+  <button type="submit" class="btn btn-success fntcss wd" >Submit</button>
+  <button (click)="sendOtp();invalidOtp=false" class="btn btn-primary fntcss" >Resend OTP</button>
   </form>
-
+</div>
+</div>
+<div class=" row justify-content-center m-3 alert alert-success" *ngIf='regSuccess'>
+  <strong>Your registration is successful !!&nbsp;&nbsp; </strong>
+   <span class="clickhere" (click)="successReg()"> Click here &nbsp;</span> to continue.
 </div>
 
 <div *ngIf='resetPwd' class="col-md-3 col-md-offset-4 reset-pswd signIn inbxTxt" id="resetPswd">
@@ -44,15 +49,12 @@
     </div>
   </div>
   <button  type="submit" class="btn btn-primary btn-md" [disabled]="!pwdReset.form.valid">Submit</button>
-
 </form>
 </div>
 
-<div class="container" *ngIf='successRegPopUp'>
-  <!-- Modal -->
+<!-- <div class="container" *ngIf='successRegPopUp'>
     <div class="modal show fade" id="myModalRegister" role="dialog" >
     <div class="modal-dialog">
-      <!-- Modal content-->
       <div class="modal-content">
 				<br><br>
         <div class="modal-body">
@@ -62,5 +64,4 @@
       </div>
     </div>
   </div>
-
-</div>
+</div> -->

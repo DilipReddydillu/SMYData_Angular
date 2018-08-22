@@ -3,9 +3,6 @@ import { DataService } from '../data.service';
 import {Router} from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 
-
-
-
 @Component({
   selector: 'app-otp-authentication',
   templateUrl: './otp-authentication.component.html',
@@ -23,20 +20,36 @@ export class OtpAuthenticationComponent {
   errMsg:string;
   mobile:any;
   successRegPopUp:boolean;
+  mobileNumber:number;
+  regSuccess:boolean;
+  userType:string;
 
-    constructor(private data: DataService, private router: Router,  private cookieService: CookieService) { }
+    constructor(private dataService: DataService, private router: Router,  private cookieService: CookieService) { }
   ngOnInit() {
     this.resetPwd = false;
-    this.data.cast.subscribe(messageSource => this.messageSource = messageSource)
+    this.dataService.cast.subscribe(messageSource => this.messageSource = messageSource)
+    this.dataService.mobileTemp.subscribe(mobileNum => this.mobileNumber = mobileNum)
+    this.dataService.userTypeVal.subscribe(userType => this.userType = userType)
     console.log('message::'+this.messageSource);
+  }
+  sendOtp(){
+      console.log('send otp:'+ this.mobileNumber)
+        this.dataService.sendOtp(this.mobileNumber).subscribe(
+           data => {
+             this.dataService.changeMessage(data+'Regi')
+           },
+           error => {
+           }
+        );
   }
 
   verifyOtp(){
-  this.data.cast.subscribe(messageSource => this.messageSource = messageSource)
+  this.dataService.cast.subscribe(messageSource => this.messageSource = messageSource)
   console.log('verifyOtp::'+this.messageSource);
   if(this.messageSource == (this.otpValue+'Regi')){
-    this.successRegPopUp = true;
-   this.router.navigate(['/', 'signIn']);
+    this.regSuccess = true;
+    //this.successRegPopUp = true;
+   //this.router.navigate(['/', 'signIn']);
   }else if(this.messageSource == this.otpValue){
     this.resetPwd = true;
   }else{
@@ -46,7 +59,7 @@ export class OtpAuthenticationComponent {
   resetPswd(){
     if (this.pwdValNew == this.pwdValCnf) {
       this.mobile = this.cookieService.get('resetPwdMobile');
-      this.data.resetpassword(this.pwdValNew,this.mobile).subscribe(
+      this.dataService.resetpassword(this.pwdValNew,this.mobile).subscribe(
          data => {
            this.router.navigate(['/', 'signIn']);
            return true;
@@ -61,5 +74,15 @@ export class OtpAuthenticationComponent {
       this.errMsg = 'Password Match error';
     }
   }
+
+  successReg(){
+    if (this.userType == 'business') {
+      this.dataService.changeProfile('true')
+      this.router.navigate(['/', 'userData']);
+    }else if(this.userType == 'individual'){
+      this.dataService.changeindProfile('true')
+      this.router.navigate(['/', 'individualDetails']);
+    }
+   }
 
 }
