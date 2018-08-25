@@ -1,17 +1,17 @@
 <nav class="navbar fixed-top bgColor">
   <a class="navbar-brand">SMyData</a>
-  <span class="navbar-text" class="login">
-   <a class="nav-link" *ngIf="!showProfile && !indProfile">
+  <span class="navbar-text" >
+   <a class="nav-link" *ngIf="!showProfile && !indProfile" class="login">
      <span  (click)="signInCall()">SignIn/Register</span>
    </a>
    <a class="nav-link" *ngIf="indProfile">
      <span class="" (click)="logOut()"><a>Logout</a></span>
    </a>
     <li class="nav-item dropdown pr-4" *ngIf="showProfile" style="list-style:none;left:-35px;font-family: serif">
-       <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown">
+       <a class="nav-link dropdown-toggle"   style="cursor:pointer" id="navbarDropdownMenuLink" data-toggle="dropdown">
          Profile
        </a>
-       <div class="dropdown-menu" style="left:-80px;text-color:black" aria-labelledby="navbarDropdownMenuLink">
+       <div class="dropdown-menu" style="left:-80px;text-color:black;cursor:pointer" aria-labelledby="navbarDropdownMenuLink">
          <span class="dropdown-item" routerLink="/userData/myInfo">View Business</span>
          <span class="dropdown-item" routerLink="/userData/addNew">Add Business</span>
          <span class="dropdown-item" routerLink="/userData/businessPlan">BusinessPlan</span><hr>
@@ -22,7 +22,7 @@
 </nav>
 
 <div class="">
-<div class="" *ngIf="view !== 'homePage'">
+<div class="" *ngIf="view == 'homePage'">
 <div class="jumbotron text-center imgBg">
   <h1>SMY DATA</h1>
 </div>
@@ -136,6 +136,7 @@
 </div>
 </div>
 <hr>
-<div class="" *ngIf="view == 'homePage'" style="margin-top:65px;color:black">
+<!-- <div class="" style="margin-top:65px;color:black"> -->
+<div class="" *ngIf="view != 'homePage'" style="margin-top:65px;color:black">
   <router-outlet></router-outlet>
 </div>

@@ -9,6 +9,8 @@ import {ToastModule} from 'ng5-toastr/ng5-toastr';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatTableModule,MatPaginatorModule } from '@angular/material';
 import {CdkTableModule} from '@angular/cdk/table';
+import {MatInputModule} from '@angular/material';
+
 
 import { AppComponent } from './app.component';
 import { SignupComponent } from './signup/signup.component';
@@ -101,6 +103,7 @@ const appRoutes: Routes = [
     MatTableModule,
     MatPaginatorModule,
     CdkTableModule,
+    MatInputModule,
     //ToasterModule,
     ToastModule.forRoot(),
     // MatButtonModule, MatCheckboxModule,

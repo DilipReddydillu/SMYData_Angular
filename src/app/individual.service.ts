@@ -2,11 +2,13 @@ import { Injectable, EventEmitter } from '@angular/core';
 //import {Observable} from 'rxjs/Observable';
 import {HttpClientModule, HttpClient, HttpHeaders} from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import {environment} from '../environments/environment';
 
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
-const urlProvider = window.location.origin;
+// const urlProvider = window.location.origin;
+const urlProvider = environment.url;
 
 
 @Injectable()

@@ -9,26 +9,16 @@ import { ToastsManager } from 'ng5-toastr/ng5-toastr';
   styleUrls: ['./select-invoice.component.css']
 })
 export class SelectInvoiceComponent implements OnInit {
-mobile;
-invoice;
-userEntry;
-userName;
-email;
-address;
-invoiceData;
-invoiceList;
-items;
-total;
-subTotal;
-rewards;
-discounts;
-BV;
-rewardPoints;
-credit;
-discountList;
+mobile;invoice;userEntry;
+userName;email;address;
+invoiceData;invoiceList;
+items;total;subTotal;
+rewards;discounts;
+BV;rewardPoints;
+credit;discountList;
 InvGen:boolean;
-gst;
-invoiceid;
+gst;invoiceid;
+totalPayable;totalReceivable
 public pattern_mobile = /^\d{10}$/;
 
   constructor(private _demoService: DataService,private _billingService: BillingService,private toastr:ToastsManager) {
@@ -52,18 +42,17 @@ public pattern_mobile = /^\d{10}$/;
   deleteRow(index){
     this.invoiceList.splice(index,1);
   };
-  calcTotal(r){
-    console.log('inn')
+  calcTotal(){
       this.total = this.subTotal = 0;
-    this.invoiceList.forEach(value => {
+      this.invoiceList.forEach(value => {
       if(value.rate != null && value.quantity !=null){
       this.subTotal += value.rate * value.quantity;
     };
     });
+    this.applyDiscount(this.discountList,this.total);
     this.total = this.subTotal - this.rewards - (this.subTotal * ((this.discounts)/100));
     this.total = this.total + (this.total * (this.gst/100));
 
-    this.applyDiscount(this.discountList,this.total);
   }
   applyDiscount(data,total){
     if(data && data.length > 0){
@@ -75,6 +64,7 @@ public pattern_mobile = /^\d{10}$/;
     }
   }
   verifyUser(){
+    this._demoService.changeCustomerMobile(this.mobile);
     if (!this.pattern_mobile.test(this.mobile)) {
             this.toastr.error("Please enter valid mobile number", 'Error',[{toastLife: '2000'},{dismiss: 'click'},{maxShown:'1'}]);
             this.mobile = '';
@@ -92,6 +82,8 @@ public pattern_mobile = /^\d{10}$/;
          this.BV = data[0].businessVolume;
          this.rewardPoints = data[0].rewardPoints;
          this.discountList = data[0].discounts;
+         this.totalPayable = data[0].totalPayable;
+         this.totalReceivable = data[0].totalReceivable;
        }
        },
        error => {
@@ -114,6 +106,8 @@ public pattern_mobile = /^\d{10}$/;
          this.BV = data[0].businessVolume;
          this.rewardPoints = data[0].rewardPoints;
          this.discountList = data[0].discounts;
+         this.totalPayable = data[0].totalPayable;
+         this.totalReceivable = data[0].totalReceivable;
        },
        error => {
          console.log('failed to add');

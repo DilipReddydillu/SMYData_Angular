@@ -41,18 +41,20 @@
 <!--generated invoice  -->
 <div class="invoiceCreation container" >
   <div class="row">
-    <div class="col-sm" [hidden]='InvGen'>
+    <div class="col-sm">
       <h5>{{userName | uppercase}}</h5>
       <h5>{{mobile}}</h5>
       <h5>{{email}}</h5>
       <h5>{{address}}</h5>
     </div>
-    <div class="col-sm">
+    <div class="col-sm" >
       <img src={{imageUrl()}}  style="width:100px;height:100px;border-radius:50px">
     </div>
-    <div class="col-sm" [hidden]='InvGen'>
+    <div class="col-sm" >
       <h5>Total BV = {{BV}}</h5>
       <h5>Total Points = {{rewardPoints}}</h5>
+      <h5>Total Payables = {{totalPayable}}</h5>
+      <h5>Total Receivables = {{totalReceivable}}</h5>
     </div>
   </div><br>
   <div class="row">
@@ -65,7 +67,7 @@
         <th>Quantity</th>
         <th>Rate</th>
         <th>Total Amount</th>
-        <th>
+        <th [hidden]='InvGen'>
           <button type="button"  (click)='addRow(0)' class="btn btn-success btn-sm">
           <span>+</span>
           </button>
@@ -93,7 +95,7 @@
           <input class="tablecss" readonly value="{{invoiceList[i].rate  * invoiceList[i].quantity | currency:'RS '}}"  [disabled]='InvGen'>
         </td>
         <td *ngIf='!firstEl'  [hidden]='InvGen'>
-          <button type="button"   (click)='deleteRow(i)' class="btn btn-danger btn-sm">
+          <button type="button"   (click)='deleteRow(i);calcTotal()' class="btn btn-danger btn-sm">
             <span>-</span>
           </button>
         </td>
@@ -107,7 +109,7 @@
   <div class="col-md-4 col-sm-6">
     <h5>Discount : <input  class="fixWidth"  (blur)='calcTotal()' [(ngModel)]='discounts' [disabled]='InvGen' />%</h5>
     <h5>Rewards : <input   class="fixWidth"  (blur)='calcTotal()' [(ngModel)]='rewards' [disabled]='InvGen' /></h5>
-    <h5>Credit : <input  class="fixWidth"  [(ngModel)]='credit'  [disabled]='InvGen' style="margin-left:19px;"/></h5>
+    <h5>Credit : <input  class="fixWidth" (blur)='calcTotal()' [(ngModel)]='credit'   [disabled]='InvGen' style="margin-left:19px;"/></h5>
   </div>
   <div class="col-md-4">
   </div>
@@ -115,7 +117,7 @@
     <h5>SubTotal :<span class="mrglv" style="margin-left:0px"> {{subTotal}}</span></h5>
     <h5>GST :<span class="mrglv" style="margin-left:34px"> <input class="fixWidth"  (blur)='calcTotal()' [(ngModel)]='gst' [disabled]='InvGen' />%</span></h5>
     <h5>Total :<span class="mrglv" style="margin-left:32px"> {{total}}</span></h5>
-    <h5>Paid :<span class="mrglv" style="margin-left:37px"> {{total - credit}}</span></h5>
+    <h5>Paid :<span class="mrglv" style="margin-left:37px"> {{total - credit | number}}</span></h5>
   </div>
 </div>
 <div class="row">

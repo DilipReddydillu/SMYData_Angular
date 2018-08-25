@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataService } from '../data.service';
 import { BillingService } from '../billing.service';
 import { ToastsManager } from 'ng5-toastr/ng5-toastr';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 
 
 @Component({
@@ -21,112 +22,75 @@ address;
 newPayable;
 model;
 addNew;
-public pattern_mobile = /^\d{10}$/;
+customerMobile;
+
+dataSource: MatTableDataSource<any>;
+displayedColumns = ['invoice','date','amount','payoff'];
+@ViewChild(MatPaginator) paginator: MatPaginator;
+@ViewChild(MatSort) sort: MatSort;
 
   constructor(private _demoService: DataService,private billingService: BillingService,private toastr:ToastsManager) {
     this.newPayable={invoiceNumber:'',amount:'',desc:'',mobile:''};
   }
-
   ngOnInit() {
+    this._demoService.tempCustomerMobile.subscribe(customerMobile => this.customerMobile = customerMobile)
+    this.getPayablesData();
   }
-  verifyUser(){
-    if (!this.pattern_mobile.test(this.mobile)) {
-            this.toastr.error("Please enter valid mobile number", 'Error',[{toastLife: '2000'},{dismiss: 'click'},{maxShown:'1'}]);
-            this.mobile = '';
-      }else{
-        this.toastr.clearAllToasts();
-        this._demoService.customerExist(this.mobile).subscribe(
-          data => {
-            if(data != null && Object.keys(data).length<=0){
-              this.userEntry = true;
-            }else{
-              this.name = data[0].userName;
-              this.getPayablesData(this.mobile);
-            }
-          },
-          error => {
-            this.toastr.info("Could Not Fetch Data!! Try Again..",'Error',[{toastLife: '2000'},{dismiss: 'click'}]);
-          }
-        );
-  }
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
   }
 
-  userDetails(name,mail,address){
-    this._demoService.createUser({userName:this.userName,email:this.email,address:this.address,userMobile:this.mobile}).subscribe(
-      data => {
-        this.userEntry = false;
-      },
-      error => {
-        this.toastr.error("Could Not Save Data!! Try Again..",'Error',{toastLife: '5000'});
-      }
-    );
-  }
-
-  receiveAmount(data){
-    let dataList = [];
-    data.mobile = this.mobile;
-    dataList.push(data);
-    console.log(data)
-    this.billingService.postReceivedAmount(data).subscribe(data => {
-      if(data != null && Object.keys(data).length>=0){
-        this.toastr.success("",'Success',{toastLife: '5000'});
-         this.model = data[0];
-      }else{
-        this.toastr.error("No Records Found",'Error',{toastLife: '5000'});
-       }
-    },
-    error => {
-      this.toastr.error("Could Not Save Data!! Try Again..",'Error',{toastLife: '5000'});
-    })
-  }
-
-  getPayablesData(mobile){
+  getPayablesData(){
     this.model = true;
-    this.billingService.getPayables(mobile).subscribe(data => {
-      console.log('getPayablesData:'+ data)
+    this.billingService.getPayables().subscribe(data => {
+      console.log('getPayablesData:'+ JSON.stringify(data))
       if(data != null && Object.keys(data).length>=0){
-         this.model = data[0];
+         let dataObj = data[0]['paybleReceivables'];
+         console.log(dataObj)
+         this.dataSource = new MatTableDataSource(dataObj);
+         this.applyFilter(this.customerMobile);
+         if(data[0] == null)
+         this.model = true;
       }else{
-        this.toastr.error("No Records Found",'Error',{toastLife: '5000'});
+        this.toastr.error("No Records Found",'Error',{toastLife: '3000'});
        }
     },
     error => {
-      this.toastr.error("Could Not Fetch Data!! Try Again..",'Error',{toastLife: '5000'});
+      this.toastr.error("Could Not Fetch Data!! Try Again..",'Error',{toastLife: '3000'});
     })
   };
 
   payAmount(data){
-    let dataList = [];
-    data.mobile = this.mobile;
-    dataList.push(data);
     console.log(data)
-    this.billingService.postPayOffAmount(dataList).subscribe(data => {
+    this.billingService.postPayOffAmount(data).subscribe(data => {
       if(data != null && Object.keys(data).length>=0){
-        this.toastr.success("",'Success',{toastLife: '5000'});
-         this.model = data[0];
+        this.toastr.success("",'Success',{toastLife: '3000'});
+        this.getPayablesData()
       }else{
-        this.toastr.error("Something Went Wrong, Please Try Again ",'Error',{toastLife: '5000'});
+        this.toastr.error("Something Went Wrong, Please Try Again ",'Error',{toastLife: '3000'});
        }
     },
     error => {
-      this.toastr.error("Could Not Save Data!! Try Again..",'Error',{toastLife: '5000'});
+      this.toastr.error("Could Not Save Data!! Try Again..",'Error',{toastLife: '3000'});
     })
   }
 
   addPayable(data){
-    let dataList = [];
-    data.mobile = this.mobile;
-    dataList.push(data)
     console.log(data)
-    this.billingService.addPayables(dataList).subscribe(data => {
+    this.billingService.addPayables(data).subscribe(data => {
         this.newPayable = {};
          if(data != null && Object.keys(data).length>=0){
-      this.toastr.success("Saved successfully",'Success',{toastLife: '5000'});
-         this.model = data[0];
+           this.toastr.success("Saved successfully",'Success',{toastLife: '3000'});
+           this.getPayablesData();
       }
+      this.addNew = false;
     },
     error => {
-      this.toastr.error("Could Not Save Data!! Try Again..",'Error',{toastLife: '5000'});
+      this.addNew = false;
+      this.newPayable = {};
+      this.toastr.error("Could Not Save Data!! Try Again..",'Error',{toastLife: '3000'});
     })
   }
 

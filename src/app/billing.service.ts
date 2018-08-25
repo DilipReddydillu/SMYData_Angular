@@ -1,11 +1,13 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import {HttpClientModule, HttpClient, HttpHeaders} from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import {environment} from '../environments/environment';
 
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
-const urlProvider = window.location.origin;
+// const urlProvider = window.location.origin;
+const urlProvider = environment.url;
 
 
 @Injectable()
@@ -49,11 +51,10 @@ getReward(){
   }
 
   // Receivables Service calls....
-    getReceivables(mobile){
+    getReceivables(){
     console.log('insideService:getReceivables')
-    console.log("mobile:"+mobile);
-    let url = urlProvider +'/api/getPayables/receivable/'+mobile;
-    return this.http.get(url,mobile)
+    let url = urlProvider +'/api/getPayables/receivable';
+    return this.http.get(url)
   }
   postReceivedAmount(data){
     console.log('insideService:postReceivedAmount')
@@ -71,11 +72,10 @@ getReward(){
   }
 
 // Payables Service calls....
-  getPayables(mobile){
+  getPayables(){
   console.log('insideService:getPayables')
-  console.log("mobile:"+mobile);
-  let url = urlProvider +'/api/getPayables/payable/'+mobile;
-  return this.http.get(url,mobile)
+  let url = urlProvider +'/api/getPayables/payable';
+  return this.http.get(url)
 }
   postPayOffAmount(data){
   console.log('insideService:postpayoffAmount')

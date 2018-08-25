@@ -278,7 +278,6 @@ export class SignupComponent {
       console.log("mobile:"+mobileNum)
       this._demoService.doesUserExist({'mobile':mobileNum}).subscribe(
          data => {
-           console.log("hehehe")
            if (data) {
              console.log("data:"+data)
              this.model.mobile = null;

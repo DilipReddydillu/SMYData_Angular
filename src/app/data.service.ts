@@ -2,14 +2,15 @@ import { Injectable, EventEmitter } from '@angular/core';
 //import {Observable} from 'rxjs/Observable';
 import {HttpClientModule, HttpClient, HttpHeaders} from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-
+import {environment} from '../environments/environment';
 
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
-const urlProvider = window.location.origin;
+//const urlProvider = window.location.origin;
+const urlProvider = environment.url;
 const key = 'AIzaSyBFcZOIYqk_s0-qilRmve1TjMCXhYxUP3c';
-
+console.log(environment)
 @Injectable()
 export class DataService {
 
@@ -43,10 +44,16 @@ export class DataService {
 
     private userType = new BehaviorSubject<string>('');
     userTypeVal = this.userType.asObservable();
-
      changeUserType(value: any) {
        console.log('userType:'+value);
        this.userType.next(value);
+     }
+
+    private customerMobile = new BehaviorSubject<string>('');
+    tempCustomerMobile = this.customerMobile.asObservable();
+     changeCustomerMobile(value: any) {
+       console.log('customerMobile:'+value);
+       this.customerMobile.next(value);
      }
 
      changeProfile(profile: any) {
