@@ -114,9 +114,9 @@
   <div class="col-md-4">
   </div>
   <div class="col-md-4 col-sm-6">
-    <h5>SubTotal :<span class="mrglv" style="margin-left:0px"> {{subTotal}}</span></h5>
+    <h5>SubTotal :<span class="mrglv" style="margin-left:0px"> {{subTotal | number}}</span></h5>
     <h5>GST :<span class="mrglv" style="margin-left:34px"> <input class="fixWidth"  (blur)='calcTotal()' [(ngModel)]='gst' [disabled]='InvGen' />%</span></h5>
-    <h5>Total :<span class="mrglv" style="margin-left:32px"> {{total}}</span></h5>
+    <h5>Total :<span class="mrglv" style="margin-left:32px"> {{total | number}}</span></h5>
     <h5>Paid :<span class="mrglv" style="margin-left:37px"> {{total - credit | number}}</span></h5>
   </div>
 </div>

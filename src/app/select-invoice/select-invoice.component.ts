@@ -50,17 +50,20 @@ public pattern_mobile = /^\d{10}$/;
       if(value.rate != null && value.quantity !=null){
       this.subTotal += value.rate * value.quantity;
       this.applyDiscount(this.discountList,this.subTotal);
-    };
+    }else{
+      this.subTotal = 0;
+    }
     });
     this.total = this.subTotal - this.rewards - (this.subTotal * ((this.discounts)/100));
     this.total = this.total + (this.total * (this.gst/100));
 
   }
   applyDiscount(data,subTotal){
+    this.discounts = 0;
     if(data && data.length > 0){
       data.forEach(val => {
-        if(subTotal <= val.maxAmount && subTotal >= val.minAmount){
-          this.discounts = val.discount;
+        if((subTotal <= val.maxAmount && subTotal >= val.minAmount) || subTotal > val.minAmount){
+          this.discounts = this.discounts < val.discount ? val.discount : this.discounts;
         }
       });
     }

@@ -50,15 +50,18 @@ displayedColumns = ['invoice','mobile','date','amount','receive'];
     this.billingService.getReceivables().subscribe(data => {
       console.log(data)
       if(data != null && Object.keys(data).length>=0){
-        if(data[0]['paybleReceivables'].length > 0){
+        if(data[0] && data[0]['paybleReceivables'].length > 0){
         let dataObj  = data[0]['paybleReceivables'];
         this.dataSource = new MatTableDataSource(dataObj);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
         this.applyFilter(this.customerMobile);
+      }else{
+        this.dataSource = new MatTableDataSource([]);
       }
       }else{
-        this.toastr.error("No Records Found",'Error',{toastLife: '3000'});
+        this.dataSource = new MatTableDataSource([]);
+        this.toastr.info("No Records Found",'Info',{toastLife: '3000'});
        }
     },
     error => {
@@ -70,12 +73,13 @@ displayedColumns = ['invoice','mobile','date','amount','receive'];
     let arrList = [data];
     console.log(arrList)
     this.billingService.postReceivedAmount(arrList).subscribe(data => {
-      if(data != null && Object.keys(data).length>=0){
-        this.customerMobile = "";
-        this.getReceivablesData();
+      this.customerMobile = "";
+      if(data){
         this.toastr.success("",'Success',{toastLife: '3000'});
+        this.getReceivablesData();
       }else{
-        this.toastr.error("No Records Found",'Error',{toastLife: '3000'});
+        this.getReceivablesData();
+        this.toastr.info("No Records Found",'Info',{toastLife: '3000'});
        }
     },
     error => {
@@ -86,14 +90,16 @@ displayedColumns = ['invoice','mobile','date','amount','receive'];
   addReceivable(data){
     let arrList =[data]
     console.log(arrList)
+    this.customerMobile = "";
     this.billingService.addReceivables(arrList).subscribe(data => {
         this.newReceivable = {};
         if(data != null && Object.keys(data).length>=0){
           this.toastr.success("Saved successfully",'Success',{toastLife: '3000'});
-          this.customerMobile = "";
           this.getReceivablesData();
+     }else{
+       this.getReceivablesData();
      }
-        this.addNew = false;
+     this.addNew = false;
     },
     error => {
       this.addNew = false;
