@@ -13,7 +13,7 @@
      <input type="date"  [(ngModel)]='endDate'/></div>
   </div>
 <div class="row cstyle">
-  <div class="col-md-2" >
+  <div class="col-md-2 listPosition" >
     <div class="list-group">
       <button type="button" class="list-group-item list-group-item-action font-weight-bold font-italic" (click)="request('getUserDetails','report')">Customer List</button>
       <button type="button" class="list-group-item list-group-item-action font-weight-bold font-italic" (click)="request('getTopCustomer','topCustomer')">Top Customer's
@@ -24,92 +24,91 @@
       <button type="button" class="list-group-item list-group-item-action font-weight-bold font-italic" (click)="request('getTickets','tickets')">Raised Tickets</button>
     </div>
   </div>
-  <div class="col-md-10 tableFlow">
-  <div class="example-header">
+  <div class="col-md-10">
+  <div class="" *ngIf="displayedColumns">
   <mat-form-field>
     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
   </mat-form-field>
 </div>
-    <div class="example-container mat-elevation-z8">
-      <mat-table [dataSource]="dataSource" matSort *ngIf="displayedColumns">
-
+    <div class="example-container mat-elevation-z8" *ngIf="displayedColumns">
+      <mat-table [dataSource]="dataSource" matSort >
         <!-- Invoice Column -->
         <ng-container matColumnDef="invoice" *ngIf="rowCheck('invoice')">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Invoice Id</mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header class="headerTble"> Invoice Id</mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.invoiceNumber}} </mat-cell>
         </ng-container>
 
         <!-- Invoice Column -->
         <ng-container matColumnDef="invoiceId" *ngIf="rowCheck('invoiceId')">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Invoice Id</mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header class="headerTble"> Invoice Id</mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.invId}} </mat-cell>
         </ng-container>
 
         <!-- Name Column -->
         <ng-container matColumnDef="name"  *ngIf="rowCheck('name')">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header class="headerTble"> Name </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.userName}} </mat-cell>
         </ng-container>
 
         <!-- Mobile Column -->
         <ng-container matColumnDef="userMobile" *ngIf="rowCheck('userMobile')">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Mobile </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header class="headerTble"> Mobile </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.userMobile}} </mat-cell>
         </ng-container>
 
         <!-- Mobile Column -->
         <ng-container matColumnDef="mobile" *ngIf="rowCheck('mobile')">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Mobile </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header class="headerTble"> Mobile </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.mobile}} </mat-cell>
         </ng-container>
 
         <!-- Email Column -->
         <ng-container matColumnDef="email" *ngIf="rowCheck('email')">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Email </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header class="headerTble"> Email </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.email}} </mat-cell>
         </ng-container>
 
         <!-- BV Column -->
         <ng-container matColumnDef="bv" *ngIf="rowCheck('bv')">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> BV </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header class="headerTble"> BV </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.bv}} </mat-cell>
         </ng-container>
 
         <!-- Amount Column -->
         <ng-container matColumnDef="amount" *ngIf="rowCheck('amount')">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Amount </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header class="headerTble"> Amount </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.amount}} </mat-cell>
         </ng-container>
 
         <!-- Total Column -->
         <ng-container matColumnDef="total" *ngIf="rowCheck('total')">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Total </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header class="headerTble"> Total </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.total|number}} </mat-cell>
         </ng-container>
 
         <!-- ticketId Column -->
         <ng-container matColumnDef="ticketId" *ngIf="rowCheck('ticketId')">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Ticket ID </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header class="headerTble"> Ticket ID </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.ticketId}} </mat-cell>
         </ng-container>
         <!-- Subject Column -->
         <ng-container matColumnDef="subject" *ngIf="rowCheck('subject')">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Subject </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header class="headerTble"> Subject </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.subject}} </mat-cell>
         </ng-container>
         <!-- Description Column -->
         <ng-container matColumnDef="description" *ngIf="rowCheck('description')">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Description </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header class="headerTble"> Description </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.description}} </mat-cell>
         </ng-container>
         <!-- Date Column -->
         <ng-container matColumnDef="createDate" *ngIf="rowCheck('createDate')">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Created Date </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header class="headerTble"> Created Date </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.createDate}} </mat-cell>
         </ng-container>
 
 
-        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-header-row *matHeaderRowDef="displayedColumns" class="headerCss"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns;">
         </mat-row>
       </mat-table>

@@ -1,23 +1,23 @@
+
+.imgBg{
+  background-image: url('https://i.ytimg.com/vi/9MjVs8XjJoI/maxresdefault.jpg');
+  background-repeat: no-repeat;
+  height: 700px;
+  margin-bottom: 0px;
+}
 .bgColor{
   background-color: #563d7c !important;
 }
-.logoStyle{
-  cursor: pointer;
-  font-size: 2rem;
-}
 .login{
   cursor: pointer;
+}
+.homePage{
+  margin-top: -20px;
 }
 .login:hover{
   font-size: 0.9rem;
   text-decoration: underline;
   transition: 0.2s;
-}
-.navRight{
-  font-size: 1rem;
-}
-.renderPage{
-  margin-top: 80px;
 }
 h2 {
     font-size: 24px;
@@ -126,12 +126,11 @@ h4 {
     background-color: #1abc9c;
     z-index: 9999;
     border: 0;
-    color: white;
     font-size: 12px !important;
     line-height: 1.42857143 !important;
     letter-spacing: 4px;
     border-radius: 0;
-    font-family: serif;
+    font-family: Montserrat, sans-serif;
 }
 .navbar li a, .navbar .navbar-brand {
     color: #fff !important;

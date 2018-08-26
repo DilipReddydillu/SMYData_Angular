@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
 import {Router} from '@angular/router';
-
+import {FormControl} from '@angular/forms';
+import {TooltipPosition} from '@angular/material';
 
 @Component({
   selector: 'app-select-login-type',

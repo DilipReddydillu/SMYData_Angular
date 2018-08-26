@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {BillingService} from '../billing.service';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-discounts',
@@ -8,10 +9,11 @@ import {BillingService} from '../billing.service';
 })
 export class DiscountsComponent implements OnInit {
 
-  constructor(private _billingService: BillingService) { }
+  constructor(private _billingService: BillingService, private dataService:DataService) { }
 
   ngOnInit() {
     this.getDiscount();
+    this.dataService.changebuPlanCss("55");
   }
 
   isDataExist:boolean = false;

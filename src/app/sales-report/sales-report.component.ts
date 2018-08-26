@@ -34,6 +34,7 @@ objData = {
 
 constructor(private _demoService: DataService,private toastr:ToastsManager) {}
   ngOnInit() {
+    this._demoService.changebuPlanCss("0");
   }
   ngAfterViewInit() {
 }

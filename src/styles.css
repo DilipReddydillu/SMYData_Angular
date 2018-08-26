@@ -14,7 +14,7 @@ body{
   /* background-color: #1AC2A1; /* Green */
   background-color: #CCECFF; /* lightcrm */
   /* background-color: #1abc9c; /* Green */
-  color: #ffffff;
+  color: black;
   font-family: serif;
 }
 h1, h2, h3, h4, h5, h6, a{
@@ -42,9 +42,20 @@ h1{
   min-height: 355px;
 }
 .tableFlow{
-  max-height: 300px;
+  max-height: 450px;
   overflow: auto;
 }
 .fntcss{
   font-size: 1.5rem;
+}
+.headerTble{
+  font-size: x-large;
+  font-family: serif;
+  color: #FFF;
+}
+.headerCss{
+  background-color: #000;
+}
+.cursr{
+  cursor: pointer;
 }

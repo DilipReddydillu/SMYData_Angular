@@ -78,7 +78,7 @@ export class OtpAuthenticationComponent {
   successReg(){
     if (this.userType == 'business') {
       this.dataService.changeProfile('true')
-      this.router.navigate(['/', 'userData']);
+      this.router.navigate(['/', 'signIn']);
     }else if(this.userType == 'individual'){
       this.dataService.changeindProfile('true')
       this.router.navigate(['/', 'individualDetails']);

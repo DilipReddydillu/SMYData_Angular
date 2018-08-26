@@ -36,39 +36,42 @@ import { IndividualDetailsComponent } from './individual-details/individual-deta
 import { IndividualReceivablesComponent } from './individual-receivables/individual-receivables.component';
 import { IndividualPayablesComponent } from './individual-payables/individual-payables.component';
 import { IndividualReportsComponent } from './individual-reports/individual-reports.component';
+import { LandingPageComponent } from './landing-page/landing-page.component';
 
+import { AuthGuard } from './auth-guard/auth-guard';
 
 
 
 const appRoutes: Routes = [
+  { path: 'home', component: LandingPageComponent },
   { path: 'select', component: SelectLoginTypeComponent },
-  { path: 'signIn', component: SignInComponent },
+  { path: 'signIn', component: SignInComponent},
   { path: 'signUp', component: SignupComponent },
   { path: 'IndividualReg', component: IndividualRegistrationComponent },
-  { path: 'individualDetails', component: IndividualDetailsComponent,
+  { path: 'individualDetails', component: IndividualDetailsComponent , canActivate: [AuthGuard],
   children: [
     {path: 'payables', component: IndividualPayablesComponent},
     {path: 'receivables', component: IndividualReceivablesComponent},
     {path: 'reports', component: IndividualReportsComponent},
   ]
 },
-{path: 'salesReport', component: SalesReportComponent},
-  { path: 'userData', component: UserDataComponent,
+{path: 'salesReport', component: SalesReportComponent, canActivate: [AuthGuard]},
+  { path: 'userData', component: UserDataComponent, canActivate: [AuthGuard],
     children: [
-      {path: 'invoice', component: SelectInvoiceComponent},
-      {path: 'payables', component: PayablesComponent},
-      {path: 'receivables', component: ReceivablesComponent},
-      {path: 'salesReport', component: SalesReportComponent},
-      {path: 'raiseTicket', component: RaiseTicketComponent},
-      {path: 'discounts', component: DiscountsComponent},
-      {path: 'invoiceTemplate', component: InvoiceComponent},
-      {path: 'businessPlan', component: RewardsComponent},
-      {path: 'myInfo', component: SignupComponent},
-      {path: 'addNew', component: SignupComponent},
+      {path: 'invoice', component: SelectInvoiceComponent, canActivate: [AuthGuard]},
+      {path: 'payables', component: PayablesComponent, canActivate: [AuthGuard]},
+      {path: 'receivables', component: ReceivablesComponent, canActivate: [AuthGuard]},
+      {path: 'salesReport', component: SalesReportComponent, canActivate: [AuthGuard]},
+      {path: 'raiseTicket', component: RaiseTicketComponent, canActivate: [AuthGuard]},
+      {path: 'discounts', component: DiscountsComponent, canActivate: [AuthGuard]},
+      {path: 'invoiceTemplate', component: InvoiceComponent, canActivate: [AuthGuard]},
+      {path: 'businessPlan', component: RewardsComponent, canActivate: [AuthGuard]},
+      {path: 'myInfo', component: SignupComponent, canActivate: [AuthGuard]},
+      {path: 'addNew', component: SignupComponent, canActivate: [AuthGuard]},
     ]},
   { path: 'otpVerification', component: OtpAuthenticationComponent },
   { path: '',
-    redirectTo: '/',
+    redirectTo: 'home',
     pathMatch: 'full'
   }
 ];
@@ -93,7 +96,8 @@ const appRoutes: Routes = [
     IndividualDetailsComponent,
     IndividualReceivablesComponent,
     IndividualPayablesComponent,
-    IndividualReportsComponent
+    IndividualReportsComponent,
+    LandingPageComponent
   ],
   imports: [
     BrowserModule,
@@ -112,7 +116,7 @@ const appRoutes: Routes = [
       { enableTracing: true } // <-- debugging purposes only
     )
   ],
-  providers: [CookieService, DataService, BillingService,IndividualService],
+  providers: [CookieService, DataService, BillingService,IndividualService,AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

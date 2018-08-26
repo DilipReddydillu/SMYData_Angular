@@ -25,7 +25,7 @@ addNew;
 customerMobile;
 
 dataSource: MatTableDataSource<any>;
-displayedColumns = ['invoice','date','amount','payoff'];
+displayedColumns = ['invoice','mobile','date','amount','payoff'];
 @ViewChild(MatPaginator) paginator: MatPaginator;
 @ViewChild(MatSort) sort: MatSort;
 
@@ -33,6 +33,7 @@ displayedColumns = ['invoice','date','amount','payoff'];
     this.newPayable={invoiceNumber:'',amount:'',desc:'',mobile:''};
   }
   ngOnInit() {
+    this._demoService.changebuPlanCss("0");
     this._demoService.tempCustomerMobile.subscribe(customerMobile => this.customerMobile = customerMobile)
     this.getPayablesData();
   }
@@ -46,13 +47,15 @@ displayedColumns = ['invoice','date','amount','payoff'];
     this.model = true;
     this.billingService.getPayables().subscribe(data => {
       console.log('getPayablesData:'+ JSON.stringify(data))
-      if(data != null && Object.keys(data).length>=0){
+      if(data != null){
+        if(data[0]['paybleReceivables'].length > 0){
          let dataObj = data[0]['paybleReceivables'];
          console.log(dataObj)
          this.dataSource = new MatTableDataSource(dataObj);
+         this.dataSource.paginator = this.paginator;
+         this.dataSource.sort = this.sort;
          this.applyFilter(this.customerMobile);
-         if(data[0] == null)
-         this.model = true;
+       }
       }else{
         this.toastr.error("No Records Found",'Error',{toastLife: '3000'});
        }
@@ -63,8 +66,9 @@ displayedColumns = ['invoice','date','amount','payoff'];
   };
 
   payAmount(data){
-    console.log(data)
-    this.billingService.postPayOffAmount(data).subscribe(data => {
+    let arrList = [data]
+    console.log(arrList)
+    this.billingService.postPayOffAmount(arrList).subscribe(data => {
       if(data != null && Object.keys(data).length>=0){
         this.toastr.success("",'Success',{toastLife: '3000'});
         this.getPayablesData()
@@ -78,8 +82,9 @@ displayedColumns = ['invoice','date','amount','payoff'];
   }
 
   addPayable(data){
-    console.log(data)
-    this.billingService.addPayables(data).subscribe(data => {
+    let arrList = [data];
+    console.log(arrList)
+    this.billingService.addPayables(arrList).subscribe(data => {
         this.newPayable = {};
          if(data != null && Object.keys(data).length>=0){
            this.toastr.success("Saved successfully",'Success',{toastLife: '3000'});

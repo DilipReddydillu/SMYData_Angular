@@ -25,12 +25,13 @@ newReceivable ={};
 
 
 dataSource: MatTableDataSource<any>;
-displayedColumns = ['invoice','date','amount','receive'];
+displayedColumns = ['invoice','mobile','date','amount','receive'];
 @ViewChild(MatPaginator) paginator: MatPaginator;
 @ViewChild(MatSort) sort: MatSort;
 
   constructor(private _demoService: DataService,private billingService: BillingService,private toastr:ToastsManager) {
     this.newReceivable={};
+    this._demoService.changebuPlanCss("0");
    }
 
   ngOnInit() {
@@ -49,9 +50,13 @@ displayedColumns = ['invoice','date','amount','receive'];
     this.billingService.getReceivables().subscribe(data => {
       console.log(data)
       if(data != null && Object.keys(data).length>=0){
+        if(data[0]['paybleReceivables'].length > 0){
         let dataObj  = data[0]['paybleReceivables'];
         this.dataSource = new MatTableDataSource(dataObj);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
         this.applyFilter(this.customerMobile);
+      }
       }else{
         this.toastr.error("No Records Found",'Error',{toastLife: '3000'});
        }
@@ -62,8 +67,9 @@ displayedColumns = ['invoice','date','amount','receive'];
   }
 
   receiveAmount(data){
-    console.log(data)
-    this.billingService.postReceivedAmount(data).subscribe(data => {
+    let arrList = [data];
+    console.log(arrList)
+    this.billingService.postReceivedAmount(arrList).subscribe(data => {
       if(data != null && Object.keys(data).length>=0){
         this.getReceivablesData();
         this.toastr.success("",'Success',{toastLife: '3000'});
@@ -77,8 +83,9 @@ displayedColumns = ['invoice','date','amount','receive'];
   }
 
   addReceivable(data){
-    console.log(data)
-    this.billingService.addReceivables(data).subscribe(data => {
+    let arrList =[data]
+    console.log(arrList)
+    this.billingService.addReceivables(arrList).subscribe(data => {
         this.newReceivable = {};
         if(data != null && Object.keys(data).length>=0){
           this.toastr.success("Saved successfully",'Success',{toastLife: '3000'});

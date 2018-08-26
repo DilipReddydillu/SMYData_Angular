@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {BillingService} from '../billing.service';
 import { ToastsManager } from 'ng5-toastr/ng5-toastr';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-rewards',
@@ -9,10 +10,11 @@ import { ToastsManager } from 'ng5-toastr/ng5-toastr';
 })
 export class RewardsComponent implements OnInit {
 
-  constructor(private _billingService: BillingService, private toastr:ToastsManager) { }
+  constructor(private _billingService: BillingService, private toastr:ToastsManager,private dataService:DataService) { }
 
   ngOnInit() {
        this.getReward(); // function call to fetch the data
+       this.dataService.changebuPlanCss("55");
   }
   rewards:any = {
     enable:false, rewardPointEnable:false, bonusPointEnale:false,

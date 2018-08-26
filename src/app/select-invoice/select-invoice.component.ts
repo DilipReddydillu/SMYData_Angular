@@ -25,6 +25,7 @@ public pattern_mobile = /^\d{10}$/;
 }
 
   ngOnInit() {
+    this._demoService.changebuPlanCss("0");
     this.rewards =  this.discounts = 0;
     this.invoiceList = [{
       item:'', quantity:'', rate:'',total:''
@@ -32,6 +33,7 @@ public pattern_mobile = /^\d{10}$/;
     this.items = ['chair','bean','desk','sofa'];
     this.invoiceData = {name:'',mobile:'',email:''}
     this.gst = 8;
+
   }
   addRow(){
     this.invoiceList.push({
@@ -47,17 +49,17 @@ public pattern_mobile = /^\d{10}$/;
       this.invoiceList.forEach(value => {
       if(value.rate != null && value.quantity !=null){
       this.subTotal += value.rate * value.quantity;
+      this.applyDiscount(this.discountList,this.subTotal);
     };
     });
-    this.applyDiscount(this.discountList,this.total);
     this.total = this.subTotal - this.rewards - (this.subTotal * ((this.discounts)/100));
     this.total = this.total + (this.total * (this.gst/100));
 
   }
-  applyDiscount(data,total){
+  applyDiscount(data,subTotal){
     if(data && data.length > 0){
       data.forEach(val => {
-        if(total <= val.maxAmount && total >= val.minAmount){
+        if(subTotal <= val.maxAmount && subTotal >= val.minAmount){
           this.discounts = val.discount;
         }
       });
@@ -75,6 +77,7 @@ public pattern_mobile = /^\d{10}$/;
          if(data != null && Object.keys(data).length<=0){
            this.userEntry = true;
          }else{
+           console.log(data)
          this.invoice = true;
          this.userName = data[0].userName;
          this.email = data[0].email;

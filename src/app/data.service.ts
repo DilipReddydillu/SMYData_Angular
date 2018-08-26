@@ -7,7 +7,6 @@ import {environment} from '../environments/environment';
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
-//const urlProvider = window.location.origin;
 const urlProvider = environment.url;
 const key = 'AIzaSyBFcZOIYqk_s0-qilRmve1TjMCXhYxUP3c';
 console.log(environment)
@@ -54,6 +53,12 @@ export class DataService {
      changeCustomerMobile(value: any) {
        console.log('customerMobile:'+value);
        this.customerMobile.next(value);
+     }
+
+    private buPlanCss = new BehaviorSubject<string>('0');
+    buPlanCssVal = this.buPlanCss.asObservable();
+     changebuPlanCss(value: string) {
+       this.buPlanCss.next(value);
      }
 
      changeProfile(profile: any) {

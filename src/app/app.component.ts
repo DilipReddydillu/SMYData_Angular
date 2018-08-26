@@ -19,7 +19,6 @@ export class AppComponent {
   allCookies;
   constructor(private _demoService: DataService,public toastr: ToastsManager, private router: Router, private cookieService: CookieService, vcr: ViewContainerRef) {
       this.toastr.setRootViewContainerRef(vcr);
-
     }
        ngOnInit(): void {
          this._demoService.profile.subscribe(showProfile => this.showProfile = showProfile)
@@ -27,7 +26,7 @@ export class AppComponent {
          this.allCookies = this.cookieService.getAll();
          console.log(this.allCookies);
          if(this.allCookies && this.allCookies.mobile){
-           this.showProfile = true;
+          // this.showProfile = true;
          };
     };
 
@@ -39,15 +38,11 @@ export class AppComponent {
     logOut(){
       this._demoService.changeProfile(false);
       this._demoService.changeindProfile(false);
-      this.view = 'homePage';
        this.showProfile = false;
        this.indProfile = false;
-       this.cookieService.deleteAll();
+      // this.cookieService.deleteAll();
        this.router.navigate(['']);
     }
-    homePage(){
-      //this.view = 'homePage';
-    //  this.router.navigate(['/']);
-    }
+
 
 }

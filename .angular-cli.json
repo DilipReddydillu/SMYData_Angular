@@ -6,7 +6,7 @@
   "apps": [
     {
       "root": "src",
-      "outDir": "E:/Project/myrepo/src/main/resources/static",
+      "outDir": "E:/Project/JavaCode/src/main/resources/static",
       "assets": [
         "assets",
         "favicon.ico"

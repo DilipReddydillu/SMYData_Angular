@@ -81,7 +81,6 @@ messageSource:number;
          this._demoService.logInUser(JsonData,type).subscribe(
             data => {
               if(data == true){
-              console.log(data)
               console.log("valid user!");
             if (type == 'business') {
               this.showProfile = true;

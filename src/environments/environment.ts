@@ -6,4 +6,5 @@
 export const environment = {
   production: false,
   url:'http://localhost:8585'
+  // url:window.location.origin,
 };
