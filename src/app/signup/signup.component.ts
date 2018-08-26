@@ -127,8 +127,7 @@ export class SignupComponent {
         }else{
           this.model[check.slice(8)] = '';
         }
-        this.toastr.error
-              this.toastr.error("Please enter valid "+ check.slice(8), null,{dismiss: 'click',toastLife: '3000'});
+            //  this.toastr.error("Please enter valid "+ check.slice(8), null,{dismiss: 'click',toastLife: '3000'});
         }
       }
 

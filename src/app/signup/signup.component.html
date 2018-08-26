@@ -47,7 +47,7 @@
          #mobile="ngModel"/>
          <div [hidden]="mobile.valid || mobile.pristine"
             class="alert alert-danger">
-            <span *ngIf='!mobilecheck'>Mobile Number is required</span>
+            <span *ngIf='!mobilecheck'>Enter valid mobile number! Should contain 10 digits.</span>
                   <span *ngIf='mobilecheck'>Mobile Number already exist</span>
          </div>
       </div>
@@ -59,7 +59,7 @@
          #password="ngModel"/>
          <div [hidden]="password.valid || password.pristine"
             class="alert alert-danger">
-            Password is required
+          Enter valid password ! Should contain mininum 6 characters.
          </div>
       </div>
       <div class="form-group" *ngIf='!addNew'>
@@ -69,7 +69,7 @@
          [(ngModel)]="model.email" #email="ngModel" name="alterEgo">
          <div [hidden]="email.valid || email.pristine"
             class="alert alert-danger">
-            Email is required
+            Email you have entered is not correct
          </div>
       </div>
       <div class="form-group">
