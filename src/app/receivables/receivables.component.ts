@@ -71,6 +71,7 @@ displayedColumns = ['invoice','mobile','date','amount','receive'];
     console.log(arrList)
     this.billingService.postReceivedAmount(arrList).subscribe(data => {
       if(data != null && Object.keys(data).length>=0){
+        this.customerMobile = "";
         this.getReceivablesData();
         this.toastr.success("",'Success',{toastLife: '3000'});
       }else{
@@ -89,6 +90,7 @@ displayedColumns = ['invoice','mobile','date','amount','receive'];
         this.newReceivable = {};
         if(data != null && Object.keys(data).length>=0){
           this.toastr.success("Saved successfully",'Success',{toastLife: '3000'});
+          this.customerMobile = "";
           this.getReceivablesData();
      }
         this.addNew = false;

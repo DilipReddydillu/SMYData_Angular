@@ -21,8 +21,8 @@
    <span class="clickhere" (click)="successReg()"> Click here &nbsp;</span> to LogIn.
 </div>
 
-<div *ngIf='resetPwd' class="col-md-3 col-md-offset-4 reset-pswd signIn inbxTxt" id="resetPswd">
-  <form (ngSubmit)="resetPswd(); pwdReset.reset()" #pwdReset="ngForm" class="pwd-form">
+<div *ngIf='resetPwd'  class="row justify-content-center" id="resetPswd">
+  <form (ngSubmit)="resetPswd(); pwdReset.reset()" #pwdReset="ngForm" class="pwd-form cstyle">
     <div *ngIf='errorDisplay' class="alert alert-danger"  (click)="errorDisplay = false">
       <strong>{{errMsg}}</strong>
     </div>
@@ -48,7 +48,7 @@
        Password is required
     </div>
   </div>
-  <button  type="submit" class="btn btn-primary btn-md" [disabled]="!pwdReset.form.valid">Submit</button>
+  <button  type="submit" class="btn btn-success btn-block fntcss" [disabled]="!pwdReset.form.valid">Submit</button>
 </form>
 </div>
 

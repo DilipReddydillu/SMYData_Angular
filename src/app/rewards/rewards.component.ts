@@ -33,10 +33,10 @@ export class RewardsComponent implements OnInit {
     this._billingService.addReward(rewardsData).subscribe(
        data => {
          console.log('success::'+data);
-         this.toastr.success("Saved successfully",'Success',{toastLife: '5000'});
+         this.toastr.success("Saved successfully",'Success',{toastLife: '3000'});
        },
        error => {
-         this.toastr.error("Could Not Save Data!! Try Again..",'Error',{toastLife: '5000'});
+         this.toastr.error("Could Not Save Data!! Try Again..",'Error',{toastLife: '3000'});
        }
     );
   };

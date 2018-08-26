@@ -71,6 +71,7 @@ displayedColumns = ['invoice','mobile','date','amount','payoff'];
     this.billingService.postPayOffAmount(arrList).subscribe(data => {
       if(data != null && Object.keys(data).length>=0){
         this.toastr.success("",'Success',{toastLife: '3000'});
+        this.customerMobile = "";
         this.getPayablesData()
       }else{
         this.toastr.error("Something Went Wrong, Please Try Again ",'Error',{toastLife: '3000'});
@@ -88,6 +89,7 @@ displayedColumns = ['invoice','mobile','date','amount','payoff'];
         this.newPayable = {};
          if(data != null && Object.keys(data).length>=0){
            this.toastr.success("Saved successfully",'Success',{toastLife: '3000'});
+           this.customerMobile = "";
            this.getPayablesData();
       }
       this.addNew = false;

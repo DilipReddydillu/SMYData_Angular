@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {BillingService} from '../billing.service';
 import { DataService } from '../data.service';
+import { ToastsManager } from 'ng5-toastr/ng5-toastr';
 
 @Component({
   selector: 'app-discounts',
@@ -9,7 +10,7 @@ import { DataService } from '../data.service';
 })
 export class DiscountsComponent implements OnInit {
 
-  constructor(private _billingService: BillingService, private dataService:DataService) { }
+  constructor(private _billingService: BillingService, private toastr:ToastsManager, private dataService:DataService) { }
 
   ngOnInit() {
     this.getDiscount();
@@ -41,9 +42,10 @@ export class DiscountsComponent implements OnInit {
   //calling addDiscount method which is inside the billing.service to save the discounts data
     this._billingService.addDiscount(discountData).subscribe(
        data => {
-         console.log('success::'+data)
+         this.toastr.success("Saved successfully",'Success',{toastLife: '3000'});
        },
        error => {
+         this.toastr.error("Could Not Save Data!! Try Again..",'Error',{toastLife: '3000'});
        }
     );
   };
