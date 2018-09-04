@@ -14,7 +14,6 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
   styleUrls: ['./sign-in.component.css']
 })
 export class SignInComponent  {
-//@Output() id: string;
 messageSource:number;
   cookieValue = 'UNKNOWN';
   public model: any = {mobile:'',password:''};
@@ -29,6 +28,9 @@ messageSource:number;
     showProfile;
     userType;
     validMobile = false;
+    errMsg;
+    focusMobile;
+    focusPassword;
     public pattern_mobile = /^\d{10}$/;
 
 
@@ -37,9 +39,7 @@ messageSource:number;
     ngOnInit(): void {
       this._demoService.userTypeVal.subscribe(userType => this.userType = userType)
       this._demoService.cast.subscribe(messageSource => this.messageSource = messageSource)
-      console.log('message::'+this.messageSource);
       this.allCookies = this.cookieService.getAll();
-      console.log(this.allCookies);
       if(this.allCookies && this.allCookies.rememberMeVal == 'TRUE'){
         this.model.mobile = this.allCookies.mobile;
         this.model.password = this.allCookies.pswd;
@@ -48,8 +48,8 @@ messageSource:number;
  };
 
 
+
     onSubmit() {
-    console.log(this.model)
       this.logInUser(this.model,this.userType)
       if(this.rememberMe){
         this.cookieService.set( 'mobile', this.model.mobile );
@@ -61,7 +61,6 @@ messageSource:number;
     };
 
     sendOtp(){
-      console.log(this.mobileNumVal);
           this.router.navigate(['/', 'otpVerification']);
           document.getElementById('modalWindow').click();
           this.cookieService.set('resetPwdMobile',this.mobileNumVal);
@@ -81,7 +80,6 @@ messageSource:number;
          this._demoService.logInUser(JsonData,type).subscribe(
             data => {
               if(data == true){
-              console.log("valid user!");
             if (type == 'business') {
               this.showProfile = true;
               this.submitted = true;
@@ -93,27 +91,47 @@ messageSource:number;
             }
               return true;
             }else{
-              console.error("not registered!");
               this.loginFail =true;
             }
             },
             error => {
-              console.error("not registered!");
               this.loginFail =true;
-              //this._demoService.changeProfile('true')
               return Observable.throw(error);
             }
          );
        }
 
+       doesUserExist(mobileNum){
+         this.errMsg = "Enter valid mobile number! Should contain 10 digits.";
+         if(mobileNum.length == 10){
+         this._demoService.doesUserExist({'mobile':mobileNum}).subscribe(
+            data => {
+              if (data) {
+              this.errMsg = "";
+              }else{
+              }
+            },
+            error => {
+              this.errMsg = "Mobile number does not exist! Kindly register"
+            }
+         );
+       }
+       }
+
+       focusFunction(pristine,valid,val,type){
+         if(val == 'focus'){
+          this[type] = "focusGreen";
+        }
+        else if (!pristine && !valid) {
+          this[type] = "focusRed";
+        }
+        if(pristine && (val=='outfocus')){
+          this[type] = "";
+        }
+       }
        validation(){
-         console.log("in validation method:");
-         if (!this.pattern_mobile.test(this.model.mobile)) {
-                 this.toastr.error("Please enter valid mobile number", 'Error',[{dismiss: 'click'},{maxShown:'1'}]);
+         if (!this.pattern_mobile.test(this.model.mobile))
                  this.model.mobile = '';
-           }else{
-             this.toastr.clearAllToasts();
-           }
          }
 
 }

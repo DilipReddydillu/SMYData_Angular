@@ -123,7 +123,8 @@ export class DataService {
 
     getLocationDetails(place) {
         console.log(place)
-        let url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + place.details + '&key=' + key;
+        // let url = 'http:postalpincode.in/api/pincode/'+place.details;
+         let url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + place.details + '&key=' + key;
         return this.http.get(url)
     }
 
@@ -138,9 +139,9 @@ export class DataService {
       let url =  urlProvider + '/api/resetPwd/'+pwd;
       return this.http.get(url, pwd )
     }
-    doesUserExist(mobile){
-      var url =  urlProvider + '/api/loginUser';
-      return this.http.get(url,mobile);
+    doesUserExist(data){
+      var url =  urlProvider + '/api/saveUser/validate';
+      return this.http.get(url,data);
     }
 
     customerExist(mobile){

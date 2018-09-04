@@ -24,7 +24,6 @@ export class AppComponent {
          this._demoService.profile.subscribe(showProfile => this.showProfile = showProfile)
          this._demoService.indprofile.subscribe(indProfile => this.indProfile = indProfile)
          this.allCookies = this.cookieService.getAll();
-         console.log(this.allCookies);
          if(this.allCookies && this.allCookies.mobile){
           // this.showProfile = true;
          };

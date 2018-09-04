@@ -49,7 +49,6 @@ showBuList(){
   this.showbusinessList = true;
   this._demoService.viewMyBusiness().subscribe(
      data => {
-       console.log('showBuList::'+data)
        this.businessList = data;
      },
      error => {
@@ -61,7 +60,6 @@ showBuList(){
 sideNav(value){
   this[value] = true;
   this.profile = false;
-  console.log('show-'+value);
 }
 
 }

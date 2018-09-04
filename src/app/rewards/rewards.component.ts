@@ -28,11 +28,9 @@ export class RewardsComponent implements OnInit {
 
   // function call to save the data
   addingReward(rewardsData){
-  console.log(rewardsData);
   //calling addReward method which is inside the billing.service to save the rewards data
     this._billingService.addReward(rewardsData).subscribe(
        data => {
-         console.log('success::'+data);
          this.toastr.success("Saved successfully",'Success',{toastLife: '3000'});
        },
        error => {
@@ -45,7 +43,6 @@ export class RewardsComponent implements OnInit {
   //calling getReward method which is inside the billing.service to fetch the rewards data
     this._billingService.getReward().subscribe(
        data => {
-         console.log('success::'+data)
          if(data != null){
          this.rewards = data;
        }

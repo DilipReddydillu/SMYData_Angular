@@ -43,17 +43,17 @@ export class SignupComponent {
             id: '2'
         },
         {
-            name: 'LabourId',
-            id: '3'
+          name: 'TIN',
+          id: '3'
         },
-        {
-            name: 'TIN',
-            id: '4'
-        },
-        {
-            name: 'RegId',
-            id: '5'
-        },
+        // {
+        //     name: 'LabourId',
+        //     id: '3'
+        // },
+        // {
+        //     name: 'RegId',
+        //     id: '5'
+        // },
     ];
 
     submitted = false;
@@ -70,12 +70,14 @@ export class SignupComponent {
     patternErr:string;
     showbusinessList:boolean;
     businessList:any;
+    idProofErrMsg:string;
+    maxLn:number;
     public pattern_email = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
     public pattern_mobile = /^\d{10}$/;
     public pattern_pinCode = /^\d{3,7}$/;
-    public pattern_password = /([0-9a-zA-Z]){6,20}/;
+    // public pattern_password = /([0-9a-zA-Z]){6,15}/;
+    public pattern_password = /^(?=.*?[A-Z])(?=.*?[0-9]).{6,}$/;
 
-    //public model={"companyName":"","ownerName":"","mobile":"","password":"","email":"","businessAddress":"","pinCode":"","city":"","state":"","country":"","website":"","category":"","regProof":"","reg":""};
     public model = {
         "registrationId": '',
         "ownerName": "",
@@ -107,8 +109,6 @@ export class SignupComponent {
       this.addNewBusinessForm = url.includes('addNew');
       this.businessEditableForm = url.includes('myInfo');
 
-      console.log('add:'+this.addNewBusinessForm);
-      console.log('edit:'+this.businessEditableForm)
       if (this.addNewBusinessForm) {
           this.formSubmitName = 'Add Business';
           this.formTitle = 'Add New Business';
@@ -116,11 +116,9 @@ export class SignupComponent {
       }else if (this.businessEditableForm) {
           this.showBuList();
       } else {}
-      console.log('newBusinessVal::'+this.addNewBusinessForm);
     }
 
     validation(check,value){
-      console.log("invalidation method:"+check+":"+value)
       if (!this[check].test(value)) {
         if(check == 'pattern_pinCode'){
           this.model.businessDetails[0].pinCode = ''
@@ -133,17 +131,11 @@ export class SignupComponent {
 
     onSubmit() {
       if (this.addNewBusinessForm) {
-          console.log('newBusinessVal::'+this.addNewBusinessForm);
-          console.log(this.model)
       this.addNewBusiness(this.model)
     }else if(this.businessEditableForm){
-      console.log(this.model)
-        console.log('edit comp.ts')
       this.editBusiness(this.model)
     }else{
       this.registerUser(this.model);
-      console.log('register comp.ts')
-      console.log(JSON.stringify(this.model));
       }
       //this.getLocation();
     }
@@ -167,8 +159,6 @@ export class SignupComponent {
           this._demoService.changeMobile(this.mobileOTP);
         this._demoService.registerUser(dataJson).subscribe(
             data => {
-                console.log(data)
-                  console.log("Data saved successfully!");
                   if (data[0] == 'success') {
                     this.sendOtp(this.mobileOTP )
                     return true;
@@ -187,7 +177,6 @@ export class SignupComponent {
     addNewBusiness(dataJson){
       this._demoService.addingNewBusiness(dataJson).subscribe(
           data => {
-              console.log("Data saved successfully!");
               this.toastr.success("successfully added","Success",{toastLife: '5000'});
               return true;
           },
@@ -204,8 +193,6 @@ export class SignupComponent {
     showBuList(){
       this._demoService.viewMyBusiness().subscribe(
          data => {
-           console.log('showBuList::')
-           console.log(data)
            this.businessList = data;
            if (this.businessList.businessDetails.length == 1) {
              this.viewBusinessDetails(0)
@@ -222,7 +209,6 @@ export class SignupComponent {
       let obj = this.businessList.businessDetails[index];
       this.businessList.businessDetails.splice(index,1);
       this.businessList.businessDetails.unshift(obj);
-      console.log( this.businessList)
       this.model= this.businessList
       this.formSubmitName = 'Submit';
       this.formTitle = this.businessList.businessDetails[0].companyName;
@@ -232,7 +218,6 @@ export class SignupComponent {
     editBusiness(dataJson){
       this._demoService.editBusinessService(dataJson).subscribe(
           data => {
-              console.log("Data saved successfully!");
               this.toastr.success("successfully added","Success",{toastLife: '5000'});
                this.router.navigate(['/', 'userData']);
           },
@@ -249,7 +234,6 @@ export class SignupComponent {
         let JsonData = {details: data};
         this._demoService.getLocationDetails(JsonData).subscribe(
             data => {
-                console.log(data)
                 this.locDeatils(data);
                 return true;
             },
@@ -262,7 +246,6 @@ export class SignupComponent {
     }
 
     sendOtp(mobileNum){
-        console.log('send otp comp.ts'+ mobileNum)
           this.router.navigate(['/', 'otpVerification']);
           this._demoService.sendOtp(mobileNum).subscribe(
              data => {
@@ -274,23 +257,50 @@ export class SignupComponent {
     }
 
     doesUserExist(mobileNum){
-      console.log("mobile:"+mobileNum)
       this._demoService.doesUserExist({'mobile':mobileNum}).subscribe(
          data => {
            if (data) {
-             console.log("data:"+data)
              this.model.mobile = null;
              this.mobilecheck = true;
            }
          },
          error => {
-
          }
       );
     }
 
+    idProofValidate(proof,id){
+      console.log(proof+id)
+      this.registerInfo.forEach(function(val){
+        if (val.id == proof) proof = val.name;
+      })
+
+      switch(proof){
+        case "PanCard":
+        console.log(!/^([A-Za-z]){5}([0-9]){4}([A-Za-z]){1}$/.test(id))
+            if (!/^([A-Za-z]){5}([0-9]){4}([A-Za-z]){1}$/.test(id)){
+              this.model.businessDetails[0].regProof = "";
+              this.idProofErrMsg = "Please enter valid PanCard number! Ex: AFCDE1234K";
+              this.maxLn = 10;
+            }
+              break;
+        case "Aadhar":
+            if (!/^\d{12}$/.test(id)){
+              this.model.businessDetails[0].regProof = "";
+              this.idProofErrMsg = "Please enter valid Aadhar number! Should contain 12 digits";
+              this.maxLn = 12;
+            }
+              break;
+        case "TIN":
+            if (!/^\d{11}$/.test(id)){
+              this.model.businessDetails[0].regProof = "";
+              this.idProofErrMsg = "Please enter valid TIN number! Should contain 11 digits";
+              this.maxLn = 11;
+            }
+      }
+    }
+
     getLocation() {
-      console.log("lat n long");
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(this.showPosition);
     } else {

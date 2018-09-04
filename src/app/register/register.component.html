@@ -1,0 +1,441 @@
+<div class="container">
+  <div class="row justify-content-center">
+      <div class="col-5 box">
+      <div class="registeropt my-3" >
+        <div class="regLink" [ngClass]="{'selected':business}" (click)="business = true">
+        Business
+        </div>
+        <div class="regLink" [ngClass]="{'selected':!business}" (click)="business = false">
+          Individual
+        </div>
+      </div>
+			<div class="business" *ngIf="business">
+				<form  (ngSubmit)="onSubmit(model);" #signup="ngForm">
+								<div class="form-group">
+									<div class="input-group inputBx" [ngClass]="focusBuName">
+										 <div class="input-group-prepend">
+											 <div class="input-group-text grpTxt">
+												 <i class="fa  fa-id-card" aria-hidden="true"></i>
+											 </div>
+										 </div>
+                     <input name="name"
+                     required placeholder="Company Name / Business Name *"
+                     (focus)="focusFunction(name.pristine,name.valid,'focus','focusBuName')"
+                     (focusout)="focusFunction(name.pristine,name.valid,'outfocus','focusBuName')"
+                     [(ngModel)]="model.businessDetails[0].companyName" #name="ngModel"/>
+									 </div>
+                    <div class="errMsg" *ngIf="!model.businessDetails[0].companyName" [hidden]="name.pristine || name.valid">
+                      <span>Company Name / Business Name is required</span>
+                    </div>
+								</div>
+								<div class="form-group">
+									<div class="input-group inputBx" [ngClass]="focusOwnerName">
+										 <div class="input-group-prepend">
+											 <div class="input-group-text grpTxt">
+												 <i class="fa fa-user" aria-hidden="true"></i>
+											 </div>
+										 </div>
+                     <input type="text"
+                     required placeholder="Owner Name / Manager Name *"
+                     (focus)="focusFunction(ownername.pristine,ownername.valid,'focus','focusOwnerName')"
+                     (focusout)="focusFunction(ownername.pristine,ownername.valid,'outfocus','focusOwnerName')"
+                     [(ngModel)]="model.ownerName" name="ownername"
+                     #ownername="ngModel" />
+									 </div>
+                    <div class="errMsg"  *ngIf="!model.businessDetails[0].ownerName" [hidden]="ownername.pristine || ownername.valid">
+                      <span> Owner Name / Manager Name is required</span>
+                    </div>
+								</div>
+								<div class="form-group">
+									<div class="input-group inputBx" [ngClass]="focusMobile">
+										 <div class="input-group-prepend">
+											 <div class="input-group-text grpTxt">
+												 <i class="fa fa-phone-square" aria-hidden="true"></i>
+											 </div>
+										 </div>
+                     <input type="text" name="mobile"
+                      required placeholder="Mobile Number *" autocomplete="off"
+                      (focus)="focusFunction(mobile.pristine,mobile.valid,'focus','focusMobile')"
+                      (focusout)="doesUserExist(model);focusFunction(mobile.pristine,mobile.valid,'outfocus','focusMobile')"
+                      pattern="[0-9]{10}" maxlength="10"
+                      [(ngModel)]="model.mobile"
+                      #mobile="ngModel"/>
+									 </div>
+                    <div class="errMsg" *ngIf="!model.mobile" [hidden]="mobile.pristine">
+                      <span>Mobile number is required</span>
+                    </div>
+                    <div class="errMsg" *ngIf="model.mobile" [hidden]="mobile.valid">
+                      <span>Please provide valid mobile number</span>
+                    </div>
+                    <div class="errMsg" *ngIf="mobilecheck">
+                      <span>Mobile number already exist</span>
+                    </div>
+								</div>
+                <div class="form-group">
+									<div class="input-group inputBx" [ngClass]="focusEmail">
+										 <div class="input-group-prepend">
+											 <div class="input-group-text grpTxt">
+												 <i class="fa fa-envelope" aria-hidden="true"></i>
+											 </div>
+										 </div>
+                     <input type="email" name="email"
+                     required placeholder="Email Address *" autocomplete="off"
+                     pattern="^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$"
+                     (focus)="focusFunction(email.pristine,email.valid,'focus','focusEmail')"
+                     (focusout)="doesUserExist(model);focusFunction(email.pristine,email.valid,'outfocus','focusEmail')"
+                     [(ngModel)]="model.email" #email="ngModel"/>
+									 </div>
+                    <div class="errMsg" *ngIf="!model.email" [hidden]="email.pristine">
+                      <span>Email id is required</span>
+                    </div>
+                    <div class="errMsg" *ngIf="model.email" [hidden]="email.valid">
+                      <span>Please provide valid email id</span>
+                    </div>
+								</div>
+                <div class="form-group">
+									<div class="input-group inputBx" [ngClass]="focusPassword">
+										 <div class="input-group-prepend">
+											 <div class="input-group-text grpTxt">
+												<i class="fa fa-key"></i>
+											 </div>
+										 </div>
+                     <input type="password" name="password"
+                     required placeholder="Password *" autocomplete="off"
+                     pattern="^(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[!@#$%]).{6,15}$" maxlength="15"
+                     (focus)="focusFunction(password.pristine,password.valid,'focus','focusPassword')"
+                     (focusout)="focusFunction(password.pristine,password.valid,'outfocus','focusPassword')"
+                     [(ngModel)]="model.password"
+                     #password="ngModel"/>
+									 </div>
+                   <div class="errMsg" *ngIf="!model.password" [hidden]="password.pristine">
+                     <span>Password is required </span>
+                   </div>
+                   <div class="errMsg" *ngIf="model.password" [hidden]="password.valid">
+                     <span>Requires at least 1 Uppercase, 1 Number and 1 of these special characters(!@#$%)</span>
+                   </div>
+								</div>
+                <div class="form-group">
+									<div class="input-group inputBx" [ngClass]="focusCnfPassword">
+										 <div class="input-group-prepend">
+											 <div class="input-group-text grpTxt">
+												<i class="fa fa-key"></i>
+											 </div>
+										 </div>
+                     <input type="password" name="passwordCnf"
+                     pattern="^(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[!@#$%]).{6,15}$"
+                     (focus)="focusFunction(passwordCnf.pristine,passwordCnf.valid,'focus','focusCnfPassword')"
+                     (focusout)="focusFunction(passwordCnf.pristine,passwordCnf.valid,'outfocus','focusCnfPassword')"
+                      required placeholder="Confirm Password *" autocomplete="off"
+                      [(ngModel)]="model.passwordCnf" #passwordCnf="ngModel"/>
+									 </div>
+                   <div class="errMsg" *ngIf="!model.passwordCnf" [hidden]="passwordCnf.pristine">
+                     <span>Password (Confirm) is required</span>
+                   </div>
+                   <div class="errMsg" *ngIf="model.passwordCnf != model.password" [hidden]="!model.passwordCnf || passwordCnf.valid">
+                     <span> Passwords did not match.</span>
+                   </div>
+								</div>
+								<div class="form-group">
+									<div class="input-group inputBx" [ngClass]="focusBuAddr">
+										 <div class="input-group-prepend">
+											 <div class="input-group-text grpTxt">
+												 <i class="fa fa-university" aria-hidden="true"></i>
+											 </div>
+										 </div>
+                     <input name="businessAddr"
+                     required placeholder="Business Address *"
+                     (focus)="focusFunction(businessAddr.pristine,businessAddr.valid,'focus','focusBuAddr')"
+                     (focusout)="focusFunction(businessAddr.pristine,businessAddr.valid,'outfocus','focusBuAddr')"
+                     [(ngModel)]="model.businessDetails[0].businessAddress" #businessAddr="ngModel"/>
+									 </div>
+                    <div class="errMsg" *ngIf="!model.businessDetails[0].businessAddress" [hidden]="businessAddr.pristine">
+                      <span>Business Address is required</span>
+                    </div>
+								</div>
+
+
+          <div class="form-group">
+            <div class="input-group inputBx" [ngClass]="focusPin">
+               <div class="input-group-prepend">
+                 <div class="input-group-text grpTxt">
+                   <i class="fa fa-map-marker" aria-hidden="true"></i>
+                 </div>
+               </div>
+               <input name="pin"
+               required placeholder="Pin Code *" maxlength="6" pattern="[0-9]{6}"
+               (focus)="focusFunction(pin.pristine,pin.valid,'focus','focusPin')"
+               (focusout)="focusFunction(pin.pristine,pin.valid,'outfocus','focusPin')"
+               [(ngModel)]="model.businessDetails[0].pinCode" #pin="ngModel"/>
+               <div class="input-group-append">
+                 <button type="button" class="btn btn-success btn-md getloc"
+                 [disabled]="!model.businessDetails[0].pinCode || !pin.valid"
+                 (click)="addressDetails(pin.value)">
+                 Get Location
+               </button>
+               </div>
+             </div>
+              <div class="errMsg" *ngIf="!model.businessDetails[0].pinCode" [hidden]="pin.pristine">
+                <span>Pin code is required</span>
+              </div>
+              <div class="errMsg" *ngIf="model.businessDetails[0].pinCode" [hidden]="pin.valid">
+                <span>Please provide valid pin code</span>
+              </div>
+              <div class="errMsg" *ngIf="showAddrMsg">
+                <span>Could not fetch the location details.Please provide the following details</span>
+              </div>
+          </div>
+          <div  class="flexDiv" *ngIf="showAddr">
+         <div class="form-group flex-item">
+             <div class="input-group inputBx" [ngClass]="focusCity">
+                <input  name="city" class="locDeatils"
+                required placeholder="City *"
+                (focus)="focusFunction(city.pristine,city.valid,'focus','focusCity')"
+                (focusout)="focusFunction(city.pristine,city.valid,'outfocus','focusCity')"
+                [(ngModel)]="model.businessDetails[0].city" #city="ngModel"/>
+              </div>
+               <div class="errMsg" [hidden]="city.pristine || city.valid">
+                 <span>City is required</span>
+               </div>
+         </div>
+         <div class="form-group flex-item flex-item-middle">
+           <div class="input-group inputBx" [ngClass]="focusState">
+              <input  name="state" class="locDeatils"
+              required placeholder="State *"
+              (focus)="focusFunction(state.pristine,state.valid,'focus','focusState')"
+              (focusout)="focusFunction(state.pristine,state.valid,'outfocus','focusState')"
+              [(ngModel)]="model.businessDetails[0].state" #state="ngModel"/>
+            </div>
+             <div class="errMsg" [hidden]="state.pristine || state.valid">
+               <span>State is required</span>
+             </div>
+         </div>
+         <div class="form-group flex-item flex-item-last">
+           <div class="input-group inputBx" [ngClass]="focusCountry">
+              <input  name="country" class="locDeatils"
+              required placeholder="Country *"
+              (focus)="focusFunction(country.pristine,country.valid,'focus','focusCountry')"
+              (focusout)="focusFunction(country.pristine,country.valid,'outfocus','focusCountry')"
+              [(ngModel)]="model.businessDetails[0].country" #country="ngModel"/>
+            </div>
+             <div class="errMsg" [hidden]="country.pristine || country.valid">
+               <span>Country is required</span>
+             </div>
+         </div>
+      </div>
+      <!-- website -->
+      <div class="form-group">
+        <div class="input-group inputBx" [ngClass]="focusWebsite">
+           <div class="input-group-prepend">
+             <div class="input-group-text grpTxt">
+               <i class="" aria-hidden="true"></i>
+             </div>
+           </div>
+           <input  name="website"
+           placeholder="Website"
+           [(ngModel)]="model.businessDetails[0].website" #website="ngModel"/>
+         </div>
+          <div class="errMsg" [hidden]="website.pristine || website.valid">
+            <span>Website is required</span>
+          </div>
+      </div>
+      <!--  -->
+      <div class="dropdown-flex">
+         <div class="form-group dropdown-category" >
+            <select name="category" ngModel class="form-control" id="category"
+            required
+            [(ngModel)]="model.businessDetails[0].category" name="category"
+            #category="ngModel">
+            <option value="" disabled>Business Category *</option>
+            <option *ngFor="let data of categoryInfo" [ngValue]="data.id">
+            {{ data.name }}
+            </option>
+            </select>
+         </div>
+         <div class="form-group dropdown-register" >
+            <select name="reg" ngModel class="form-control"
+            required (change)="idProofValidate(model.businessDetails[0].reg)"
+            [(ngModel)]="model.businessDetails[0].reg" name="reg"
+            #reg="ngModel">
+            <option value="" disabled>Registration Info *</option>
+            <option *ngFor="let data of registerInfo" [ngValue]="data.id">
+            {{ data.name }}
+            </option>
+            </select>
+         </div>
+      </div>
+      <!--  -->
+      <div class="form-group" *ngIf='model.businessDetails[0].reg'>
+        <div class="input-group inputBx" [ngClass]="focusBuName">
+           <div class="input-group-prepend">
+             <div class="input-group-text grpTxt">
+               <i class="fa fa-phone-square" aria-hidden="true"></i>
+             </div>
+           </div>
+           <input name="regDetails"
+           required placeholder="Enter Id Proof Number *" [maxlength]="maxLn"
+           (focus)="focusFunction(regDetails.pristine,regDetails.valid,'focus','focusregDetails')"
+           (focusout)="focusFunction(regDetails.pristine,regDetails.valid,'outfocus','focusregDetails')"
+           (blur)="idProofValidate(model.businessDetails[0].reg,regDetails.value);"
+            [(ngModel)]="model.businessDetails[0].regProof"
+            #regDetails="ngModel"/>
+          </div>
+          <div class="errMsg" [hidden]="regDetails.valid || regDetails.pristine">
+            <span>{{idProofErrMsg}}</span>
+          </div>
+      </div>
+        <div class="form-group">
+          <div class="input-group inputBx" >
+        <input type="file" (change)="selectFile($event)" placeholder="Upload Id Proof Doc" accept=".pdf,.doc,.docx" required>
+      </div>
+      </div>
+      <!-- Terms and conditions -->
+      <!-- <div class="form-group">
+        <input class="tNc input-group" required name="tnc" id="tnc" type="text"/> <span> I read and accept terms and conditions</span>
+      </div> -->
+     <!-- Sign Up button -->
+        <div class="row justify-content-center">
+          <div class="col-8">
+            <button type="submit" [className]="signup.form.valid ? 'btn btn-block btn-success' : 'btn btn-block btn-default'"  [disabled]="!signup.form.valid" name="button">SIGN UP</button>
+          </div>
+        </div>
+				</form>
+			</div>
+
+      <!-- Individual Form -->
+      <div class="business" *ngIf="!business">
+        <form  (ngSubmit)="onSubmit(individual);" #signup="ngForm">
+                <div class="form-group">
+                  <div class="input-group inputBx" [ngClass]="focusFname">
+                     <div class="input-group-prepend">
+                       <div class="input-group-text grpTxt">
+                         <i class="fa  fa-user" aria-hidden="true"></i>
+                       </div>
+                     </div>
+                     <input name="fname"
+                     required placeholder="First Name *"
+                     (focus)="focusFunction(fname.pristine,fname.valid,'focus','focusFname')"
+                     (focusout)="focusFunction(fname.pristine,fname.valid,'outfocus','focusFname')"
+                     [(ngModel)]="individual.ownerName" #fname="ngModel"/>
+                   </div>
+                    <div class="errMsg" *ngIf="!individual.fName" [hidden]="fname.pristine || fname.valid">
+                      <span>First Name is required</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                  <div class="input-group inputBx" [ngClass]="focusOwnerName">
+                     <div class="input-group-prepend">
+                       <div class="input-group-text grpTxt">
+                         <i class="fa fa-user" aria-hidden="true"></i>
+                       </div>
+                     </div>
+                     <input
+                   placeholder="Last Name"
+                     [(ngModel)]="individual.lastName" name="ownername"
+                     #ownername="ngModel" />
+                   </div>
+                </div>
+                <div class="form-group">
+                  <div class="input-group inputBx" [ngClass]="focusMobile">
+                     <div class="input-group-prepend">
+                       <div class="input-group-text grpTxt">
+                         <i class="fa fa-phone-square" aria-hidden="true"></i>
+                       </div>
+                     </div>
+                     <input name="mobile"
+                      required placeholder="Mobile Number *" autocomplete="off"
+                      (focus)="focusFunction(mobile.pristine,mobile.valid,'focus','focusMobile')"
+                      (focusout)="doesUserExist(individual);focusFunction(mobile.pristine,mobile.valid,'outfocus','focusMobile')"
+                      pattern="[0-9]{10}" maxlength="10"
+                      [(ngModel)]="individual.mobile"
+                      #mobile="ngModel"/>
+                   </div>
+                    <div class="errMsg" *ngIf="!individual.mobile" [hidden]="mobile.pristine">
+                      <span>Mobile number is required</span>
+                    </div>
+                    <div class="errMsg" *ngIf="individual.mobile" [hidden]="mobile.valid">
+                      <span>Please provide valid mobile number</span>
+                    </div>
+                    <div class="errMsg" *ngIf="mobilecheck">
+                      <span>Mobile number already exist</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                  <div class="input-group inputBx" [ngClass]="focusEmail">
+                     <div class="input-group-prepend">
+                       <div class="input-group-text grpTxt">
+                         <i class="fa fa-envelope" aria-hidden="true"></i>
+                       </div>
+                     </div>
+                     <input type="email" name="email"
+                     required placeholder="Email Address *" autocomplete="off"
+                     pattern="^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$"
+                     (focus)="focusFunction(email.pristine,email.valid,'focus','focusEmail')"
+                     (focusout)="doesUserExist(individual);focusFunction(email.pristine,email.valid,'outfocus','focusEmail')"
+                     [(ngModel)]="individual.email" #email="ngModel"/>
+                   </div>
+                    <div class="errMsg" *ngIf="!individual.email" [hidden]="email.pristine">
+                      <span>Email id is required</span>
+                    </div>
+                    <div class="errMsg" *ngIf="individual.email" [hidden]="email.valid">
+                      <span>Please provide valid email id</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                  <div class="input-group inputBx" [ngClass]="focusPassword">
+                     <div class="input-group-prepend">
+                       <div class="input-group-text grpTxt">
+                        <i class="fa fa-key"></i>
+                       </div>
+                     </div>
+                     <input type="password" name="password"
+                     required placeholder="Password *" autocomplete="off"
+                     pattern="^(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[!@#$%]).{6,15}$" maxlength="15"
+                     (focus)="focusFunction(password.pristine,password.valid,'focus','focusPassword')"
+                     (focusout)="focusFunction(password.pristine,password.valid,'outfocus','focusPassword')"
+                     [(ngModel)]="individual.password"
+                     #password="ngModel"/>
+                   </div>
+                   <div class="errMsg" *ngIf="!individual.password" [hidden]="password.pristine">
+                     <span>Password is required </span>
+                   </div>
+                   <div class="errMsg" *ngIf="individual.password" [hidden]="password.valid">
+                     <span>Requires at least 1 Uppercase, 1 Number and 1 of these special characters(!@#$%)</span>
+                   </div>
+                </div>
+                <div class="form-group">
+                  <div class="input-group inputBx" [ngClass]="focusCnfPassword">
+                     <div class="input-group-prepend">
+                       <div class="input-group-text grpTxt">
+                        <i class="fa fa-key"></i>
+                       </div>
+                     </div>
+                     <input type="password" name="passwordCnf"
+                     pattern="^(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[!@#$%]).{6,15}$"
+                     (focus)="focusFunction(passwordCnf.pristine,passwordCnf.valid,'focus','focusCnfPassword')"
+                     (focusout)="focusFunction(passwordCnf.pristine,passwordCnf.valid,'outfocus','focusCnfPassword')"
+                      required placeholder="Confirm Password *" autocomplete="off"
+                      [(ngModel)]="individual.passwordCnf" #passwordCnf="ngModel"/>
+                   </div>
+                   <div class="errMsg" *ngIf="!individual.passwordCnf" [hidden]="passwordCnf.pristine">
+                     <span>Password (Confirm) is required</span>
+                   </div>
+                   <div class="errMsg" *ngIf="individual.passwordCnf != individual.password" [hidden]="!individual.passwordCnf || passwordCnf.valid">
+                     <span> Passwords did not match.</span>
+                   </div>
+                </div>
+      <!-- Terms and conditions -->
+      <!-- <div class="form-group">
+        <input class="tNc input-group" required name="tnc" id="tnc" type="text"/> <span> I read and accept terms and conditions</span>
+      </div> -->
+     <!-- Sign Up button -->
+        <div class="row justify-content-center">
+          <div class="col-8">
+            <button type="submit" [className]="signup.form.valid ? 'btn btn-block btn-success' : 'btn btn-block btn-default'"  [disabled]="!signup.form.valid" name="button">SIGN UP</button>
+          </div>
+        </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -80,7 +80,6 @@ public pattern_mobile = /^\d{10}$/;
          if(data != null && Object.keys(data).length<=0){
            this.userEntry = true;
          }else{
-           console.log(data)
          this.invoice = true;
          this.userName = data[0].userName;
          this.email = data[0].email;
@@ -93,7 +92,6 @@ public pattern_mobile = /^\d{10}$/;
        }
        },
        error => {
-        console.log("ERROR: Could not connect!!")
         this.toastr.info("Could Not Fetch Data!! Try Again..",'Error',{toastLife: '5000'});
        }
     );
@@ -101,10 +99,8 @@ public pattern_mobile = /^\d{10}$/;
   }
 
   userDetails(){
-    console.log(name);
     this._demoService.createUser({userName:this.userName,email:this.email,address:this.address,userMobile:this.mobile}).subscribe(
        data => {
-         console.log(data)
          this.invoice = true;
          this.userName = data[0].userName;
          this.email = data[0].email;
@@ -116,7 +112,6 @@ public pattern_mobile = /^\d{10}$/;
          this.totalReceivable = data[0].totalReceivable;
        },
        error => {
-         console.log('failed to add');
          this.toastr.error("Could Not Add Data!! Try Again..",'Error',{toastLife: '5000'});
        }
     );
@@ -128,10 +123,8 @@ public pattern_mobile = /^\d{10}$/;
       subTotal:this.subTotal,rewards:this.rewards,discount:this.discounts,
       credit:this.credit, invoiceDetail:this.invoiceList
       }
-    console.log(generateInvoice);
     this._billingService.addInvoice(generateInvoice).subscribe(
       data => {
-          console.log(data)
           if(data != null){
           this.invoiceid = data[0].invId;
           this.InvGen = true;
@@ -140,7 +133,6 @@ public pattern_mobile = /^\d{10}$/;
           }
         },
        error => {
-         console.log('could not create Invoice! try again!!')
          this.toastr.error("Could Not Generate!! Try Again..",'Error',{toastLife: '5000'});
        }
     );

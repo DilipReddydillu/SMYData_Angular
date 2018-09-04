@@ -1,9 +1,9 @@
 <nav class="navbar fixed-top bgColor">
   <a class="navbar-brand logoStyle" routerLink="/home" >SMyData</a>
-  <span class="navbar-text navRight" >
+  <span class="navbar-text navRight loginsp" >
     <!-- <span *ngIf="showProfile">Welcome </span> -->
    <a class="nav-link" *ngIf="!showProfile && !indProfile" class="login">
-     <span  (click)="signInCall()">SignIn/Register</span>
+     <span class="login" routerLink="/signIn">LOG IN</span>
    </a>
    <a class="nav-link" *ngIf="indProfile">
      <span class="" (click)="logOut()"><a>Logout</a></span>

@@ -48,7 +48,6 @@ displayedColumns = ['invoice','mobile','date','amount','receive'];
   getReceivablesData(){
     this.model = true;
     this.billingService.getReceivables().subscribe(data => {
-      console.log(data)
       if(data != null && Object.keys(data).length>=0){
         if(data[0] && data[0]['paybleReceivables'].length > 0){
         let dataObj  = data[0]['paybleReceivables'];
@@ -71,7 +70,6 @@ displayedColumns = ['invoice','mobile','date','amount','receive'];
 
   receiveAmount(data){
     let arrList = [data];
-    console.log(arrList)
     this.billingService.postReceivedAmount(arrList).subscribe(data => {
       this.customerMobile = "";
       if(data){
@@ -89,7 +87,6 @@ displayedColumns = ['invoice','mobile','date','amount','receive'];
 
   addReceivable(data){
     let arrList =[data]
-    console.log(arrList)
     this.customerMobile = "";
     this.billingService.addReceivables(arrList).subscribe(data => {
         this.newReceivable = {};

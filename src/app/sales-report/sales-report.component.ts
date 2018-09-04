@@ -47,10 +47,8 @@ applyFilter(filterValue: string) {
     let obj = {value:type,startDate:this.startDate,endDate:this.endDate};
     this.displayedColumns = this.objData[type];
     this.report = this.payable_receivable = this.tickets = this.topCustomer = this.invoiceData = "";
-  //  console.log(this.displayedColumns);
     this._demoService.requestReport(obj,type).subscribe(
       data => {
-        console.log(data)
          this[val] = data;
          this.dataSource = new MatTableDataSource(this[val]);
          this.dataSource.paginator = this.paginator;

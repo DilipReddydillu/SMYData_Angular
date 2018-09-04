@@ -46,11 +46,9 @@ displayedColumns = ['invoice','mobile','date','amount','payoff'];
   getPayablesData(){
     this.model = true;
     this.billingService.getPayables().subscribe(data => {
-      console.log('getPayablesData:'+ JSON.stringify(data))
       if(data != null){
         if(data[0] && data[0]['paybleReceivables'].length > 0){
          let dataObj = data[0]['paybleReceivables'];
-         console.log(dataObj)
          this.dataSource = new MatTableDataSource(dataObj);
          this.dataSource.paginator = this.paginator;
          this.dataSource.sort = this.sort;
@@ -70,7 +68,6 @@ displayedColumns = ['invoice','mobile','date','amount','payoff'];
 
   payAmount(data){
     let arrList = [data]
-    console.log(arrList)
     this.customerMobile = "";
     this.billingService.postPayOffAmount(arrList).subscribe(data => {
       if(data){
@@ -89,7 +86,6 @@ displayedColumns = ['invoice','mobile','date','amount','payoff'];
 
   addPayable(data){
     let arrList = [data];
-    console.log(arrList)
     this.customerMobile = "";
     this.billingService.addPayables(arrList).subscribe(data => {
         this.newPayable = {};

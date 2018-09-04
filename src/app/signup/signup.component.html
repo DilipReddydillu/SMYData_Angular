@@ -40,7 +40,7 @@
       </div>
       <div class="form-group" *ngIf='!addNew'>
          <label for="name">Mobile Number</label>
-         <input type="text" class="form-control"
+         <input type="text" class="form-control" maxlength="10"
          required [readonly]="businessEditableForm"
          (blur)="doesUserExist(mobile.value);validation('pattern_mobile',mobile.value)"
          [(ngModel)]="model.mobile" name="mobile"
@@ -55,17 +55,17 @@
          <label for="name">Password</label>
          <input type="password" class="form-control" id="password" [readonly]="businessEditableForm"
          required   (blur)="validation('pattern_password',password.value)"
-         [(ngModel)]="model.password" name="password" placeholder="Min 6 Characters"
+         [(ngModel)]="model.password" name="password" placeholder="Min 6 Characters. Must contain captial letter & digit"
          #password="ngModel"/>
          <div [hidden]="password.valid || password.pristine"
             class="alert alert-danger">
-          Enter valid password ! Should contain mininum 6 characters.
+          Enter valid password ! Min 6 characters.Password must contain at least one capital alphabet and numeric digit.
          </div>
       </div>
       <div class="form-group" *ngIf='!addNew'>
          <label for="alterEgo">Email Address</label>
          <input type="text" class="form-control" id="email" [readonly]="businessEditableForm"
-         (blur)="validation('pattern_email',email.value)" required
+         (blur)="validation('pattern_email',email.value)" required placeholder="Henry@gmail.com"
          [(ngModel)]="model.email" #email="ngModel" name="alterEgo">
          <div [hidden]="email.valid || email.pristine"
             class="alert alert-danger">
@@ -86,13 +86,13 @@
       <div  class="flexDiv">
       <div class="form-group flex-item-buAdd">
          <label for="name">PIN Code</label>
-         <input type="text" class="form-control" id="pin"
-         required  (blur)="validation('pattern_pinCode',pin.value)"
+         <input type="text" class="form-control" id="pin" maxlength="6"
+         required  (blur)="validation('pattern_pinCode',pin.value)" placeholder="500010"
          [(ngModel)]="model.businessDetails[0].pinCode" name="pin"
          #pin="ngModel"/>
          <div [hidden]="pin.valid || pin.pristine"
             class="alert alert-danger">
-            PIN Code is required
+            Invalid PIN Code! Should contain 6 digits.
          </div>
       </div>
       <div  class="form-group flex-item-getAdd locationBtn">
@@ -154,7 +154,7 @@
          <div class="form-group dropdown-register" >
             <label for="name">Registration Info</label>
             <select name="reg" ngModel class="form-control" id="reg"
-            required
+            required (change)="idProofValidate(model.businessDetails[0].reg)"
             [(ngModel)]="model.businessDetails[0].reg" name="reg"
             #reg="ngModel">
             <option value="" disabled>Registration Info</option>
@@ -166,13 +166,13 @@
       </div>
       <div class="form-group" *ngIf='model.businessDetails[0].reg'>
          <label for="name">Enter Id Proof Number</label>
-         <input type="text" class="form-control" id="regDetails"
-         required
+         <input type="text" class="form-control" id="regDetails" [maxlength]="maxLn"
+         required (blur)="idProofValidate(model.businessDetails[0].reg,regDetails.value);"
          [(ngModel)]="model.businessDetails[0].regProof" name="regDetails"
          #regDetails="ngModel"/>
          <div [hidden]="regDetails.valid || regDetails.pristine"
             class="alert alert-danger">
-            Proof Id  is required
+            {{idProofErrMsg}}
          </div>
       </div>
       <button type="submit" class="btn btn-success btn-block" [disabled]="!signup.form.valid" >{{formSubmitName}}</button>
@@ -180,10 +180,3 @@
    </div>
  </div>
 </div>
-<!--
-<div [hidden]="!submitted" class="alert alert-success alert-dismissible">
-   <a href="#" class="close" data-dismiss="alert" aria-label="close" routerLink="/userData" routerLinkActive="active">&times;</a>
-   <strong style="text-align:center">Sign Up successful!!
-   <small> <a href="#" routerLink="/signIn" routerLinkActive="active">click here</a></small>to Sign In
-   </strong>
-</div> -->

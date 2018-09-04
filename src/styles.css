@@ -3,22 +3,16 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
 
-.ng-valid[required], .ng-valid.required  {
-  border-left: 5px solid #42A948; /* green */
-}
 
-.ng-invalid:not(form)  {
-  border-left: 5px solid #a94442; /* red */
-}
 body{
   /* background-color: #1AC2A1; /* Green */
-  background-color: #CCECFF; /* lightcrm */
+  background-color: #F5F5F5; /* lightcrm */
   /* background-color: #1abc9c; /* Green */
   color: black;
-  font-family: serif;
+  font-family: Roboto;
 }
 h1, h2, h3, h4, h5, h6, a{
-  font-family: serif;
+  font-family: Roboto;
 }
 h1{
   text-align: center;
@@ -50,7 +44,7 @@ h1{
 }
 .headerTble{
   font-size: x-large;
-  font-family: serif;
+  font-family: Roboto;
   color: #FFF;
 }
 .headerCss{

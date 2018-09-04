@@ -30,10 +30,8 @@ export class OtpAuthenticationComponent {
     this.dataService.cast.subscribe(messageSource => this.messageSource = messageSource)
     this.dataService.mobileTemp.subscribe(mobileNum => this.mobileNumber = mobileNum)
     this.dataService.userTypeVal.subscribe(userType => this.userType = userType)
-    console.log('message::'+this.messageSource);
   }
   sendOtp(){
-      console.log('send otp:'+ this.mobileNumber)
         this.dataService.sendOtp(this.mobileNumber).subscribe(
            data => {
              this.dataService.changeMessage(data+'Regi')
@@ -45,7 +43,6 @@ export class OtpAuthenticationComponent {
 
   verifyOtp(){
   this.dataService.cast.subscribe(messageSource => this.messageSource = messageSource)
-  console.log('verifyOtp::'+this.messageSource);
   if(this.messageSource == (this.otpValue+'Regi')){
     this.regSuccess = true;
     //this.successRegPopUp = true;
@@ -76,13 +73,13 @@ export class OtpAuthenticationComponent {
   }
 
   successReg(){
-    if (this.userType == 'business') {
-      this.dataService.changeProfile('true')
-      this.router.navigate(['/', 'signIn']);
-    }else if(this.userType == 'individual'){
-      this.dataService.changeindProfile('true')
-      this.router.navigate(['/', 'individualDetails']);
-    }
+    this.router.navigate(['/', 'signIn']);
+   //  if (this.userType == 'business') {
+   //    this.dataService.changeProfile('true')
+   //  }else if(this.userType == 'individual'){
+   //    this.dataService.changeindProfile('true')
+   //    this.router.navigate(['/', 'individualDetails']);
+   //  }
    }
 
 }

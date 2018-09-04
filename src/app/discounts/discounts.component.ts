@@ -38,7 +38,6 @@ export class DiscountsComponent implements OnInit {
 
   // function call to save the data
   addingDiscount(discountData){
-  console.log(discountData);
   //calling addDiscount method which is inside the billing.service to save the discounts data
     this._billingService.addDiscount(discountData).subscribe(
        data => {
@@ -54,17 +53,13 @@ export class DiscountsComponent implements OnInit {
   //calling getDiscount method which is inside the billing.service to fetch the discounts data
     this._billingService.getDiscount().subscribe(
        data => {
-         console.log('success::'+data)
          if(data != null && Object.keys(data).length>0){
-         console.log('data::'+Object.keys(data).length)
          this.isDataExist = true
          this.discounts = data;
        } else {
-         console.log('failure')
        }
        },
        error => {
-         console.log('error')
        }
     );
   }
