@@ -58,7 +58,8 @@ export class RegisterComponent implements OnInit {
   formTitle : String = 'Registration Form';
   businessEditableForm:any;
   addNew:boolean;
-  mobilecheck:boolean;
+  userExistCheck;
+  emailExistCheck;
   patternErr:string;
   showbusinessList:boolean;
   businessList:any;
@@ -132,13 +133,21 @@ export class RegisterComponent implements OnInit {
        );
  }
   doesUserExist(obj){
-    this.mobilecheck = false;
-    this._demoService.doesUserExist(obj).subscribe(
+    this.userExistCheck = "";
+   this._demoService.registerUser(obj).subscribe(
        data => {
-         if (data) {
-           console.log(data)
-           this.model.mobile = null;
-           this.mobilecheck = true;
+         let res = data;
+         console.log(res)
+         if (res != undefined && res[0] == 'success') {
+           // console.log(data)
+           this.userExistCheck ="";
+         }else if(res != undefined && res[0] == "Email already exist"){
+           this.model.email = "";
+           this.emailExistCheck =res[0];
+         }
+         else if(res != undefined && res[0] == "Mobile Number already exist"){
+           this.model.mobile = "";
+           this.userExistCheck =res[0];
          }
        },
        error => {
@@ -208,6 +217,8 @@ export class RegisterComponent implements OnInit {
   focusFunction(pristine,valid,event,type){
     if(event == 'focus'){
      this[type] = "focusGreen";
+     this.emailExistCheck="";
+     this.userExistCheck="";
    }
    else if (!pristine && !valid) {
      this[type] = "focusRed";

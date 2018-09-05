@@ -61,14 +61,14 @@
                       [(ngModel)]="model.mobile"
                       #mobile="ngModel"/>
 									 </div>
-                    <div class="errMsg" *ngIf="!model.mobile" [hidden]="mobile.pristine">
+                    <div class="errMsg" *ngIf="!model.mobile && !userExistCheck" [hidden]="mobile.pristine">
                       <span>Mobile number is required</span>
                     </div>
                     <div class="errMsg" *ngIf="model.mobile" [hidden]="mobile.valid">
                       <span>Please provide valid mobile number</span>
                     </div>
-                    <div class="errMsg" *ngIf="mobilecheck">
-                      <span>Mobile number already exist</span>
+                    <div class="errMsg" *ngIf="!mobile.pristine && userExistCheck">
+                      <strong>{{userExistCheck}}</strong>
                     </div>
 								</div>
                 <div class="form-group">
@@ -85,11 +85,14 @@
                      (focusout)="doesUserExist(model);focusFunction(email.pristine,email.valid,'outfocus','focusEmail')"
                      [(ngModel)]="model.email" #email="ngModel"/>
 									 </div>
-                    <div class="errMsg" *ngIf="!model.email" [hidden]="email.pristine">
+                    <div class="errMsg" *ngIf="!model.email && !emailExistCheck" [hidden]="email.pristine">
                       <span>Email id is required</span>
                     </div>
                     <div class="errMsg" *ngIf="model.email" [hidden]="email.valid">
                       <span>Please provide valid email id</span>
+                    </div>
+                    <div class="errMsg" *ngIf="!email.pristine && emailExistCheck">
+                      <strong>{{emailExistCheck}}</strong>
                     </div>
 								</div>
                 <div class="form-group">
@@ -268,7 +271,7 @@
         <div class="input-group inputBx" [ngClass]="focusBuName">
            <div class="input-group-prepend">
              <div class="input-group-text grpTxt">
-               <i class="fa fa-phone-square" aria-hidden="true"></i>
+               <i class="" aria-hidden="true"></i>
              </div>
            </div>
            <input name="regDetails"
@@ -289,9 +292,12 @@
       </div>
       </div>
       <!-- Terms and conditions -->
-      <!-- <div class="form-group">
-        <input class="tNc input-group" required name="tnc" id="tnc" type="text"/> <span> I read and accept terms and conditions</span>
-      </div> -->
+      <div class="form-group">
+        <span class="input-group-append">
+        <input class="tNc input-group" required name="tnc" id="tnc"
+        [(ngModel)]="model.tnc"
+        #tnc="ngModel" type="checkbox"/>  I read and accept terms and conditions *</span>
+      </div>
      <!-- Sign Up button -->
         <div class="row justify-content-center">
           <div class="col-8">
@@ -349,7 +355,7 @@
                       [(ngModel)]="individual.mobile"
                       #mobile="ngModel"/>
                    </div>
-                    <div class="errMsg" *ngIf="!individual.mobile" [hidden]="mobile.pristine">
+                    <div class="errMsg" *ngIf="!individual.mobile && !userExistCheck" [hidden]="mobile.pristine">
                       <span>Mobile number is required</span>
                     </div>
                     <div class="errMsg" *ngIf="individual.mobile" [hidden]="mobile.valid">
@@ -357,6 +363,9 @@
                     </div>
                     <div class="errMsg" *ngIf="mobilecheck">
                       <span>Mobile number already exist</span>
+                    </div>
+                    <div class="errMsg" *ngIf="individual.mobile && userExistCheck">
+                      <strong>{{userExistCheck}}</strong>
                     </div>
                 </div>
                 <div class="form-group">
@@ -373,11 +382,14 @@
                      (focusout)="doesUserExist(individual);focusFunction(email.pristine,email.valid,'outfocus','focusEmail')"
                      [(ngModel)]="individual.email" #email="ngModel"/>
                    </div>
-                    <div class="errMsg" *ngIf="!individual.email" [hidden]="email.pristine">
+                    <div class="errMsg" *ngIf="!individual.email && !emailExistCheck" [hidden]="email.pristine">
                       <span>Email id is required</span>
                     </div>
                     <div class="errMsg" *ngIf="individual.email" [hidden]="email.valid">
                       <span>Please provide valid email id</span>
+                    </div>
+                    <div class="errMsg" *ngIf="individual.email && emailExistCheck">
+                      <strong>{{emailExistCheck}}</strong>
                     </div>
                 </div>
                 <div class="form-group">
@@ -424,9 +436,11 @@
                    </div>
                 </div>
       <!-- Terms and conditions -->
-      <!-- <div class="form-group">
-        <input class="tNc input-group" required name="tnc" id="tnc" type="text"/> <span> I read and accept terms and conditions</span>
-      </div> -->
+      <div class="form-group">
+        <span class="input-group-append">
+        <input type="checkbox" class="tNc input-group" required name="tnc"
+          [(ngModel)]="individual.tnc" #tnc="ngModel"/> I read and accept terms and conditions * </span>
+      </div>
      <!-- Sign Up button -->
         <div class="row justify-content-center">
           <div class="col-8">
