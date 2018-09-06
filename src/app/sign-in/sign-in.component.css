@@ -37,4 +37,5 @@ input:focus{
 }
 input{
   border: none;
+  width: 90%;
 }

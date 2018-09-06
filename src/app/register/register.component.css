@@ -25,7 +25,7 @@ input:focus{
 }
 input{
   border: none;
-  width: 250px;
+width: 90%;
 }
 
 .flexDiv{

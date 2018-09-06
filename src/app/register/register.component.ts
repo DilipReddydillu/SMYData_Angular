@@ -107,11 +107,12 @@ export class RegisterComponent implements OnInit {
          this._demoService.changeMobile(this.mobileOTP);
        this._demoService.registerUser(dataJson).subscribe(
            data => {
+             console.log(data)
                  if (data[0] == 'success') {
                    this.sendOtp(this.mobileOTP )
                    return true;
                  }else{
-                   this.toastr.error(data[0], 'Error',{toastLife: '5000'});
+                   this.toastr.error("Registration failed. Could not save the details", 'Error',{toastLife: '5000'});
                  }
            },
            error => {
@@ -134,7 +135,8 @@ export class RegisterComponent implements OnInit {
  }
   doesUserExist(obj){
     this.userExistCheck = "";
-   this._demoService.registerUser(obj).subscribe(
+    console.log(obj)
+   this._demoService.doesUserExist(obj).subscribe(
        data => {
          let res = data;
          console.log(res)

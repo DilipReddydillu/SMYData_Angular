@@ -45,15 +45,7 @@ export class SignupComponent {
         {
           name: 'TIN',
           id: '3'
-        },
-        // {
-        //     name: 'LabourId',
-        //     id: '3'
-        // },
-        // {
-        //     name: 'RegId',
-        //     id: '5'
-        // },
+        }
     ];
 
     submitted = false;
@@ -178,6 +170,7 @@ export class SignupComponent {
       this._demoService.addingNewBusiness(dataJson).subscribe(
           data => {
               this.toastr.success("successfully added","Success",{toastLife: '5000'});
+              this.router.navigate(['/', 'userData','myInfo']);
               return true;
           },
           error => {
@@ -218,8 +211,8 @@ export class SignupComponent {
     editBusiness(dataJson){
       this._demoService.editBusinessService(dataJson).subscribe(
           data => {
-              this.toastr.success("successfully added","Success",{toastLife: '5000'});
-               this.router.navigate(['/', 'userData']);
+              this.toastr.success("successfully saved","Success",{toastLife: '5000'});
+               this.router.navigate(['/','userData','myInfo']);
           },
           error => {
               console.error("Error saving data!");

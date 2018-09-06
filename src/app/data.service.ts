@@ -5,7 +5,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import {environment} from '../environments/environment';
 
 const httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    headers: new HttpHeaders({ 'Content-Type': 'application/json',"Access-Control-Allow-Origin": "*" })
 };
 const urlProvider = environment.url;
 const key = 'AIzaSyBFcZOIYqk_s0-qilRmve1TjMCXhYxUP3c';
@@ -91,7 +91,7 @@ export class DataService {
     registerIndividual(data) {
         let body = JSON.stringify(data);
         console.log(data)
-        let url =  urlProvider + '/api/saveCustomer';
+        let url =  urlProvider + '/api/saveUser/registration';
         console.log(url)
         return this.http.post(url, body, httpOptions);
     }
@@ -117,7 +117,7 @@ export class DataService {
 
     logInUser(data,type) {
         console.log(data)
-        let url =  urlProvider + '/api/loginUser/'+type;
+        let url =  urlProvider + '/api/loginUser';
         return this.http.post(url, data)
     }
 
@@ -136,12 +136,15 @@ export class DataService {
 
     resetpassword(pwd,mobile){
       console.log(pwd + mobile)
-      let url =  urlProvider + '/api/resetPwd/'+pwd;
+      let url =  urlProvider + '/api/resetPwd/'+pwd+'/'+mobile;
       return this.http.get(url, pwd )
     }
     doesUserExist(data){
+      let dataObj = JSON.stringify(data);
       var url =  urlProvider + '/api/saveUser/validate';
-      return this.http.get(url,data);
+      console.log(url);
+      console.log(dataObj);
+      return this.http.post(url,dataObj,httpOptions);
     }
 
     customerExist(mobile){

@@ -5,7 +5,7 @@
 				<h2>SMYDATA</h2>
 			</div>
 			<div class="">
-				<form (ngSubmit)="onSubmit(); signin.reset()" #signin="ngForm" class="login-form">
+				<form (ngSubmit)="onSubmit();" #signin="ngForm" class="login-form">
 								<div class="form-group">
 									<div class="input-group mb-2 mr-sm-2 inputBx" [ngClass]="focusMobile">
 										 <div class="input-group-prepend">
@@ -46,7 +46,7 @@
 								</div>
                 <div class="row justify-content-center">
                   <div class="col-8">
-                    <button type="button" [className]="signin.form.valid ? 'btn btn-block btn-success' : 'btn btn-block btn-default'"  [disabled]="!signin.form.valid" name="button">LOG IN</button>
+                    <button type="submit" [className]="signin.form.valid ? 'btn btn-block btn-success' : 'btn btn-block btn-default'"  [disabled]="!signin.form.valid" name="button">LOG IN</button>
                   </div>
                 </div>
 				</form>
@@ -81,6 +81,11 @@
 					  <h2 class="modal-title">Reset Password</h2>
           <button type="button" class="close" id="modalWindow" data-dismiss="modal" #closeAddExpenseModal >&times;</button>
         </div>
+        <span class="my-2 text-center" *ngIf="errMsg">
+          <strong class="text-danger">Mobile Number does not exist.&nbsp;
+          <span routerLink="/signUp" class="text-info link">click here</span>&nbsp;to register
+          </strong>
+        </span>
         <div class="modal-body">
 					<form (ngSubmit)="sendOtp();" #otp="ngForm" class="otp-form">
 					<div class="form-group">
@@ -92,11 +97,11 @@
                      <i class="fa fa-phone-square" aria-hidden="true"></i>
                    </div>
                  </div>
-                 <input type="text" id="mobile" maxlength="10" placeholder="Mobile"
+                 <input type="text"  maxlength="10" placeholder="Mobile"
                     required
                     autocomplete="off"
                     required  pattern="[0-9]{10}" maxlength="10"
- 									 (keyup)="doesUserExist(mobileNumVal)"
+ 									 (keyup)="doesUserExist(mobileNumVal);"
  		               [(ngModel)]="mobileNumVal" name="mobileNum" #mobileNum=ngModel/>
                </div>
                <div class="errMsg" *ngIf="!mobileNumVal" [hidden]="mobileNum.pristine">
@@ -104,7 +109,7 @@
                </div>
                <div class="errMsg" *ngIf="mobileNumVal" [hidden]="mobileNum.valid">
                  <span>Please provide valid mobile number</span>
-               </div>
+               </div>            
             </div>
 					</div>
 					<button  type="submit" class="btn btn-primary btn-md" [disabled]="!otp.form.valid">Send OTP</button>

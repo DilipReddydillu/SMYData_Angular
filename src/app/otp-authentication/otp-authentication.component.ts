@@ -23,7 +23,8 @@ export class OtpAuthenticationComponent {
   mobileNumber:number;
   regSuccess:boolean;
   userType:string;
-
+  pswdResetSuccess:boolean;
+  focusPassword;focusCnfPassword
     constructor(private dataService: DataService, private router: Router,  private cookieService: CookieService) { }
   ngOnInit() {
     this.resetPwd = false;
@@ -45,8 +46,6 @@ export class OtpAuthenticationComponent {
   this.dataService.cast.subscribe(messageSource => this.messageSource = messageSource)
   if(this.messageSource == (this.otpValue+'Regi')){
     this.regSuccess = true;
-    //this.successRegPopUp = true;
-   //this.router.navigate(['/', 'signIn']);
   }else if(this.messageSource == this.otpValue){
     this.resetPwd = true;
   }else{
@@ -54,32 +53,31 @@ export class OtpAuthenticationComponent {
   }
 }
   resetPswd(){
-    if (this.pwdValNew == this.pwdValCnf) {
       this.mobile = this.cookieService.get('resetPwdMobile');
       this.dataService.resetpassword(this.pwdValNew,this.mobile).subscribe(
          data => {
-           this.router.navigate(['/', 'signIn']);
-           return true;
+          this.pswdResetSuccess = true;
+          this.pwdValNew = this.pwdValCnf = "";
          },
          error => {
            this.errorDisplay = true;
            this.errMsg = 'Could not Reset the password. Try Again';
          }
       );
-    }else{
-      this.errorDisplay = true;
-      this.errMsg = 'Password Match error';
-    }
   }
-
+  focusFunction(pristine,valid,event,type){
+    if(event == 'focus'){
+     this[type] = "focusGreen";
+   }
+   else if (!pristine && !valid) {
+     this[type] = "focusRed";
+   }
+   if(pristine && (event == 'outfocus')){
+     this[type] = "";
+   }
+  }
   successReg(){
     this.router.navigate(['/', 'signIn']);
-   //  if (this.userType == 'business') {
-   //    this.dataService.changeProfile('true')
-   //  }else if(this.userType == 'individual'){
-   //    this.dataService.changeindProfile('true')
-   //    this.router.navigate(['/', 'individualDetails']);
-   //  }
    }
 
 }

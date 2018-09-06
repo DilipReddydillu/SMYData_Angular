@@ -79,44 +79,46 @@ messageSource:number;
          let JsonData = data;
          this._demoService.logInUser(JsonData,type).subscribe(
             data => {
-              if(data == true){
-            if (type == 'business') {
+               console.log(data);
+              if(data[0] == "true"){
+            if (data[1] == "business") {
               this.showProfile = true;
               this.submitted = true;
               this._demoService.changeProfile('true')
               this.router.navigate(['/', 'userData']);
-            }else if(type == 'individual'){
+            }else if(data[1] == 'individual'){
               this._demoService.changeindProfile('true')
               this.router.navigate(['/', 'individualDetails']);
-            }
-              return true;
             }else{
-              this.loginFail =true;
+              this.toastr.error('Could not login please try again later', 'Error',{toastLife: '5000'});
+            }
+            }else{
+              this.toastr.error('Login failed! Invalid mobile/password', 'Error',{toastLife: '5000'});
             }
             },
             error => {
-              this.loginFail =true;
-              return Observable.throw(error);
+              this.toastr.error('Login failed! Invalid mobile/password', 'Error',{toastLife: '5000'});
             }
          );
        }
 
-       doesUserExist(mobileNum){
-         this.errMsg = "Enter valid mobile number! Should contain 10 digits.";
-         if(mobileNum.length == 10){
-         this._demoService.doesUserExist({'mobile':mobileNum}).subscribe(
+       doesUserExist(val){
+         if(val.length == 10){
+        this._demoService.doesUserExist({mobile:val}).subscribe(
             data => {
-              if (data) {
-              this.errMsg = "";
-              }else{
+              let res = data;
+              console.log(res)
+              if (res != undefined && res[0] == 'success') {
+                this.errMsg ="Mobile Number does not exist";
+              }else if(res != undefined && res[0] == "Mobile Number already exist"){
+                  this.errMsg = "";
               }
             },
             error => {
-              this.errMsg = "Mobile number does not exist! Kindly register"
             }
          );
        }
-       }
+     }
 
        focusFunction(pristine,valid,val,type){
          if(val == 'focus'){

@@ -1,10 +1,10 @@
 <div class="" *ngIf ='!showbusinessList &&   this.businessEditableForm'>
   <button type="button"  class="btn btn-primary" name="button" (click)="showbusinessList = true">Show List</button>
 </div>
-<div  *ngIf ='showbusinessList'>
-  <h2>Business List</h2>
-<ul class="list-group" >
-  <li class="list-group-item" *ngFor="let item of businessList.businessDetails; let indexVal=index " (click)='viewBusinessDetails(indexVal)'>{{item.companyName}}</li>
+<div  *ngIf ='showbusinessList' class="listItms">
+  <h2 class="text-center">Business List</h2>
+<ul class="list-group text-center" >
+  <li class="list-group-item listBu" *ngFor="let item of businessList.businessDetails; let indexVal=index " (click)='viewBusinessDetails(indexVal)'>{{item.companyName}}</li>
 </ul>
 </div>
 

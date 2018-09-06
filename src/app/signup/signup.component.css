@@ -43,3 +43,15 @@
 .locationBtn{
   margin-top: 31px;
 }
+.listBu{
+  cursor: pointer;
+  text-transform: capitalize;
+}
+.listBu:hover{
+  background-color: cornflowerblue;
+  text-decoration: underline;
+}
+.listItms{
+  text-align: center;
+  width: 50%
+}
