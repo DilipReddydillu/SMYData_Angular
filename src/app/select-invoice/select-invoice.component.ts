@@ -59,6 +59,7 @@ public pattern_mobile = /^\d{10}$/;
 
   }
   applyDiscount(data,subTotal){
+    let dicountTemp = this.discounts;
     this.discounts = 0;
     if(data && data.length > 0){
       data.forEach(val => {
@@ -67,6 +68,7 @@ public pattern_mobile = /^\d{10}$/;
         }
       });
     }
+    this.discounts = this.discounts > 0 ? this.discounts : dicountTemp;
   }
   verifyUser(){
     this._demoService.changeCustomerMobile(this.mobile);

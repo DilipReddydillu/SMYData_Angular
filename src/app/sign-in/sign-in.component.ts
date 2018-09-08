@@ -110,8 +110,8 @@ messageSource:number;
          );
        }
 
-       doesUserExist(val){
-         if(val.length == 10){
+       doesUserExist(val,valid){
+         if(val.length == 10 && valid){
         this._demoService.doesUserExist({mobile:val}).subscribe(
             data => {
               let res = data;
@@ -145,5 +145,7 @@ messageSource:number;
          if (!this.pattern_mobile.test(this.model.mobile))
                  this.model.mobile = '';
          }
+         errMsgCheck(valid){
 
+         }
 }

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
 import {Router} from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import {FormControl} from '@angular/forms';
+import {TooltipPosition} from '@angular/material';
 
 @Component({
   selector: 'app-otp-authentication',
@@ -9,6 +11,8 @@ import { CookieService } from 'ngx-cookie-service';
   styleUrls: ['./otp-authentication.component.css']
 })
 export class OtpAuthenticationComponent {
+  positionOptions: TooltipPosition[] = ['after', 'before', 'above', 'below', 'left', 'right'];
+ position = new FormControl(this.positionOptions[0]);
 
   messageSource:any;
   otpValue:any;

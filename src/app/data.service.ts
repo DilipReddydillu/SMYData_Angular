@@ -80,13 +80,19 @@ export class DataService {
        this.editBusiness.next(data);
      }
 
-    registerUser(data) {
+    registerUserIndividual(data) {
         let body = JSON.stringify(data);
         console.log(data)
         let url =  urlProvider + '/api/saveUser/registration';
         console.log(url)
         return this.http.post(url, body, httpOptions);
     }
+    registerUser(data) {
+      var headers = new HttpHeaders();
+      headers.append('Content-Type', 'application/form-data');
+      let url =  urlProvider + '/api/saveBusinessUser/registration';
+      return this.http.post(url, data,{headers: headers })
+   }
 
     registerIndividual(data) {
         let body = JSON.stringify(data);

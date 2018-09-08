@@ -10,7 +10,7 @@
         </div>
       </div>
 			<div class="business" *ngIf="business">
-				<form  (ngSubmit)="onSubmit(model);" #signup="ngForm" id="register">
+				<form  (ngSubmit)="onSubmitBu(model);" #signup="ngForm" id="register">
 								<div class="form-group">
 									<div class="input-group inputBx" [ngClass]= "{focusGreen:focusBuName,focusRed:focusBuName == 'red' ? true : flase,isDisabled:isDisabled}">
 										 <div class="input-group-prepend">
@@ -293,8 +293,11 @@
           </div>
       </div>
         <div class="form-group">
-          <div class="input-group inputBx" >
-        <input type="file" (change)="selectFile($event)" placeholder="Upload Id Proof Doc" accept=".pdf,.doc,.docx" required>
+      <div class="input-group inputBx" >
+        <input type="file" [(ngModel)]="filedata1" name ='file' #file='ngModel' (change)="selectFile($event)" placeholder="Upload Id Proof Doc" accept=".png,.jpg,.jpeg" required>
+      </div>
+      <div class="errMsg" [hidden]="file.valid || file.pristine">
+        <span>invalid file upload format.Only JPG and PNG files are allowed.</span>
       </div>
       </div>
       <!-- Terms and conditions -->

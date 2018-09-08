@@ -71,6 +71,7 @@ export class RegisterComponent implements OnInit {
   showAddrMsg = false;
   public pattern_pinCode = /^\d{3,7}$/;
   business =true;
+  filedata1;
   isDisabled;
   focusFname;focusPin;
   focusBuName;focusOwnerName;focusMobile;focusPassword;focusCnfPassword;focusWebsite;
@@ -98,22 +99,65 @@ export class RegisterComponent implements OnInit {
           }
       ]
   };
+  public filedata:any;
   public individual = {"role":"individual", "ownerName":"","lastName": "", "mobile": "", "password": "", "email": "",}
   constructor(private _demoService: DataService, private router: Router,  private toastr:ToastsManager) {
         }
 
   ngOnInit() {
   }
-
+  selectFile(e){
+         this.filedata=e.target.files[0];
+         console.log(e);
+         console.log(this.filedata)
+         let type = this.filedata.name.split(".");
+         console.log(type[type.length -1])
+         if (type.length >0 && type[type.length -1] != undefined) {
+           let docType = type[type.length -1];
+           if (docType == 'JPG' || docType == 'PNG') {
+             console.log('file saved')
+           }else{
+            this.filedata1 = ""
+           }
+         }else{
+           this.filedata1 = ""
+         }
+     }
  onSubmit(dataJson){
    this.getLocation();
          this.mobileOTP = dataJson.mobile;
          this._demoService.changeMobile(this.mobileOTP);
-       this._demoService.registerUser(dataJson).subscribe(
+       this._demoService.registerUserIndividual
+       (dataJson).subscribe(
            data => {
              console.log(data)
                  if (data!= null && data[0] == 'success') {
                    this.sendOtp(this.mobileOTP )
+                   return true;
+                 }else{
+                   this.toastr.error("Registration failed. Could not save the details", 'Error',{toastLife: '5000'});
+                 }
+           },
+           error => {
+               console.error("Error saving data!");
+               this.registrationFailed = 'Registration failed';
+               this.toastr.error('Registration failed', 'Error',{toastLife: '5000'});
+               return Observable.throw(error);
+           }
+       );
+ }
+ onSubmitBu(dataJson){
+   this.getLocation();
+         this.mobileOTP = dataJson.mobile;
+         this._demoService.changeMobile(this.mobileOTP);
+         let fd = new FormData();
+         fd.append("file",this.filedata);
+         fd.append("businessDetails",dataJson);
+       this._demoService.registerUser(fd).subscribe(
+           data => {
+             console.log(data)
+                 if (data!= null && data[0] == 'success') {
+                   this.sendOtp(this.mobileOTP)
                    return true;
                  }else{
                    this.toastr.error("Registration failed. Could not save the details", 'Error',{toastLife: '5000'});
@@ -237,8 +281,8 @@ export class RegisterComponent implements OnInit {
     this.isDisabled = false;
     if(event == 'focus'){
      this[type] = 'green';
-     this.emailExistCheck="";
-     this.userExistCheck="";
+     //this.emailExistCheck="";
+     //this.userExistCheck="";
    }
    else if (!pristine && !valid) {
      this[type] = 'red';

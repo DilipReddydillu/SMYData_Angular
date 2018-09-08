@@ -105,11 +105,11 @@
                     required
                     autocomplete="off"
                     required  pattern="[0-9]{10}" maxlength="10"
- 									 (keyup)="doesUserExist(mobileNumVal);" (focus)="mobileValidCheckOtp = false" (blur)="mobileValidCheckOtp=true"
+ 									 (keyup)="doesUserExist(mobileNumVal,mobileNum.valid);errMsg=''" (focus)="mobileValidCheckOtp = false" (blur)="mobileValidCheckOtp=true"
  		               [(ngModel)]="mobileNumVal" name="mobileNum" #mobileNum=ngModel/>
                </div>
                <div class="errMsg" *ngIf="!mobileNumVal" [hidden]="mobileNum.pristine">
-                 <span>Mobile number is required </span>
+                 <span>Mobile number is required</span>
                </div>
                <div class="errMsg" *ngIf="mobileNumVal && mobileValidCheckOtp" [hidden]="mobileNum.valid">
                  <span>Please provide valid mobile number</span>

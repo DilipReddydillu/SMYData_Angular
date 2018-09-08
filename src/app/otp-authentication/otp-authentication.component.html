@@ -39,7 +39,7 @@
         </strong>
       </span>
 			<div class="">
-				<form  (ngSubmit)="resetPswd();" #pwdReset="ngForm">
+				<form  (ngSubmit)="resetPswd();pwdReset.reset()" #pwdReset="ngForm">
           <div class="form-group">
             <div class="input-group inputBx" [ngClass]="focusPassword">
                <div class="input-group-prepend">
@@ -48,6 +48,7 @@
                  </div>
                </div>
                <input type="password" name="password"
+               [matTooltipPosition]="position.value"matTooltip="Requires minimum 6 characters,at least 1 Uppercase, 1 Number and 1 of these special characters(!@#$%)"
                required placeholder="Password *" autocomplete="off"
                pattern="^(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[!@#$%]).{6,15}$" maxlength="15"
                (focus)="focusFunction(password.pristine,password.valid,'focus','focusPassword')"
@@ -59,7 +60,7 @@
                <span>Password is required </span>
              </div>
              <div class="errMsg" *ngIf="pwdValNew && !regSuccess" [hidden]="password.valid">
-               <span>Requires minimum 6 characters, at least 1 Uppercase, 1 Number and 1 of these special characters(!@#$%)</span>
+               <span>Password requirment does not match</span>
              </div>
           </div>
           <div class="form-group">
