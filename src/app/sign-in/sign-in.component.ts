@@ -31,6 +31,7 @@ messageSource:number;
     errMsg;
     focusMobile;
     focusPassword;
+    loginErr;
     public pattern_mobile = /^\d{10}$/;
 
 
@@ -77,6 +78,7 @@ messageSource:number;
 
      logInUser(data,type) {
          let JsonData = data;
+         this.loginErr = false;
          this._demoService.logInUser(JsonData,type).subscribe(
             data => {
                console.log(data);
@@ -87,17 +89,23 @@ messageSource:number;
               this._demoService.changeProfile('true')
               this.router.navigate(['/', 'userData']);
             }else if(data[1] == 'individual'){
+              this.showProfile = true;
+              this.submitted = true;
+              this._demoService.changeProfile('true')
               this._demoService.changeindProfile('true')
               this.router.navigate(['/', 'individualDetails']);
             }else{
-              this.toastr.error('Could not login please try again later', 'Error',{toastLife: '5000'});
+              this.loginErr = true;
+              //this.toastr.error('Could not login please try again later', 'Error',{toastLife: '5000'});
             }
-            }else{
-              this.toastr.error('Login failed! Invalid mobile/password', 'Error',{toastLife: '5000'});
+          }else{
+              this.loginErr = true;
+              //this.toastr.error('Login failed! Invalid mobile/password', 'Error',{toastLife: '5000'});
             }
             },
             error => {
-              this.toastr.error('Login failed! Invalid mobile/password', 'Error',{toastLife: '5000'});
+              this.loginErr = true;
+              //this.toastr.error('Login failed! Invalid mobile/password', 'Error',{toastLife: '5000'});
             }
          );
        }

@@ -8,7 +8,7 @@
    <a class="nav-link" *ngIf="indProfile">
      <span class="" (click)="logOut()"><a>Logout</a></span>
    </a>
-    <li class="nav-item dropdown pr-4" *ngIf="showProfile" style="list-style:none;left:-35px;">
+    <li class="nav-item dropdown pr-4" *ngIf="showProfile && !indProfile" style="list-style:none;left:-35px;">
        <a class="nav-link dropdown-toggle"   style="cursor:pointer" id="navbarDropdownMenuLink" data-toggle="dropdown">
          Profile
        </a>

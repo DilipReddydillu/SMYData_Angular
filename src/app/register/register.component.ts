@@ -6,6 +6,7 @@ import {Router} from '@angular/router';
 import {UserDataComponent} from '../user-data/user-data.component'
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { ToastsManager } from 'ng5-toastr/ng5-toastr';
+import {TooltipPosition} from '@angular/material';
 
 @Component({
   selector: 'app-register',
@@ -13,6 +14,8 @@ import { ToastsManager } from 'ng5-toastr/ng5-toastr';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
+  positionOptions: TooltipPosition[] = ['after', 'before', 'above', 'below', 'left', 'right'];
+ position = new FormControl(this.positionOptions[0]);
   categoryInfo = [{
           name: 'Clothing',
           id: '1'
@@ -68,6 +71,7 @@ export class RegisterComponent implements OnInit {
   showAddrMsg = false;
   public pattern_pinCode = /^\d{3,7}$/;
   business =true;
+  isDisabled;
   focusFname;
   focusBuName;focusOwnerName;focusMobile;focusPassword;focusCnfPassword;focusWebsite;
   focusEmail;focusBuAddr;focusCountry;focusState;focusCity;focusregDetails;
@@ -108,7 +112,7 @@ export class RegisterComponent implements OnInit {
        this._demoService.registerUser(dataJson).subscribe(
            data => {
              console.log(data)
-                 if (data[0] == 'success') {
+                 if (data!= null && data[0] == 'success') {
                    this.sendOtp(this.mobileOTP )
                    return true;
                  }else{
@@ -135,6 +139,7 @@ export class RegisterComponent implements OnInit {
  }
   doesUserExist(obj){
     this.userExistCheck = "";
+	this.emailExistCheck = "";
     console.log(obj)
    this._demoService.doesUserExist(obj).subscribe(
        data => {
@@ -145,12 +150,20 @@ export class RegisterComponent implements OnInit {
            this.userExistCheck ="";
          }else if(res != undefined && res[0] == "Email already exist"){
            this.model.email = "";
+		   this.individual.email = "";
            this.emailExistCheck =res[0];
          }
          else if(res != undefined && res[0] == "Mobile Number already exist"){
            this.model.mobile = "";
+		  this.individual.email = "";
            this.userExistCheck =res[0];
          }
+		  else if(res != undefined && res[0] == "Mobile Number and Email already exist"){
+	           this.model.mobile = "";
+	           this.individual.email = "";
+	           this.userExistCheck = "Mobile Number already exist";
+	           this.emailExistCheck = "Email already exist";
+	         }
        },
        error => {
        }
@@ -215,15 +228,20 @@ export class RegisterComponent implements OnInit {
           }
     }
   }
-
+  regForm(value){
+   this.business = value;
+   this.isDisabled = true;
+   document.forms['register'].reset()
+ }
   focusFunction(pristine,valid,event,type){
+    this.isDisabled = false;
     if(event == 'focus'){
-     this[type] = "focusGreen";
+     this[type] = 'green';
      this.emailExistCheck="";
      this.userExistCheck="";
    }
    else if (!pristine && !valid) {
-     this[type] = "focusRed";
+     this[type] = 'red';
    }
    if(pristine && (event == 'outfocus')){
      this[type] = "";

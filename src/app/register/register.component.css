@@ -17,6 +17,9 @@ padding: 25px;
 input:focus{
     outline: none;
 }
+.isDisabled{
+  border: solid 1px #e3e3e3 !important;
+}
 .focusGreen{
   border: 1px solid green;
 }

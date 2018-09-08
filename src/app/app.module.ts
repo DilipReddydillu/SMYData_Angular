@@ -9,6 +9,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatTableModule,MatPaginatorModule } from '@angular/material';
 import {CdkTableModule} from '@angular/cdk/table';
 import {MatInputModule} from '@angular/material';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 import { AppRoutingModule } from './app-routing/app-routing.module';
 import { AppComponent } from './app.component';
@@ -71,6 +72,7 @@ import { RegisterComponent } from './register/register.component';
     MatPaginatorModule,
     CdkTableModule,
     MatInputModule,
+    MatTooltipModule,
     AppRoutingModule,
     ToastModule.forRoot()
   ],

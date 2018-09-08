@@ -2,17 +2,17 @@
   <div class="row justify-content-center">
       <div class="col-5 box">
       <div class="registeropt my-3" >
-        <div class="regLink" [ngClass]="{'selected':business}" (click)="business = true">
+        <div class="regLink" [ngClass]="{'selected':business}" (click)="regForm(true)">
         Business
         </div>
-        <div class="regLink" [ngClass]="{'selected':!business}" (click)="business = false">
+        <div class="regLink" [ngClass]="{'selected':!business}" (click)="regForm(false)">
           Individual
         </div>
       </div>
 			<div class="business" *ngIf="business">
-				<form  (ngSubmit)="onSubmit(model);" #signup="ngForm">
+				<form  (ngSubmit)="onSubmit(model);" #signup="ngForm" id="register">
 								<div class="form-group">
-									<div class="input-group inputBx" [ngClass]="focusBuName">
+									<div class="input-group inputBx" [ngClass]= "{focusGreen:focusBuName,focusRed:focusBuName == 'red' ? true : flase,isDisabled:isDisabled}">
 										 <div class="input-group-prepend">
 											 <div class="input-group-text grpTxt">
 												 <i class="fa  fa-id-card" aria-hidden="true"></i>
@@ -29,7 +29,7 @@
                     </div>
 								</div>
 								<div class="form-group">
-									<div class="input-group inputBx" [ngClass]="focusOwnerName">
+									<div class="input-group inputBx" [ngClass]= "{focusGreen:focusOwnerName == 'green' ? true : flase,focusRed:focusOwnerName == 'red' ? true : flase,isDisabled:isDisabled}">
 										 <div class="input-group-prepend">
 											 <div class="input-group-text grpTxt">
 												 <i class="fa fa-user" aria-hidden="true"></i>
@@ -47,7 +47,7 @@
                     </div>
 								</div>
 								<div class="form-group">
-									<div class="input-group inputBx" [ngClass]="focusMobile">
+									<div class="input-group inputBx" [ngClass]= "{focusGreen:focusMobile == 'green' ? true : flase,focusRed:focusMobile == 'red' ? true : flase,isDisabled:isDisabled}">
 										 <div class="input-group-prepend">
 											 <div class="input-group-text grpTxt">
 												 <i class="fa fa-phone-square" aria-hidden="true"></i>
@@ -56,7 +56,8 @@
                      <input type="text" name="mobile"
                       required placeholder="Mobile Number *" autocomplete="off"
                       (focus)="focusFunction(mobile.pristine,mobile.valid,'focus','focusMobile')"
-                      (focusout)="doesUserExist(model);focusFunction(mobile.pristine,mobile.valid,'outfocus','focusMobile')"
+                      (focusout)="focusFunction(mobile.pristine,mobile.valid,'outfocus','focusMobile')"
+                      (keyup)="doesUserExist(model)"
                       pattern="[0-9]{10}" maxlength="10"
                       [(ngModel)]="model.mobile"
                       #mobile="ngModel"/>
@@ -72,7 +73,7 @@
                     </div>
 								</div>
                 <div class="form-group">
-									<div class="input-group inputBx" [ngClass]="focusEmail">
+									<div class="input-group inputBx" [ngClass]= "{focusGreen:focusEmail == 'green' ? true : flase,focusRed:focusEmail== 'red' ? true : flase,isDisabled:isDisabled}">
 										 <div class="input-group-prepend">
 											 <div class="input-group-text grpTxt">
 												 <i class="fa fa-envelope" aria-hidden="true"></i>
@@ -80,9 +81,11 @@
 										 </div>
                      <input type="email" name="email"
                      required placeholder="Email Address *" autocomplete="off"
-                     pattern="^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$"
+                     pattern="^[\w\.]+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$"
+
                      (focus)="focusFunction(email.pristine,email.valid,'focus','focusEmail')"
-                     (focusout)="doesUserExist(model);focusFunction(email.pristine,email.valid,'outfocus','focusEmail')"
+                     (focusout)="focusFunction(email.pristine,email.valid,'outfocus','focusEmail')"
+                     (keyup)="doesUserExist(model)"
                      [(ngModel)]="model.email" #email="ngModel"/>
 									 </div>
                     <div class="errMsg" *ngIf="!model.email && !emailExistCheck" [hidden]="email.pristine">
@@ -96,13 +99,15 @@
                     </div>
 								</div>
                 <div class="form-group">
-									<div class="input-group inputBx" [ngClass]="focusPassword">
+									<div class="input-group inputBx" [ngClass]= "{focusGreen:focusPassword == 'green' ? true : flase,focusRed:focusPassword== 'red' ? true : flase,isDisabled:isDisabled ? true : flase}">
 										 <div class="input-group-prepend">
 											 <div class="input-group-text grpTxt">
 												<i class="fa fa-key"></i>
 											 </div>
 										 </div>
                      <input type="password" name="password"
+                      [matTooltipPosition]="position.value"
+                       matTooltip="Requires minimum 6 characters,at least 1 Uppercase, 1 Number and 1 of these special characters(!@#$%)"
                      required placeholder="Password *" autocomplete="off"
                      pattern="^(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[!@#$%]).{6,15}$" maxlength="15"
                      (focus)="focusFunction(password.pristine,password.valid,'focus','focusPassword')"
@@ -114,17 +119,18 @@
                      <span>Password is required </span>
                    </div>
                    <div class="errMsg" *ngIf="model.password" [hidden]="password.valid">
-                     <span>Requires at least 1 Uppercase, 1 Number and 1 of these special characters(!@#$%)</span>
+                     <span>Requires minimum 6 characters,at least 1 Uppercase, 1 Number and 1 of these special characters(!@#$%)</span>
                    </div>
 								</div>
                 <div class="form-group">
-									<div class="input-group inputBx" [ngClass]="focusCnfPassword">
+									<div class="input-group inputBx" [ngClass]= "{focusGreen:focusCnfPassword == 'green' ? true : flase,focusRed:focusCnfPassword== 'red' ? true : flase,isDisabled:isDisabled ? true : flase}">
 										 <div class="input-group-prepend">
 											 <div class="input-group-text grpTxt">
 												<i class="fa fa-key"></i>
 											 </div>
 										 </div>
                      <input type="password" name="passwordCnf"
+                    [matTooltipPosition]="position.value"matTooltip="Requires minimum 6 characters,at least 1 Uppercase, 1 Number and 1 of these special characters(!@#$%)"
                      pattern="^(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[!@#$%]).{6,15}$"
                      (focus)="focusFunction(passwordCnf.pristine,passwordCnf.valid,'focus','focusCnfPassword')"
                      (focusout)="focusFunction(passwordCnf.pristine,passwordCnf.valid,'outfocus','focusCnfPassword')"
@@ -139,7 +145,7 @@
                    </div>
 								</div>
 								<div class="form-group">
-									<div class="input-group inputBx" [ngClass]="focusBuAddr">
+									<div class="input-group inputBx" [ngClass]= "{focusGreen:focusBuAddr == 'green' ? true : flase,focusRed:focusBuAddr== 'red' ? true : flase,isDisabled:isDisabled ? true : flase}">
 										 <div class="input-group-prepend">
 											 <div class="input-group-text grpTxt">
 												 <i class="fa fa-university" aria-hidden="true"></i>
@@ -158,7 +164,7 @@
 
 
           <div class="form-group">
-            <div class="input-group inputBx" [ngClass]="focusPin">
+            <div class="input-group inputBx" [ngClass]= "{focusGreen:focusPin == 'green' ? true : flase,focusRed:focusPin ? true : flase}">
                <div class="input-group-prepend">
                  <div class="input-group-text grpTxt">
                    <i class="fa fa-map-marker" aria-hidden="true"></i>
@@ -189,7 +195,7 @@
           </div>
           <div  class="flexDiv" *ngIf="showAddr">
          <div class="form-group flex-item">
-             <div class="input-group inputBx" [ngClass]="focusCity">
+             <div class="input-group inputBx" [ngClass]= "{focusGreen:focusCity == 'green' ? true : flase,focusRed:focusCity}">
                 <input  name="city" class="locDeatils"
                 required placeholder="City *"
                 (focus)="focusFunction(city.pristine,city.valid,'focus','focusCity')"
@@ -201,7 +207,7 @@
                </div>
          </div>
          <div class="form-group flex-item flex-item-middle">
-           <div class="input-group inputBx" [ngClass]="focusState">
+           <div class="input-group inputBx" [ngClass]= "{focusGreen:focusState == 'green' ? true : flase,focusRed:focusBuAddr== 'red' ? true : flase,isDisabled:isDisabled}">
               <input  name="state" class="locDeatils"
               required placeholder="State *"
               (focus)="focusFunction(state.pristine,state.valid,'focus','focusState')"
@@ -213,7 +219,7 @@
              </div>
          </div>
          <div class="form-group flex-item flex-item-last">
-           <div class="input-group inputBx" [ngClass]="focusCountry">
+           <div class="input-group inputBx" [ngClass]= "{focusGreen:focusCountry == 'green' ? true : flase,focusRed:focusCountry== 'red' ? true : flase,isDisabled:isDisabled}">
               <input  name="country" class="locDeatils"
               required placeholder="Country *"
               (focus)="focusFunction(country.pristine,country.valid,'focus','focusCountry')"
@@ -227,7 +233,7 @@
       </div>
       <!-- website -->
       <div class="form-group">
-        <div class="input-group inputBx" [ngClass]="focusWebsite">
+        <div class="input-group inputBx" [ngClass]= "{focusGreen:focusWebsite == 'green' ? true : flase,focusRed:focusWebsite== 'red' ? true : flase,isDisabled:isDisabled}">
            <div class="input-group-prepend">
              <div class="input-group-text grpTxt">
                <i class="" aria-hidden="true"></i>
@@ -268,7 +274,7 @@
       </div>
       <!--  -->
       <div class="form-group" *ngIf='model.businessDetails[0].reg'>
-        <div class="input-group inputBx" [ngClass]="focusBuName">
+        <div class="input-group inputBx" [ngClass]= "{focusGreen:focusregDetails == 'green' ? true : flase,focusRed:focusregDetails== 'red' ? true : flase,isDisabled:isDisabled}">
            <div class="input-group-prepend">
              <div class="input-group-text grpTxt">
                <i class="" aria-hidden="true"></i>
@@ -309,9 +315,9 @@
 
       <!-- Individual Form -->
       <div class="business" *ngIf="!business">
-        <form  (ngSubmit)="onSubmit(individual);" #signup="ngForm">
+        <form  (ngSubmit)="onSubmit(individual);" #signup="ngForm" id="register">
                 <div class="form-group">
-                  <div class="input-group inputBx" [ngClass]="focusFname">
+                  <div class="input-group inputBx" [ngClass]= "{focusGreen:focusFname == 'green' ? true : flase,focusRed:focusFname== 'red' ? true : flase,isDisabled:isDisabled}">
                      <div class="input-group-prepend">
                        <div class="input-group-text grpTxt">
                          <i class="fa  fa-user" aria-hidden="true"></i>
@@ -328,7 +334,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                  <div class="input-group inputBx" [ngClass]="focusOwnerName">
+                  <div class="input-group inputBx">
                      <div class="input-group-prepend">
                        <div class="input-group-text grpTxt">
                          <i class="fa fa-user" aria-hidden="true"></i>
@@ -341,7 +347,7 @@
                    </div>
                 </div>
                 <div class="form-group">
-                  <div class="input-group inputBx" [ngClass]="focusMobile">
+                  <div class="input-group inputBx" [ngClass]= "{focusGreen:focusMobile == 'green' ? true : flase,focusRed:focusMobile== 'red' ? true : flase,isDisabled:isDisabled}">
                      <div class="input-group-prepend">
                        <div class="input-group-text grpTxt">
                          <i class="fa fa-phone-square" aria-hidden="true"></i>
@@ -350,7 +356,8 @@
                      <input name="mobile"
                       required placeholder="Mobile Number *" autocomplete="off"
                       (focus)="focusFunction(mobile.pristine,mobile.valid,'focus','focusMobile')"
-                      (focusout)="doesUserExist(individual);focusFunction(mobile.pristine,mobile.valid,'outfocus','focusMobile')"
+                      (focusout)="focusFunction(mobile.pristine,mobile.valid,'outfocus','focusMobile')"
+                      (keyup)="doesUserExist(individual);"
                       pattern="[0-9]{10}" maxlength="10"
                       [(ngModel)]="individual.mobile"
                       #mobile="ngModel"/>
@@ -369,7 +376,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                  <div class="input-group inputBx" [ngClass]="focusEmail">
+                  <div class="input-group inputBx" [ngClass]= "{focusGreen:focusEmail == 'green' ? true : flase,focusRed:focusEmail== 'red' ? true : flase,isDisabled:isDisabled}">
                      <div class="input-group-prepend">
                        <div class="input-group-text grpTxt">
                          <i class="fa fa-envelope" aria-hidden="true"></i>
@@ -377,9 +384,10 @@
                      </div>
                      <input type="email" name="email"
                      required placeholder="Email Address *" autocomplete="off"
-                     pattern="^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$"
+                     pattern="^[\w\.]+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$"
                      (focus)="focusFunction(email.pristine,email.valid,'focus','focusEmail')"
-                     (focusout)="doesUserExist(individual);focusFunction(email.pristine,email.valid,'outfocus','focusEmail')"
+                     (focusout)="focusFunction(email.pristine,email.valid,'outfocus','focusEmail')"
+                     (keyup)="doesUserExist(individual)"
                      [(ngModel)]="individual.email" #email="ngModel"/>
                    </div>
                     <div class="errMsg" *ngIf="!individual.email && !emailExistCheck" [hidden]="email.pristine">
@@ -393,13 +401,14 @@
                     </div>
                 </div>
                 <div class="form-group">
-                  <div class="input-group inputBx" [ngClass]="focusPassword">
+                  <div class="input-group inputBx" [ngClass]= "{focusGreen:focusPassword == 'green' ? true : flase,focusRed:focusPassword== 'red' ? true : flase,isDisabled:isDisabled}">
                      <div class="input-group-prepend">
                        <div class="input-group-text grpTxt">
                         <i class="fa fa-key"></i>
                        </div>
                      </div>
                      <input type="password" name="password"
+                    [matTooltipPosition]="position.value"matTooltip="Requires minimum 6 characters,at least 1 Uppercase, 1 Number and 1 of these special characters(!@#$%)"
                      required placeholder="Password *" autocomplete="off"
                      pattern="^(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[!@#$%]).{6,15}$" maxlength="15"
                      (focus)="focusFunction(password.pristine,password.valid,'focus','focusPassword')"
@@ -411,17 +420,18 @@
                      <span>Password is required </span>
                    </div>
                    <div class="errMsg" *ngIf="individual.password" [hidden]="password.valid">
-                     <span>Requires at least 1 Uppercase, 1 Number and 1 of these special characters(!@#$%)</span>
+                     <span>Requires minimum 6 characters,at least 1 Uppercase, 1 Number and 1 of these special characters(!@#$%)</span>
                    </div>
                 </div>
                 <div class="form-group">
-                  <div class="input-group inputBx" [ngClass]="focusCnfPassword">
+                  <div class="input-group inputBx" [ngClass]= "{focusGreen:focusCnfPassword == 'green' ? true : flase,focusRed:focusCnfPassword== 'red' ? true : flase,isDisabled:isDisabled}">
                      <div class="input-group-prepend">
                        <div class="input-group-text grpTxt">
                         <i class="fa fa-key"></i>
                        </div>
                      </div>
                      <input type="password" name="passwordCnf"
+                    [matTooltipPosition]="position.value"matTooltip="Requires minimum 6 characters,at least 1 Uppercase, 1 Number and 1 of these special characters(!@#$%)"
                      pattern="^(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[!@#$%]).{6,15}$"
                      (focus)="focusFunction(passwordCnf.pristine,passwordCnf.valid,'focus','focusCnfPassword')"
                      (focusout)="focusFunction(passwordCnf.pristine,passwordCnf.valid,'outfocus','focusCnfPassword')"

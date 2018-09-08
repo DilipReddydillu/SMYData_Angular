@@ -39,3 +39,6 @@ input{
   border: none;
   width: 90%;
 }
+.link{
+  cursor: pointer;
+}
