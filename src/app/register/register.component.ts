@@ -72,7 +72,7 @@ export class RegisterComponent implements OnInit {
   public pattern_pinCode = /^\d{3,7}$/;
   business =true;
   isDisabled;
-  focusFname;
+  focusFname;focusPin;
   focusBuName;focusOwnerName;focusMobile;focusPassword;focusCnfPassword;focusWebsite;
   focusEmail;focusBuAddr;focusCountry;focusState;focusCity;focusregDetails;
   public model = {
@@ -149,18 +149,18 @@ export class RegisterComponent implements OnInit {
            // console.log(data)
            this.userExistCheck ="";
          }else if(res != undefined && res[0] == "Email already exist"){
-           this.model.email = "";
-		   this.individual.email = "";
            this.emailExistCheck =res[0];
+           //this.model.email = "";
+		   //this.individual.email = "";
          }
          else if(res != undefined && res[0] == "Mobile Number already exist"){
-           this.model.mobile = "";
-		  this.individual.email = "";
+           //this.model.mobile = "";
+		  //this.individual.email = "";
            this.userExistCheck =res[0];
          }
 		  else if(res != undefined && res[0] == "Mobile Number and Email already exist"){
-	           this.model.mobile = "";
-	           this.individual.email = "";
+	           //this.model.mobile = "";
+	          // this.individual.email = "";
 	           this.userExistCheck = "Mobile Number already exist";
 	           this.emailExistCheck = "Email already exist";
 	         }

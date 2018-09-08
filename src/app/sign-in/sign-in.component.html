@@ -18,8 +18,8 @@
 											 </div>
 										 </div>
                      <input type="text" id="mobile" maxlength="10" placeholder="Mobile"
-                        required (focus)="focusFunction(mobile.pristine,mobile.valid,'focus','focusMobile')"
-                        autocomplete="off" (focusout)="focusFunction(mobile.pristine,mobile.valid,'outfocus','focusMobile')"
+                        required (focus)="focusFunction(mobile.pristine,mobile.valid,'focus','focusMobile');mobileValidCheck = false"
+                        autocomplete="off" (focusout)="focusFunction(mobile.pristine,mobile.valid,'outfocus','focusMobile');mobileValidCheck = true"
 
                         [(ngModel)]="model.mobile" name="mobile"  pattern="[0-9]{10}"
                         #mobile="ngModel"/>
@@ -27,7 +27,7 @@
                     <div class="errMsg" *ngIf="!model.mobile" [hidden]="mobile.pristine">
                       <span>Mobile number is required </span>
                     </div>
-                    <div class="errMsg" *ngIf="model.mobile" [hidden]="mobile.valid">
+                    <div class="errMsg" *ngIf="model.mobile && mobileValidCheck" [hidden]="mobile.valid ">
                       <span>Please provide valid mobile number</span>
                     </div>
 								</div>
@@ -66,7 +66,7 @@
     </div>
     <div class="">
       <span>Forgot your password?
-        <span data-toggle="modal" (click)="errMsg = mobileNumVal =''" data-target="#myModal" class="reglink">Reset password</span>
+        <span data-toggle="modal" (click)="frgtPswd();errMsg = mobileNumVal =''" data-target="#myModal" class="reglink">Reset password</span>
       </span>
     </div>
     </div>
@@ -91,7 +91,7 @@
           </strong>
         </span>
         <div class="modal-body">
-					<form (ngSubmit)="sendOtp();" #otp="ngForm" class="otp-form">
+					<form (ngSubmit)="sendOtp();" #otp="ngForm" id="otpForm" class="otp-form">
 					<div class="form-group">
 						<label for="mobileNum">Enter Mobile Number:</label>
             <div class="form-group">
@@ -105,18 +105,18 @@
                     required
                     autocomplete="off"
                     required  pattern="[0-9]{10}" maxlength="10"
- 									 (keyup)="doesUserExist(mobileNumVal);"
+ 									 (keyup)="doesUserExist(mobileNumVal);" (focus)="mobileValidCheckOtp = false" (blur)="mobileValidCheckOtp=true"
  		               [(ngModel)]="mobileNumVal" name="mobileNum" #mobileNum=ngModel/>
                </div>
                <div class="errMsg" *ngIf="!mobileNumVal" [hidden]="mobileNum.pristine">
                  <span>Mobile number is required </span>
                </div>
-               <div class="errMsg" *ngIf="mobileNumVal" [hidden]="mobileNum.valid">
+               <div class="errMsg" *ngIf="mobileNumVal && mobileValidCheckOtp" [hidden]="mobileNum.valid">
                  <span>Please provide valid mobile number</span>
                </div>
             </div>
 					</div>
-					<button  type="submit" class="btn btn-primary btn-md" [disabled]="!otp.form.valid && errMsg">Send OTP</button>
+					<button  type="submit" class="btn btn-primary btn-md" [disabled]="!otp.form.valid || errMsg">Send OTP</button>
 				</form>
         </div>
       </div>

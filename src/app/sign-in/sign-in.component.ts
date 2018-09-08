@@ -127,7 +127,9 @@ messageSource:number;
          );
        }
      }
-
+     frgtPswd(){
+        document.forms['otpForm'].reset()
+     }
        focusFunction(pristine,valid,val,type){
          if(val == 'focus'){
           this[type] = "focusGreen";
