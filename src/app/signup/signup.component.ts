@@ -155,13 +155,13 @@ export class SignupComponent {
                     this.sendOtp(this.mobileOTP )
                     return true;
                   }else{
-                    this.toastr.error(data[0], 'Error',{toastLife: '5000'});
+                    this.toastr.error(data[0], 'Error',{toastLife: '3000'});
                   }
             },
             error => {
                 console.error("Error saving data!");
                 this.registrationFailed = 'Registration failed';
-                this.toastr.error('Registration failed', 'Error',{toastLife: '5000'});
+                this.toastr.error('Registration failed', 'Error',{toastLife: '3000'});
                 return Observable.throw(error);
             }
         );
@@ -169,13 +169,13 @@ export class SignupComponent {
     addNewBusiness(dataJson){
       this._demoService.addingNewBusiness(dataJson).subscribe(
           data => {
-              this.toastr.success("successfully added","Success",{toastLife: '5000'});
+              this.toastr.success("successfully added","Success",{toastLife: '3000'});
               this.router.navigate(['/', 'userData','myInfo']);
               return true;
           },
           error => {
               console.error("Error saving data!");
-              this.toastr.error("Failed to add", "Error",{toastLife: '5000'});
+              this.toastr.error("Failed to add", "Error",{toastLife: '3000'});
               this.registrationFailed = 'Failed to add new Business';
               return Observable.throw(error);
 
@@ -211,12 +211,12 @@ export class SignupComponent {
     editBusiness(dataJson){
       this._demoService.editBusinessService(dataJson).subscribe(
           data => {
-              this.toastr.success("successfully saved","Success",{toastLife: '5000'});
-               this.router.navigate(['/','userData','myInfo']);
+              this.toastr.success("successfully saved","Success",{toastLife: '3000'});
+               this.router.navigate(['/','userData']);
           },
           error => {
               console.error("Error saving data!");
-              this.toastr.error("Error saving data!", "ERROR!!",{toastLife: '5000'});
+              this.toastr.error("Error saving data!", "ERROR!!",{toastLife: '3000'});
               this.registrationFailed = 'Failed to edit Data';
               return Observable.throw(error);
           }
@@ -232,7 +232,7 @@ export class SignupComponent {
             },
             error => {
                 console.error("Error fetching data!");
-                this.toastr.error("Error while fetching data!", "ERROR!!",{toastLife: '5000'});
+                this.toastr.error("Error while fetching data!", "ERROR!!",{toastLife: '3000'});
                 return Observable.throw(error);
             }
         );

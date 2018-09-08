@@ -10,7 +10,7 @@
         </div>
       </div>
 			<div class="business" *ngIf="business">
-				<form  (ngSubmit)="onSubmitBu(model);" #signup="ngForm" id="register">
+				<form  (ngSubmit)="onSubmit(model);" #signup="ngForm" id="register">
 								<div class="form-group">
 									<div class="input-group inputBx" [ngClass]= "{focusGreen:focusBuName,focusRed:focusBuName == 'red' ? true : flase,isDisabled:isDisabled}">
 										 <div class="input-group-prepend">
@@ -189,7 +189,7 @@
               <div class="errMsg" *ngIf="model.businessDetails[0].pinCode && pinValidCheck" [hidden]="pin.valid">
                 <span>Please provide valid pin code</span>
               </div>
-              <div class="errMsg" *ngIf="showAddrMsg && !model.businessDetails[0].city && !model.businessDetails[0].state && !model.businessDetails[0].country">
+              <div class="errMsg" *ngIf="showAddrMsg && (!model.businessDetails[0].city || !model.businessDetails[0].state || !model.businessDetails[0].country)">
                 <span>Could not fetch the location details.Please provide the following details</span>
               </div>
           </div>
