@@ -26,6 +26,8 @@ import { IndividualPayablesComponent } from '../individual-payables/individual-p
 import { IndividualReportsComponent } from '../individual-reports/individual-reports.component';
 import { LandingPageComponent } from '../landing-page/landing-page.component';
 import { RegisterComponent } from '../register/register.component';
+import { BusinessUsersComponent } from '../business-users/business-users.component';
+import { IndividualUsersComponent } from '../individual-users/individual-users.component';
 import { AuthGuard } from '../auth-guard/auth-guard';
 
 
@@ -33,6 +35,8 @@ import { AuthGuard } from '../auth-guard/auth-guard';
 const appRoutes: Routes = [
   { path: 'home', component: LandingPageComponent },
   // { path: 'select', component: SelectLoginTypeComponent },
+  {path: 'businessData', component: BusinessUsersComponent},
+  {path: 'individualData', component: IndividualUsersComponent},
   { path: 'signIn', component: SignInComponent},
   { path: 'signUp', component: RegisterComponent },
   { path: 'IndividualReg', component: IndividualRegistrationComponent },
@@ -40,7 +44,7 @@ const appRoutes: Routes = [
   children: [
     {path: 'payables', component: IndividualPayablesComponent},
     {path: 'receivables', component: IndividualReceivablesComponent},
-    {path: 'reports', component: IndividualReportsComponent},
+    {path: 'reports', component: IndividualReportsComponent}
   ]
 },
 {path: 'salesReport', component: SalesReportComponent, canActivate: [AuthGuard]},
@@ -55,7 +59,7 @@ const appRoutes: Routes = [
       {path: 'invoiceTemplate', component: InvoiceComponent, canActivate: [AuthGuard]},
       {path: 'businessPlan', component: RewardsComponent, canActivate: [AuthGuard]},
       {path: 'myInfo', component: SignupComponent, canActivate: [AuthGuard]},
-      {path: 'addNew', component: SignupComponent, canActivate: [AuthGuard]},
+      {path: 'addNew', component: SignupComponent, canActivate: [AuthGuard]}
     ]},
   { path: 'otpVerification', component: OtpAuthenticationComponent },
   { path: '',

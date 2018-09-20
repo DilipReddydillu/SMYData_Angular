@@ -30,6 +30,7 @@ buPlanCss;
     this._demoService.newBusinessVal.subscribe(newBusinessVal => this.addNewBusinessForm = newBusinessVal);
     this._demoService.buPlanCssVal.subscribe(value => this.buPlanCss = value);
      this.showRegForm = this.addNewBusinessForm;
+     this.showBuList();
   }
 addNewBusiness(){
   this.showeditForm = false;
@@ -46,13 +47,13 @@ viewBusinessDetails(data){
   this.showbusinessList = false;
 }
 showBuList(){
-  this.showbusinessList = true;
   this._demoService.viewMyBusiness().subscribe(
      data => {
        this.businessList = data;
+         this._demoService.changeBusinessList(this.businessList);
      },
      error => {
-
+       alert("could not fetch BU data")
      }
   );
 }

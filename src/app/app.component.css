@@ -200,3 +200,7 @@ footer .glyphicon {
       font-size: 150px;
   }
 }
+.dropdown-item:hover{
+  background-color: black;
+  cursor: pointer;
+}

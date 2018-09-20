@@ -90,3 +90,10 @@ color: white;
 .getloc{
   margin-left:18px;
 }
+/deep/ .tooltipCss{
+  color: black !important;
+  font-size: 12px;
+  background-color: #ffffff;
+  border: 1px solid black;
+  display: block !important;
+}

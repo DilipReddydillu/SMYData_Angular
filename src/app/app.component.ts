@@ -17,16 +17,27 @@ export class AppComponent {
   showProfile =false;
   indProfile = false;
   allCookies;
+  selectedBU = "";
+  businessList:any;
   constructor(private _demoService: DataService,public toastr: ToastsManager, private router: Router, private cookieService: CookieService, vcr: ViewContainerRef) {
       this.toastr.setRootViewContainerRef(vcr);
     }
        ngOnInit(): void {
-         this._demoService.profile.subscribe(showProfile => this.showProfile = showProfile)
-         this._demoService.indprofile.subscribe(indProfile => this.indProfile = indProfile)
+         this._demoService.profile.subscribe(showProfile =>
+            this.showProfile = showProfile);
+         this._demoService.indprofile.subscribe(indProfile =>
+           this.indProfile = indProfile)
+         this._demoService.buListData.subscribe(buList =>
+           this.businessList = buList);
          this.allCookies = this.cookieService.getAll();
          if(this.allCookies && this.allCookies.mobile){
           // this.showProfile = true;
-         };
+        };
+
+        if(this.businessList){
+          this.selectedBU =  this.businessList.businessDetails[0].companyName;
+        }
+
     };
 
     signInCall(){
@@ -34,12 +45,29 @@ export class AppComponent {
       this.router.navigate(['/', 'select']);
     }
 
+    changeBU(obj){
+      this._demoService.changeMyBusiness(obj).subscribe(
+         data => {
+           this.selectedBU = obj.companyName;
+           this.toastr.success("", "Business Changed",{toastLife: '3000'});
+         },
+         error => {
+           this.toastr.error("", "ERROR!!",{toastLife: '3000'});
+         }
+      );
+    }
+
     logOut(){
       this._demoService.changeProfile(false);
       this._demoService.changeindProfile(false);
        this.showProfile = false;
        this.indProfile = false;
-      // this.cookieService.deleteAll();
+       this._demoService.logout().subscribe(
+         data => {
+           console.log("logged out..");
+         },error => {
+           console.log("logged out failed..");
+         });
        this.router.navigate(['']);
     }
 

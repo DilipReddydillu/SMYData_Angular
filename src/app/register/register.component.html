@@ -106,8 +106,8 @@
 											 </div>
 										 </div>
                      <input type="password" name="password"
-                      [matTooltipPosition]="position.value"
-                       matTooltip="Requires minimum 6 characters,at least 1 Uppercase, 1 Number and 1 of these special characters(!@#$%)"
+                     matTooltipPosition="right" matTooltipClass="tooltipCss"
+                        matTooltip="Requires minimum 6 characters,at least 1 Uppercase, 1 Number and 1 of these special characters(!@#$%)"
                      required placeholder="Password *" autocomplete="off"
                      pattern="^(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[!@#$%]).{6,15}$" maxlength="15"
                      (focus)="focusFunction(password.pristine,password.valid,'focus','focusPassword');pswdValidCheck=false"
@@ -130,7 +130,8 @@
 											 </div>
 										 </div>
                      <input type="password" name="passwordCnf"
-                    [matTooltipPosition]="position.value"matTooltip="Requires minimum 6 characters,at least 1 Uppercase, 1 Number and 1 of these special characters(!@#$%)"
+                    [matTooltipPosition]="position.value" matTooltipClass="tooltipCss"
+                    matTooltip="Requires minimum 6 characters,at least 1 Uppercase, 1 Number and 1 of these special characters(!@#$%)"
                      pattern="^(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[!@#$%]).{6,15}$"
                      (focus)="focusFunction(passwordCnf.pristine,passwordCnf.valid,'focus','focusCnfPassword');pswdCnfValidCheck =false"
                      (focusout)="focusFunction(passwordCnf.pristine,passwordCnf.valid,'outfocus','focusCnfPassword');pswdCnfValidCheck =true"
@@ -301,12 +302,12 @@
       </div>
       </div>
       <!-- Terms and conditions -->
-      <div class="form-group">
+      <!-- <div class="form-group">
         <span class="input-group-append">
         <input class="tNc input-group" required name="tnc" id="tnc"
         [(ngModel)]="model.tnc"
         #tnc="ngModel" type="checkbox"/>  I read and accept terms and conditions *</span>
-      </div>
+      </div> -->
      <!-- Sign Up button -->
         <div class="row justify-content-center">
           <div class="col-8">
@@ -411,8 +412,8 @@
                        </div>
                      </div>
                      <input type="password" name="password"
-                    [matTooltipPosition]="position.value"matTooltip="Requires minimum 6 characters,at least 1 Uppercase, 1 Number and 1 of these special characters(!@#$%)"
-                     required placeholder="Password *" autocomplete="off"
+                     matTooltipPosition="right" matTooltipClass="tooltipCss"
+                    matTooltip="Requires minimum 6 characters,at least 1 Uppercase, 1 Number and 1 of these special characters(!@#$%)"                     required placeholder="Password *" autocomplete="off"
                      pattern="^(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[!@#$%]).{6,15}$" maxlength="15"
                      (focus)="focusFunction(password.pristine,password.valid,'focus','focusPassword');pswdValidCheck= false"
                      (focusout)="focusFunction(password.pristine,password.valid,'outfocus','focusPassword');pswdValidCheck= true"
@@ -434,8 +435,8 @@
                        </div>
                      </div>
                      <input type="password" name="passwordCnf"
-                    [matTooltipPosition]="position.value"matTooltip="Requires minimum 6 characters,at least 1 Uppercase, 1 Number and 1 of these special characters(!@#$%)"
-                     pattern="^(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[!@#$%]).{6,15}$"
+                     matTooltipPosition="right" matTooltipClass="tooltipCss"
+                      matTooltip="Requires minimum 6 characters,at least 1 Uppercase, 1 Number and 1 of these special characters(!@#$%)"                     pattern="^(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[!@#$%]).{6,15}$"
                      (focus)="focusFunction(passwordCnf.pristine,passwordCnf.valid,'focus','focusCnfPassword');pswdCnfValidCheck =false"
                      (focusout)="focusFunction(passwordCnf.pristine,passwordCnf.valid,'outfocus','focusCnfPassword');pswdCnfValidCheck =true"
                       required placeholder="Confirm Password *" autocomplete="off"
@@ -449,11 +450,11 @@
                    </div>
                 </div>
       <!-- Terms and conditions -->
-      <div class="form-group">
+      <!-- <div class="form-group">
         <span class="input-group-append">
         <input type="checkbox" class="tNc input-group" required name="tnc"
           [(ngModel)]="individual.tnc" #tnc="ngModel"/> I read and accept terms and conditions * </span>
-      </div>
+      </div> -->
      <!-- Sign Up button -->
         <div class="row justify-content-center">
           <div class="col-8">

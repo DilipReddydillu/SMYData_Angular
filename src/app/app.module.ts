@@ -6,7 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 import {ToastModule} from 'ng5-toastr/ng5-toastr';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatTableModule,MatPaginatorModule } from '@angular/material';
+import {MatTableModule,MatPaginatorModule,MatSortModule } from '@angular/material';
 import {CdkTableModule} from '@angular/cdk/table';
 import {MatInputModule} from '@angular/material';
 import {MatTooltipModule} from '@angular/material/tooltip';
@@ -37,6 +37,8 @@ import { IndividualReportsComponent } from './individual-reports/individual-repo
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { AuthGuard } from './auth-guard/auth-guard';
 import { RegisterComponent } from './register/register.component';
+import { BusinessUsersComponent } from './business-users/business-users.component';
+import { IndividualUsersComponent } from './individual-users/individual-users.component';
 
 
 @NgModule({
@@ -61,7 +63,9 @@ import { RegisterComponent } from './register/register.component';
     IndividualPayablesComponent,
     IndividualReportsComponent,
     LandingPageComponent,
-    RegisterComponent
+    RegisterComponent,
+    BusinessUsersComponent,
+    IndividualUsersComponent
   ],
   imports: [
     BrowserModule,
@@ -70,6 +74,7 @@ import { RegisterComponent } from './register/register.component';
     BrowserAnimationsModule,
     MatTableModule,
     MatPaginatorModule,
+    MatSortModule,
     CdkTableModule,
     MatInputModule,
     MatTooltipModule,

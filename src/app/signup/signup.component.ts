@@ -67,7 +67,6 @@ export class SignupComponent {
     public pattern_email = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
     public pattern_mobile = /^\d{10}$/;
     public pattern_pinCode = /^\d{3,7}$/;
-    // public pattern_password = /([0-9a-zA-Z]){6,15}/;
     public pattern_password = /^(?=.*?[A-Z])(?=.*?[0-9]).{6,}$/;
 
     public model = {

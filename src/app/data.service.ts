@@ -61,6 +61,12 @@ export class DataService {
        this.buPlanCss.next(value);
      }
 
+    private buList = new BehaviorSubject<any>('');
+    buListData = this.buList.asObservable();
+     changeBusinessList(data) {
+       this.buList.next(data);
+     }
+
      changeProfile(profile: any) {
        console.log('profile:'+profile);
        this.showProfile.next(profile);
@@ -121,6 +127,11 @@ export class DataService {
     return this.http.get(url)
   }
 
+    changeMyBusiness(obj){
+   let url =  urlProvider + '/api/changeMyBusiness';
+    return this.http.post(url, obj, httpOptions)
+  }
+
     logInUser(data,type) {
         console.log(data)
         let url =  urlProvider + '/api/loginUser';
@@ -175,6 +186,11 @@ export class DataService {
       var url =  urlProvider + '/api/'+type+'/'+data.startDate+'/'+data.endDate;
       console.log(url)
       return this.http.get(url,data);
+    }
+
+    logout(){
+      let url =  urlProvider + '/api/logOut/';
+      return this.http.get(url)
     }
 
 }
