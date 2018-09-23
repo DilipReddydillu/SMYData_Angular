@@ -7,7 +7,7 @@
   <div class="col"> </div>
   <div class="col-md-5 col-sm-12">
     <div class="input-group col align-self-center" style="margin-top:50px" *ngIf='!userEntry'>
-      <input type="text" class="form-control" [(ngModel)]='mobile' placeholder="Enter Mobile Number" style="height:50px">
+      <input type="text" class="form-control" [(ngModel)]='mobile'  maxlength="10" placeholder="Enter Mobile Number" style="height:50px">
       <div class="input-group-append">
         <button class="btn btn-success fntcss" (click)="verifyUser()" type="button">Submit</button>
       </div>
@@ -37,24 +37,20 @@
   <div class="col"></div>
 </div>
 
-<div class="row cstyle dataBox"  *ngIf='invoice'>
+<div class="row cstyle dataBox"   *ngIf='invoice' style="font-family: Rokkitt, serif;">
 <!--generated invoice  -->
 <div class="invoiceCreation container" >
   <div class="row">
     <div class="col-sm">
-      <h5>{{userName | uppercase}}</h5>
-      <h5>{{mobile}}</h5>
-      <h5>{{email}}</h5>
-      <h5>{{address}}</h5>
+      <h6><span>{{userName | uppercase}}</span> | <span>{{mobile}}</span></h6>
+      <h6><span>{{email}}</span> | <span>{{address}}</span></h6>
     </div>
     <div class="col-sm" >
-      <img src={{imageUrl()}}  style="width:100px;height:100px;border-radius:50px">
+      <img src={{imageUrl()}}  style="width:50px;height:50px;border-radius:50px">
     </div>
     <div class="col-sm" >
-      <h5>Total BV = {{BV}}</h5>
-      <h5>Total RewardPoints = {{rewardPoints}}</h5>
-      <h5>Total Payables = {{totalPayable}}</h5>
-      <h5>Total Receivables = {{totalReceivable}}</h5>
+      <h6>Total BV={{BV}} | RewardPoints={{rewardPoints}}</h6>
+      <h6>Payables={{totalPayable}} | Receivables={{totalReceivable}}</h6>
     </div>
   </div><br>
   <div class="row">
@@ -107,17 +103,17 @@
 <hr>
 <div class="row">
   <div class="col-md-4 col-sm-6">
-    <h5>Discount : <input  class="fixWidth"  (blur)='calcTotal()' [(ngModel)]='discounts' [disabled]='InvGen' />%</h5>
-    <h5>Rewards : <input   class="fixWidth"  (blur)='calcTotal()' [(ngModel)]='rewards' [disabled]='InvGen' /></h5>
-    <h5>Credit : <input  class="fixWidth" (blur)='calcTotal()' [(ngModel)]='credit'   [disabled]='InvGen' style="margin-left:19px;"/></h5>
+    <h6><span>Discount </span><input  class="fixWidth"  (blur)='calcTotal()' [(ngModel)]='discounts' [disabled]='InvGen' />%</h6>
+    <h6><span>Rewards </span>  <input   class="fixWidth"  (blur)='calcTotal()' [(ngModel)]='rewards' [disabled]='InvGen' /></h6>
+    <h6><span>Credit  </span> <input  class="fixWidth" (blur)='calcTotal()' [(ngModel)]='credit'   [disabled]='InvGen' style="margin-left:16px;width:80px"/></h6>
   </div>
   <div class="col-md-4">
   </div>
   <div class="col-md-4 col-sm-6">
-    <h5>SubTotal :<span class="mrglv" style="margin-left:0px"> {{subTotal | number}}</span></h5>
-    <h5>GST :<span class="mrglv" style="margin-left:34px"> <input class="fixWidth"  (blur)='calcTotal()' [(ngModel)]='gst' [disabled]='InvGen' />%</span></h5>
-    <h5>Total :<span class="mrglv" style="margin-left:32px"> {{total | number}}</span></h5>
-    <h5>Paid :<span class="mrglv" style="margin-left:37px"> {{total - credit | number}}</span></h5>
+    <h6>SubTotal <span class="mrglv" style="margin-left:0px"> {{subTotal | number}}</span></h6>
+    <h6>GST <span class="mrglv" style="margin-left:32px"> <input class="fixWidth"  (blur)='calcTotal()' [(ngModel)]='gst' [disabled]='InvGen' />%</span></h6>
+    <h6>Total <span class="mrglv" style="margin-left:32px"> {{total | number}}</span></h6>
+    <h6>Paid <span class="mrglv" style="margin-left:37px"> {{total - credit | number}}</span></h6>
   </div>
 </div>
 <div class="row">
@@ -125,7 +121,7 @@
     <button type="button" name="button"  class="btn btn-block btn-success fntcss" (click)="submitInvoice()">Submit</button>
   </div>
   <div class="col align-self-center" [hidden]="!InvGen">
-    <button type="button" name="button"  class="btn btn-block btn-primary fntcss">Generate Invoice</button>
+    <button type="button" name="button" routerLink="/userData/generateInvoice"  class="btn btn-block btn-primary fntcss">Generate Invoice</button>
   </div>
 </div>
 </div>

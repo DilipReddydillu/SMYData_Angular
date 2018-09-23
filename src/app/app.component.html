@@ -3,14 +3,13 @@
   <span *ngIf="showProfile && !indProfile" style="margin-left: 600px;">Welcome to</span>
   <span *ngIf="showProfile && !indProfile" class="nav" style="margin-left: -110px;font-size:15px">
     <li class="nav-item dropdown">
-   <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{selectedBU}}</a>
-   <div class="dropdown-menu" style="background-color:#563D7C">
-     <a class="dropdown-item" *ngFor="let bu of businessList.businessDetails" (click)="changeBU(bu)">{{bu.companyName}}</a>
+   <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{selectedBU | uppercase}}</a>
+   <div class="dropdown-menu">
+     <span class="dropdown-item" *ngFor="let bu of businessList.businessDetails" (click)="changeBU(bu)">{{bu.companyName | uppercase}}</span>
    </div>
  </li>
   </span>
   <span class="navbar-text navRight loginsp" >
-    <span *ngIf="showProfile">Welcome </span>
    <a class="nav-link" *ngIf="!showProfile && !indProfile" class="login">
      <span class="login" routerLink="/signIn">LOG IN</span>
    </a>

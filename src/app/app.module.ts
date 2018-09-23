@@ -39,6 +39,7 @@ import { AuthGuard } from './auth-guard/auth-guard';
 import { RegisterComponent } from './register/register.component';
 import { BusinessUsersComponent } from './business-users/business-users.component';
 import { IndividualUsersComponent } from './individual-users/individual-users.component';
+import { InvoiceGenerationComponent } from './invoice-generation/invoice-generation.component';
 
 
 @NgModule({
@@ -65,7 +66,8 @@ import { IndividualUsersComponent } from './individual-users/individual-users.co
     LandingPageComponent,
     RegisterComponent,
     BusinessUsersComponent,
-    IndividualUsersComponent
+    IndividualUsersComponent,
+    InvoiceGenerationComponent
   ],
   imports: [
     BrowserModule,

@@ -19,15 +19,15 @@ export class AppComponent {
   allCookies;
   selectedBU = "";
   businessList:any;
-  constructor(private _demoService: DataService,public toastr: ToastsManager, private router: Router, private cookieService: CookieService, vcr: ViewContainerRef) {
+  constructor(private _dataService: DataService,public toastr: ToastsManager, private router: Router, private cookieService: CookieService, vcr: ViewContainerRef) {
       this.toastr.setRootViewContainerRef(vcr);
     }
        ngOnInit(): void {
-         this._demoService.profile.subscribe(showProfile =>
+         this._dataService.profile.subscribe(showProfile =>
             this.showProfile = showProfile);
-         this._demoService.indprofile.subscribe(indProfile =>
+         this._dataService.indprofile.subscribe(indProfile =>
            this.indProfile = indProfile)
-         this._demoService.buListData.subscribe(buList =>
+         this._dataService.buListData.subscribe(buList =>
            this.businessList = buList);
          this.allCookies = this.cookieService.getAll();
          if(this.allCookies && this.allCookies.mobile){
@@ -46,7 +46,7 @@ export class AppComponent {
     }
 
     changeBU(obj){
-      this._demoService.changeMyBusiness(obj).subscribe(
+      this._dataService.changeMyBusiness(obj).subscribe(
          data => {
            this.selectedBU = obj.companyName;
            this.toastr.success("", "Business Changed",{toastLife: '3000'});
@@ -58,11 +58,11 @@ export class AppComponent {
     }
 
     logOut(){
-      this._demoService.changeProfile(false);
-      this._demoService.changeindProfile(false);
+      this._dataService.changeProfile(false);
+      this._dataService.changeindProfile(false);
        this.showProfile = false;
        this.indProfile = false;
-       this._demoService.logout().subscribe(
+       this._dataService.logout().subscribe(
          data => {
            console.log("logged out..");
          },error => {

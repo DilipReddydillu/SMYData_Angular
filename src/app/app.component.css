@@ -201,6 +201,6 @@ footer .glyphicon {
   }
 }
 .dropdown-item:hover{
-  background-color: black;
+  color: red;
   cursor: pointer;
 }

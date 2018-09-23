@@ -11,9 +11,7 @@ body{
   color: black;
   font-family: Roboto;
 }
-h1, h2, h3, h4, h5, h6, a{
-  font-family: Roboto;
-}
+
 h1{
   text-align: center;
 }
@@ -40,7 +38,7 @@ h1{
   overflow: auto;
 }
 .fntcss{
-  font-size: 1.5rem;
+  font-size: 1.2rem;
 }
 .headerTble{
   font-size: x-large;

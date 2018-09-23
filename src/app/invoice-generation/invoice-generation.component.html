@@ -1,0 +1,106 @@
+<div class="row cstyle dataBox" style="font-family: Rokkitt, serif;" id="inv">
+<!--generated invoice  -->
+<div class="invoiceCreation container" >
+  <div class="row">
+    <div class="col-md-2">
+      <h1 style="font-weight:900">INVOICE</h1>
+    </div>
+    <div class="col-md-10 text-right">
+      <span matTooltipPosition="below" matTooltip="Download" (click)="download()"><i class="fas fa-download fontIcn"></i></span>
+      <span matTooltipPosition="below" matTooltip="Print" (click)="printData()"><i class="fas fa-print fontIcn"></i></span>
+      <span matTooltipPosition="below" matTooltip="Email" (click)="emailInv()"><i class="fas fa-envelope-square fontIcn"></i></span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm">
+      <h6><span>{{invData.userName | uppercase}}Dilip</span> | <span>{{invData.mobile}}7799663951</span></h6>
+      <h6><span>{{invData.email}}Dilip@gmail.com</span> | <span>{{invData.address}}Hyderabad</span></h6>
+    </div>
+    <div class="col-sm" >
+      <!-- <img src={{imageUrl()}}  style="width:50px;height:50px;border-radius:50px"> -->
+    </div>
+    <div class="col-sm" >
+      <h6>Invoice # {{invData.invId}} </h6><h6> Invoice Date {{invData.createDate|date}}</h6>
+    </div>
+  </div><br>
+  <div class="row">
+    <div class="col-md-12" style="overflow:auto;max-height:200px">
+    <table class="table table-bordered">
+    <thead class="fntcss" style="background-color:#4fd64f">
+      <tr>
+        <th>#</th>
+        <th>Item Name</th>
+        <th>Quantity</th>
+        <th>Rate</th>
+        <th>Total Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of invData.invoiceDetail;let i = index; let lastEl = last; let firstEl = first">
+        <td class="indx">{{i+1}}</td>
+        <td>{{data.item}}</td>
+        <td>{{data.quantity}}</td>
+        <td>{{data.rate}}</td>
+        <td>{{data.rate * data.quantity | number}}</td>
+      </tr>
+      <!-- <hr> -->
+      <!-- <tr style="background-color:#c1bfbb">
+        <td><h5><span>Discount </span>{{invData.discount}}%</h5></td>
+        <td><h5><span>Rewards </span>{{invData.rewards}}</h5></td>
+        <td><h5><span>Credit </span>{{invData.credit}}</h5></td>
+        <td>
+          <h4>SubTotal</h4>
+          <h4>GST</h4>
+          <h4 class="py-3" style="background-color:#4fd64f;margin-right:-26px">Invoice Total</h4>
+          <h4>Paid</h4>
+        </td>
+        <td>
+          <h4>{{invData.subTotal | number}}</h4>
+          <h4>8%</h4>
+          <h4 class="py-3" style="background-color:#4fd64f;">{{invData.total | number}}</h4>
+          <h4>{{invData.total - invData.credit | number}}</h4>
+        </td>
+      </tr> -->
+    </tbody>
+  </table>
+  </div>
+</div>
+<hr>
+<div class="row">
+  <div class="col-md-4 col-sm-6">
+    <div class="row">
+      <div class="col-md-4"><h5>Discount</h5></div>
+      <div class="col-md-4"><h5>{{invData.discount}}%</h5></div>
+    </div>
+    <div class="row">
+      <div class="col-md-4"><h5>Rewards</h5></div>
+      <div class="col-md-4"><h5>{{invData.rewards}}</h5></div>
+    </div>
+    <div class="row">
+      <div class="col-md-4"><h5>Credit</h5></div>
+      <div class="col-md-4"><h5>{{invData.credit}}</h5></div>
+    </div>
+  </div>
+  <div class="col-md-4">
+  </div>
+  <div class="col-md-4 col-sm-6">
+    <div class="row">
+      <div class="col-md-5"><h5>SubTotal</h5></div>
+      <div class="col-md-5"><h5>{{invData.subTotal | number}}</h5></div>
+    </div>
+    <div class="row">
+      <div class="col-md-5"><h5>GST</h5></div>
+      <div class="col-md-5"><h5>8%</h5></div>
+    </div>
+    <div class="row" style="background-color:#4fd64f">
+      <div class="col-md-5"><h5>Invoice Total</h5></div>
+      <div class="col-md-5"><h5>{{invData.total | number}}</h5></div>
+    </div>
+    <div class="row"  style="background-color:#4fd64f">
+      <div class="col-md-5"><h5>Paid</h5></div>
+      <div class="col-md-5"><h5>{{invData.total - invData.credit | number}}</h5></div>
+    </div>
+  </div>
+</div>
+</div>
+</div>

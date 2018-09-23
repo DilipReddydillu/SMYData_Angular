@@ -18,7 +18,7 @@
 												 <i class="fa  fa-id-card" aria-hidden="true"></i>
 											 </div>
 										 </div>
-                     <input name="name"
+                     <input name="name" autocomplete="off"
                      required placeholder="Company Name / Business Name *"
                      (focus)="focusFunction(name.pristine,name.valid,'focus','focusBuName')"
                      (focusout)="focusFunction(name.pristine,name.valid,'outfocus','focusBuName')"
@@ -35,7 +35,7 @@
 												 <i class="fa fa-user" aria-hidden="true"></i>
 											 </div>
 										 </div>
-                     <input type="text"
+                     <input type="text"  autocomplete="off"
                      required placeholder="Owner Name / Manager Name *"
                      (focus)="focusFunction(ownername.pristine,ownername.valid,'focus','focusOwnerName')"
                      (focusout)="focusFunction(ownername.pristine,ownername.valid,'outfocus','focusOwnerName')"
@@ -53,7 +53,7 @@
 												 <i class="fa fa-phone-square" aria-hidden="true"></i>
 											 </div>
 										 </div>
-                     <input type="text" name="mobile"
+                     <input type="text" name="mobile"  autocomplete="off"
                       required placeholder="Mobile Number *" autocomplete="off"
                       (focus)="focusFunction(mobile.pristine,mobile.valid,'focus','focusMobile');mobileValidCheck = false"
                       (focusout)="focusFunction(mobile.pristine,mobile.valid,'outfocus','focusMobile');mobileValidCheck = true;"
@@ -79,7 +79,7 @@
 												 <i class="fa fa-envelope" aria-hidden="true"></i>
 											 </div>
 										 </div>
-                     <input type="email" name="email"
+                     <input type="email" name="email"  autocomplete="off"
                      required placeholder="Email Address *" autocomplete="off"
                      pattern="^[\w\.]+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$"
 
@@ -105,9 +105,9 @@
 												<i class="fa fa-key"></i>
 											 </div>
 										 </div>
-                     <input type="password" name="password"
+                     <input type="password" name="password"  autocomplete="off"
                      matTooltipPosition="right" matTooltipClass="tooltipCss"
-                        matTooltip="Requires minimum 6 characters,at least 1 Uppercase, 1 Number and 1 of these special characters(!@#$%)"
+                     matTooltip="Requires minimum 6 characters,at least 1 Uppercase, 1 Number and 1 of these special characters(!@#$%)"
                      required placeholder="Password *" autocomplete="off"
                      pattern="^(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[!@#$%]).{6,15}$" maxlength="15"
                      (focus)="focusFunction(password.pristine,password.valid,'focus','focusPassword');pswdValidCheck=false"
@@ -129,7 +129,7 @@
 												<i class="fa fa-key"></i>
 											 </div>
 										 </div>
-                     <input type="password" name="passwordCnf"
+                     <input type="password" name="passwordCnf"  autocomplete="off"
                     [matTooltipPosition]="position.value" matTooltipClass="tooltipCss"
                     matTooltip="Requires minimum 6 characters,at least 1 Uppercase, 1 Number and 1 of these special characters(!@#$%)"
                      pattern="^(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[!@#$%]).{6,15}$"
@@ -152,7 +152,7 @@
 												 <i class="fa fa-university" aria-hidden="true"></i>
 											 </div>
 										 </div>
-                     <input name="businessAddr"
+                     <input name="businessAddr"  autocomplete="off"
                      required placeholder="Business Address *"
                      (focus)="focusFunction(businessAddr.pristine,businessAddr.valid,'focus','focusBuAddr')"
                      (focusout)="focusFunction(businessAddr.pristine,businessAddr.valid,'outfocus','focusBuAddr')"
@@ -171,7 +171,7 @@
                    <i class="fa fa-map-marker" aria-hidden="true"></i>
                  </div>
                </div>
-               <input name="pin" style="width:60%"
+               <input name="pin" style="width:60%"  autocomplete="off"
                required placeholder="Pin Code *" maxlength="6" pattern="[0-9]{6}"
                (focus)="focusFunction(pin.pristine,pin.valid,'focus','focusPin');pinValidCheck = false"
                (focusout)="focusFunction(pin.pristine,pin.valid,'outfocus','focusPin');pinValidCheck = true"
@@ -197,7 +197,7 @@
           <div  class="flexDiv" *ngIf="showAddr">
          <div class="form-group flex-item">
              <div class="input-group inputBx" [ngClass]= "{focusGreen:focusCity == 'green' ? true : flase,focusRed:focusCity == 'red',isDisabled:isDisabled ? true : flase}">
-                <input  name="city" class="locDeatils"
+                <input  name="city" class="locDeatils"  autocomplete="off"
                 required placeholder="City *"
                 (focus)="focusFunction(city.pristine,city.valid,'focus','focusCity')"
                 (focusout)="focusFunction(city.pristine,city.valid,'outfocus','focusCity')"
@@ -209,7 +209,7 @@
          </div>
          <div class="form-group flex-item flex-item-middle">
            <div class="input-group inputBx" [ngClass]= "{focusGreen:focusState == 'green' ? true : flase,focusRed:focusBuAddr== 'red' ? true : flase,isDisabled:isDisabled ? true : flase}">
-              <input  name="state" class="locDeatils"
+              <input  name="state" class="locDeatils"  autocomplete="off"
               required placeholder="State *"
               (focus)="focusFunction(state.pristine,state.valid,'focus','focusState')"
               (focusout)="focusFunction(state.pristine,state.valid,'outfocus','focusState')"
@@ -221,7 +221,7 @@
          </div>
          <div class="form-group flex-item flex-item-last">
            <div class="input-group inputBx" [ngClass]= "{focusGreen:focusCountry == 'green' ? true : flase,focusRed:focusCountry== 'red' ? true : flase,isDisabled:isDisabled ? true : flase}">
-              <input  name="country" class="locDeatils"
+              <input  name="country" class="locDeatils"  autocomplete="off"
               required placeholder="Country *"
               (focus)="focusFunction(country.pristine,country.valid,'focus','focusCountry')"
               (focusout)="focusFunction(country.pristine,country.valid,'outfocus','focusCountry')"
@@ -240,7 +240,7 @@
                <i class="" aria-hidden="true"></i>
              </div>
            </div>
-           <input  name="website"
+           <input  name="website"  autocomplete="off"
            placeholder="Website"
            [(ngModel)]="model.businessDetails[0].website" #website="ngModel"/>
          </div>
@@ -281,7 +281,7 @@
                <i class="" aria-hidden="true"></i>
              </div>
            </div>
-           <input name="regDetails"
+           <input name="regDetails"  autocomplete="off"
            required placeholder="Enter Id Proof Number *" [maxlength]="maxLn"
            (focus)="focusFunction(regDetails.pristine,regDetails.valid,'focus','focusregDetails')"
            (focusout)="focusFunction(regDetails.pristine,regDetails.valid,'outfocus','focusregDetails')"
@@ -327,7 +327,7 @@
                          <i class="fa  fa-user" aria-hidden="true"></i>
                        </div>
                      </div>
-                     <input name="fname"
+                     <input name="fname"  autocomplete="off"
                      required placeholder="First Name *"
                      (focus)="focusFunction(fname.pristine,fname.valid,'focus','focusFname')"
                      (focusout)="focusFunction(fname.pristine,fname.valid,'outfocus','focusFname')"
@@ -344,7 +344,7 @@
                          <i class="fa fa-user" aria-hidden="true"></i>
                        </div>
                      </div>
-                     <input
+                     <input  autocomplete="off"
                    placeholder="Last Name"
                      [(ngModel)]="individual.lastName" name="ownername"
                      #ownername="ngModel" />
@@ -357,7 +357,7 @@
                          <i class="fa fa-phone-square" aria-hidden="true"></i>
                        </div>
                      </div>
-                     <input name="mobile"
+                     <input name="mobile"  autocomplete="off"
                       required placeholder="Mobile Number *" autocomplete="off"
                       (focus)="focusFunction(mobile.pristine,mobile.valid,'focus','focusMobile');mobileValidCheck = false"
                       (focusout)="focusFunction(mobile.pristine,mobile.valid,'outfocus','focusMobile');mobileValidCheck = true"
@@ -386,7 +386,7 @@
                          <i class="fa fa-envelope" aria-hidden="true"></i>
                        </div>
                      </div>
-                     <input type="email" name="email"
+                     <input type="email" name="email"  autocomplete="off"
                      required placeholder="Email Address *" autocomplete="off"
                      pattern="^[\w\.]+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$"
                      (focus)="focusFunction(email.pristine,email.valid,'focus','focusEmail');emailValidCheck = false"
@@ -411,7 +411,7 @@
                         <i class="fa fa-key"></i>
                        </div>
                      </div>
-                     <input type="password" name="password"
+                     <input type="password" name="password"  autocomplete="off"
                      matTooltipPosition="right" matTooltipClass="tooltipCss"
                     matTooltip="Requires minimum 6 characters,at least 1 Uppercase, 1 Number and 1 of these special characters(!@#$%)"                     required placeholder="Password *" autocomplete="off"
                      pattern="^(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[!@#$%]).{6,15}$" maxlength="15"
@@ -434,7 +434,7 @@
                         <i class="fa fa-key"></i>
                        </div>
                      </div>
-                     <input type="password" name="passwordCnf"
+                     <input type="password" name="passwordCnf"  autocomplete="off"
                      matTooltipPosition="right" matTooltipClass="tooltipCss"
                       matTooltip="Requires minimum 6 characters,at least 1 Uppercase, 1 Number and 1 of these special characters(!@#$%)"                     pattern="^(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[!@#$%]).{6,15}$"
                      (focus)="focusFunction(passwordCnf.pristine,passwordCnf.valid,'focus','focusCnfPassword');pswdCnfValidCheck =false"

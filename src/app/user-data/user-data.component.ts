@@ -1,4 +1,4 @@
-import { Component ,Input,Output, OnChanges } from '@angular/core';
+import { Component ,Input,Output, OnChanges, NgZone } from '@angular/core';
 import { DataService } from '../data.service';
 import {Observable} from 'rxjs/Rx';
 import {Router} from '@angular/router';
@@ -62,5 +62,9 @@ sideNav(value){
   this[value] = true;
   this.profile = false;
 }
+routeTo(url){
+  this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
+   this.router.navigate([url]));
 
+}
 }

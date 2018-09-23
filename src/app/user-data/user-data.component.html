@@ -1,11 +1,11 @@
 <div class="row textfamily">
   <div class="col-md-2 col-sm-4 textStyle">
     <div class="list-group" id="list-tab" role="tablist" [style.margin-top.px]="buPlanCss">
-      <a class="list-group-item list-group-item-action listcss"  data-toggle="list" role="tab" routerLink="/userData/invoice">Invoice</a>
-      <a class="list-group-item list-group-item-action listcss"  data-toggle="list" role="tab" routerLink="/userData/payables">Payables</a>
-      <a class="list-group-item list-group-item-action listcss"  data-toggle="list" role="tab" routerLink="/userData/receivables">Receivables</a>
-      <a class="list-group-item list-group-item-action listcss"  data-toggle="list" role="tab" routerLink="/userData/salesReport">Sales Report</a>
-      <a class="list-group-item list-group-item-action listcss"  data-toggle="list" role="tab" routerLink="/userData/raiseTicket">Raise Ticket</a>
+      <a class="list-group-item list-group-item-action listcss"  data-toggle="list" role="tab" (click)="routeTo('/userData/invoice')" >Invoice</a>
+      <a class="list-group-item list-group-item-action listcss"  data-toggle="list" role="tab" (click)="routeTo('/userData/payables')">Payables</a>
+      <a class="list-group-item list-group-item-action listcss"  data-toggle="list" role="tab" (click)="routeTo('/userData/receivables')">Receivables</a>
+      <a class="list-group-item list-group-item-action listcss"  data-toggle="list" role="tab" (click)="routeTo('/userData/salesReport')">Sales Report</a>
+      <a class="list-group-item list-group-item-action listcss"  data-toggle="list" role="tab" (click)="routeTo('/userData/raiseTicket')">Raise Ticket</a>
     </div>
   </div>
   <div class="col-md-10 col-sm-8">

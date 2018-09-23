@@ -15,17 +15,17 @@ invoiceData;invoiceList;
 items;total;subTotal;
 rewards;discounts;
 BV;rewardPoints;
-credit;discountList;
+credit=0;discountList;
 InvGen:boolean;
 gst;invoiceid;
 totalPayable;totalReceivable
 public pattern_mobile = /^\d{10}$/;
 
-  constructor(private _demoService: DataService,private _billingService: BillingService,private toastr:ToastsManager) {
+  constructor(private _dataService: DataService,private _billingService: BillingService,private toastr:ToastsManager) {
 }
 
   ngOnInit() {
-    this._demoService.changebuPlanCss("0");
+    this._dataService.changebuPlanCss("0");
     this.rewards =  this.discounts = 0;
     this.invoiceList = [{
       item:'', quantity:'', rate:'',total:''
@@ -71,13 +71,13 @@ public pattern_mobile = /^\d{10}$/;
     this.discounts = this.discounts > 0 ? this.discounts : dicountTemp;
   }
   verifyUser(){
-    this._demoService.changeCustomerMobile(this.mobile);
+    this._dataService.changeCustomerMobile(this.mobile);
     if (!this.pattern_mobile.test(this.mobile)) {
             this.toastr.error("Please enter valid mobile number", 'Error',[{toastLife: '2000'},{dismiss: 'click'},{maxShown:'1'}]);
             this.mobile = '';
       }else{
         this.toastr.clearAllToasts();
-    this._demoService.customerExist(this.mobile).subscribe(
+    this._dataService.customerExist(this.mobile).subscribe(
        data => {
          if(data != null && Object.keys(data).length<=0){
            this.userEntry = true;
@@ -101,7 +101,7 @@ public pattern_mobile = /^\d{10}$/;
   }
 
   userDetails(){
-    this._demoService.createUser({userName:this.userName,email:this.email,address:this.address,userMobile:this.mobile}).subscribe(
+    this._dataService.createUser({userName:this.userName,email:this.email,address:this.address,userMobile:this.mobile}).subscribe(
        data => {
          this.invoice = true;
          this.userName = data[0].userName;
@@ -120,16 +120,19 @@ public pattern_mobile = /^\d{10}$/;
   }
 
   submitInvoice(){
-    let generateInvoice = {
+    let invoice = {
       userName:this.userName,userMobile:this.mobile,total:this.total,
       subTotal:this.subTotal,rewards:this.rewards,discount:this.discounts,
       credit:this.credit, invoiceDetail:this.invoiceList
       }
-    this._billingService.addInvoice(generateInvoice).subscribe(
+    this._billingService.addInvoice(invoice).subscribe(
       data => {
           if(data != null){
+            console.log(data);
+            console.log(JSON.stringify(data))
           this.invoiceid = data[0].invId;
           this.InvGen = true;
+          this._dataService.changeInvoiceData(data)
           }else{
              this.invoice = this.userEntry = false;
           }

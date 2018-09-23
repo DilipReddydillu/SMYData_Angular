@@ -12,7 +12,7 @@ import {IndividualService} from '../individual.service';
 import { OtpAuthenticationComponent } from '../otp-authentication/otp-authentication.component';
 import { RewardsComponent } from '../rewards/rewards.component';
 import { DiscountsComponent } from '../discounts/discounts.component';
- import { InvoiceComponent } from '../invoice/invoice.component';
+import { InvoiceComponent } from '../invoice/invoice.component';
 import { SelectInvoiceComponent } from '../select-invoice/select-invoice.component';
 import { PayablesComponent } from '../payables/payables.component';
 import { ReceivablesComponent } from '../receivables/receivables.component';
@@ -28,6 +28,7 @@ import { LandingPageComponent } from '../landing-page/landing-page.component';
 import { RegisterComponent } from '../register/register.component';
 import { BusinessUsersComponent } from '../business-users/business-users.component';
 import { IndividualUsersComponent } from '../individual-users/individual-users.component';
+import { InvoiceGenerationComponent } from '../invoice-generation/invoice-generation.component';
 import { AuthGuard } from '../auth-guard/auth-guard';
 
 
@@ -48,15 +49,16 @@ const appRoutes: Routes = [
   ]
 },
 {path: 'salesReport', component: SalesReportComponent, canActivate: [AuthGuard]},
-  { path: 'userData', component: UserDataComponent, canActivate: [AuthGuard],
+  { path: 'userData', component: UserDataComponent,
     children: [
-      {path: 'invoice', component: SelectInvoiceComponent, canActivate: [AuthGuard]},
+      {path: 'invoice', component: SelectInvoiceComponent},
       {path: 'payables', component: PayablesComponent, canActivate: [AuthGuard]},
       {path: 'receivables', component: ReceivablesComponent, canActivate: [AuthGuard]},
       {path: 'salesReport', component: SalesReportComponent, canActivate: [AuthGuard]},
       {path: 'raiseTicket', component: RaiseTicketComponent, canActivate: [AuthGuard]},
       {path: 'discounts', component: DiscountsComponent, canActivate: [AuthGuard]},
       {path: 'invoiceTemplate', component: InvoiceComponent, canActivate: [AuthGuard]},
+      {path: 'generateInvoice', component: InvoiceGenerationComponent, canActivate: [AuthGuard]},
       {path: 'businessPlan', component: RewardsComponent, canActivate: [AuthGuard]},
       {path: 'myInfo', component: SignupComponent, canActivate: [AuthGuard]},
       {path: 'addNew', component: SignupComponent, canActivate: [AuthGuard]}
@@ -69,7 +71,7 @@ const appRoutes: Routes = [
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(appRoutes)],
+    imports: [RouterModule.forRoot(appRoutes, {onSameUrlNavigation: 'reload'})],
     exports: [RouterModule]
 })
 export class AppRoutingModule { }

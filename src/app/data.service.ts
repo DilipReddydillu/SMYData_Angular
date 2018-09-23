@@ -66,6 +66,12 @@ export class DataService {
      changeBusinessList(data) {
        this.buList.next(data);
      }
+    private invoiceData = new BehaviorSubject<any>('');
+    invData = this.invoiceData.asObservable();
+     changeInvoiceData(data) {
+       console.log("invoiceDataChange:"+data)
+       this.invoiceData.next(data);
+     }
 
      changeProfile(profile: any) {
        console.log('profile:'+profile);
@@ -186,6 +192,11 @@ export class DataService {
       var url =  urlProvider + '/api/'+type+'/'+data.startDate+'/'+data.endDate;
       console.log(url)
       return this.http.get(url,data);
+    }
+
+    emailInvoice(id){
+      let url =  urlProvider + '/api/emailInvoice/'+id;
+      return this.http.get(url)
     }
 
     logout(){
