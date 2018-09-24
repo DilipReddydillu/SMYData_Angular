@@ -72,6 +72,12 @@ export class DataService {
        console.log("invoiceDataChange:"+data)
        this.invoiceData.next(data);
      }
+     //holds registeration form data
+    private registrationData = new BehaviorSubject<any>('');
+    regData = this.registrationData.asObservable();
+     changeRegData(data) {
+       this.registrationData.next(data);
+     }
 
      changeProfile(profile: any) {
        console.log('profile:'+profile);

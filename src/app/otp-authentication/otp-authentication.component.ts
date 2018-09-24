@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import {FormControl} from '@angular/forms';
 import {TooltipPosition} from '@angular/material';
+import { ToastsManager } from 'ng5-toastr/ng5-toastr';
 
 @Component({
   selector: 'app-otp-authentication',
@@ -28,8 +29,9 @@ export class OtpAuthenticationComponent {
   regSuccess:boolean;
   userType:string;
   pswdResetSuccess:boolean;
+  regDataObj:any;
   focusPassword;focusCnfPassword
-    constructor(private dataService: DataService, private router: Router,  private cookieService: CookieService) { }
+    constructor(private dataService: DataService, private router: Router,  private cookieService: CookieService, private toastr: ToastsManager) { }
   ngOnInit() {
     this.resetPwd = false;
     this.dataService.cast.subscribe(messageSource => this.messageSource = messageSource)
@@ -48,13 +50,34 @@ export class OtpAuthenticationComponent {
 
   verifyOtp(){
   this.dataService.cast.subscribe(messageSource => this.messageSource = messageSource)
+  this.dataService.cast.subscribe(regData => this.regDataObj = regData)
   if(this.messageSource == (this.otpValue+'Regi')){
-    this.regSuccess = true;
+    this.userRegistration(this.regDataObj);
   }else if(this.messageSource == this.otpValue){
     this.resetPwd = true;
   }else{
     this.invalidOtp = true;
   }
+}
+
+userRegistration(dataJson){
+this.dataService.registerUserIndividual
+(dataJson).subscribe(
+    data => {
+      console.log(data)
+          if (data!= null && data[0] == 'success') {
+            this.regSuccess = true;
+            return true;
+          }else{
+            this.router.navigate(['/', 'signIn']);
+            this.toastr.error("Registration failed. Could not save the details", 'Error',{toastLife: '3000'});
+          }
+    },
+    error => {
+        this.toastr.error('Registration failed. Please try again', 'Error',{toastLife: '3000'});
+        this.router.navigate(['/', 'signIn']);
+    }
+);
 }
   resetPswd(){
       this.mobile = this.cookieService.get('resetPwdMobile');

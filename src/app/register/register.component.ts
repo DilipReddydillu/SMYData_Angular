@@ -127,24 +127,25 @@ export class RegisterComponent implements OnInit {
    this.getLocation();
          this.mobileOTP = dataJson.mobile;
          this._demoService.changeMobile(this.mobileOTP);
-       this._demoService.registerUserIndividual
-       (dataJson).subscribe(
-           data => {
-             console.log(data)
-                 if (data!= null && data[0] == 'success') {
-                   this.sendOtp(this.mobileOTP )
-                   return true;
-                 }else{
-                   this.toastr.error("Registration failed. Could not save the details", 'Error',{toastLife: '5000'});
-                 }
-           },
-           error => {
-               console.error("Error saving data!");
-               this.registrationFailed = 'Registration failed';
-               this.toastr.error('Registration failed', 'Error',{toastLife: '5000'});
-               return Observable.throw(error);
-           }
-       );
+         this.sendOtp(this.mobileOTP)
+         this._demoService.changeRegData(dataJson);
+       // this._demoService.registerUserIndividual
+       // (dataJson).subscribe(
+       //     data => {
+       //       console.log(data)
+       //           if (data!= null && data[0] == 'success') {
+       //             return true;
+       //           }else{
+       //             this.toastr.error("Registration failed. Could not save the details", 'Error',{toastLife: '5000'});
+       //           }
+       //     },
+       //     error => {
+       //         console.error("Error saving data!");
+       //         this.registrationFailed = 'Registration failed';
+       //         this.toastr.error('Registration failed', 'Error',{toastLife: '5000'});
+       //         return Observable.throw(error);
+       //     }
+       // );
  }
  onSubmitBu(dataJson){
    this.getLocation();
