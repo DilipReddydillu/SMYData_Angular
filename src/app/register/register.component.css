@@ -70,10 +70,10 @@ width: 90%;
 }
 .regLink{
   display: inline-block;
-  width: 49%;
+  width: 48%;
   text-align:center;
   padding: 4px;
-  margin: 1px;
+  margin: 2px;
   color:#69a644;
   font-weight: 400;
   cursor: pointer;

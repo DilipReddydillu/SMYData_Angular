@@ -23,7 +23,7 @@ export class InvoiceGenerationComponent implements OnInit {
             this.toastr.success("Email sent", '',{toastLife: '3000'});
         },
         error => {
-            this.toastr.error('Sending failed', 'Error',{toastLife: '3000'});
+            this.toastr.error('Sending failed.', 'Error',{toastLife: '3000'});
         }
     );
   }

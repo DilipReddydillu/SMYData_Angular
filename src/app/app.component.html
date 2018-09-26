@@ -1,17 +1,16 @@
-<nav class="navbar fixed-top bgColor">
-  <a class="navbar-brand logoStyle" routerLink="/home" >SMyData</a>
-  <span *ngIf="showProfile && !indProfile" style="margin-left: 600px;">Welcome to</span>
-  <span *ngIf="showProfile && !indProfile" class="nav" style="margin-left: -110px;font-size:15px">
+<nav class="navbar fixed-top navStyles py-0">
+  <a class="navbar-brand" routerLink="/home" >SMYDATA</a>
+  <span *ngIf="showProfile && !indProfile">
     <li class="nav-item dropdown">
-   <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{selectedBU | uppercase}}</a>
+   <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Welcome to {{selectedBU | uppercase}}</a>
    <div class="dropdown-menu">
      <span class="dropdown-item" *ngFor="let bu of businessList.businessDetails" (click)="changeBU(bu)">{{bu.companyName | uppercase}}</span>
    </div>
  </li>
   </span>
   <span class="navbar-text navRight loginsp" >
-   <a class="nav-link" *ngIf="!showProfile && !indProfile" class="login">
-     <span class="login" routerLink="/signIn">LOG IN</span>
+   <a class="nav-link" *ngIf="!showProfile && !indProfile">
+     <span routerLink="/signIn">LOG IN</span>
    </a>
    <a class="nav-link" *ngIf="indProfile">
      <span class="" (click)="logOut()"><a>Logout</a></span>

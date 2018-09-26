@@ -51,6 +51,7 @@ export class OtpAuthenticationComponent {
   verifyOtp(){
   this.dataService.cast.subscribe(messageSource => this.messageSource = messageSource)
   this.dataService.cast.subscribe(regData => this.regDataObj = regData)
+  console.log(this.regDataObj)
   if(this.messageSource == (this.otpValue+'Regi')){
     this.userRegistration(this.regDataObj);
   }else if(this.messageSource == this.otpValue){

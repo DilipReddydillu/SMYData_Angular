@@ -5,11 +5,10 @@
 
 
 body{
-  /* background-color: #1AC2A1; /* Green */
+  background: linear-gradient(to right, rgb(211, 223, 228), rgb(214, 189, 166)); /* lightcrm */
   background-color: #F5F5F5; /* lightcrm */
-  /* background-color: #1abc9c; /* Green */
   color: black;
-  font-family: Roboto;
+font-family: Rokkitt, serif;
 }
 
 h1{
@@ -42,7 +41,7 @@ h1{
 }
 .headerTble{
   font-size: x-large;
-  font-family: Roboto;
+  /* font-family: Roboto; */
   color: #FFF;
 }
 .headerCss{
