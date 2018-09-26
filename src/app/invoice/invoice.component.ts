@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import {BillingService} from '../billing.service';
+import { DataService } from '../data.service';
 
 
 @Component({
@@ -19,7 +20,7 @@ discount;
 invoiceData;
 invoiceGenerate;
 subTotal:any;
-  constructor(private _billingService: BillingService, private cookieService: CookieService) {
+  constructor(private _billingService: BillingService, private cookieService: CookieService, private dataService:DataService ) {
   }
 
   ngOnInit() {
@@ -27,6 +28,7 @@ subTotal:any;
     this.allCookies = this.cookieService.getAll();
     this.mobile = this.allCookies.mobile;
     this.items = ['chair','bean','desk','sofa'];
+    this.dataService.changebuPlanCss("55");
   }
 
   public invoice:any = [{
@@ -36,18 +38,6 @@ subTotal:any;
   },{
     item:'desk', quantity:'1', rate:'1450'
   }];
-
-
-  addRow(){
-    this.invoice.push({
-      item:'', quantity:'', rate:'',
-      total:''
-    });
-  };
-
-  deleteRow(index){
-    this.invoice.splice(index,1);
-  };
 
 
 }

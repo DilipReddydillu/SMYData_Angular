@@ -17,3 +17,17 @@ width:200px;
   margin: 10px;
   border: 1px solid #555;
 }
+.textfamily{
+  font-family: serif;
+  margin: 0px;
+}
+.textStyle{
+  font-style: italic;
+  margin-top: 74px;
+}
+.listcss{
+  padding: 17px;
+  font-size: 1.5rem;
+  /* border-radius: 50px; */
+  /* text-align: center; */
+}

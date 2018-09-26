@@ -1,128 +1,118 @@
-<div class="container-fluid  border border-success inbxTxt"  style="padding:5px">
-  <h1> Sales-Report </h1>
-  <div class="row">
-    <div class="col-md-3">
+<div class="row cstyle justify-content-center">
+ <div class="">
+   <h2>Sales Report</h2>
+  </div>
+</div>
+  <div class="row cstyle">
+    <div class="col-md-3 my-3">
         <label>Start Date:</label>
        <input type="date"  [(ngModel)]='startDate'/>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-3 my-3">
       <label>End Date:</label>
      <input type="date"  [(ngModel)]='endDate'/></div>
   </div>
-<div class="row" style="margin-top:15px">
-  <div class="col-md-2" >
+<div class="row cstyle">
+  <div class="col-md-2 listPosition" >
     <div class="list-group">
       <button type="button" class="list-group-item list-group-item-action font-weight-bold font-italic" (click)="request('getUserDetails','report')">Customer List</button>
       <button type="button" class="list-group-item list-group-item-action font-weight-bold font-italic" (click)="request('getTopCustomer','topCustomer')">Top Customer's
       </button>
-      <button type="button" class="list-group-item list-group-item-action font-weight-bold font-italic" (click)="request('payable','payable_receivable')">Payables List</button>
-      <button type="button" class="list-group-item list-group-item-action font-weight-bold font-italic" (click)="request('receivable','payable_receivable')">Receivables List</button>
+      <button type="button" class="list-group-item list-group-item-action font-weight-bold font-italic" (click)="request('payable','payable_receivable')">Payable List</button>
+      <button type="button" class="list-group-item list-group-item-action font-weight-bold font-italic" (click)="request('receivable','payable_receivable')">Receivable List</button>
       <button type="button" class="list-group-item list-group-item-action font-weight-bold font-italic" (click)="request('getInvoice','invoiceData')">Invoice List</button>
       <button type="button" class="list-group-item list-group-item-action font-weight-bold font-italic" (click)="request('getTickets','tickets')">Raised Tickets</button>
     </div>
   </div>
   <div class="col-md-10">
-    <!-- <router-outlet></router-outlet> -->
-  <table class="table table-hover" *ngIf="report">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Name</th>
-      <th scope="col">Email</th>
-      <th scope="col">Mobile</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let data of report;let i = index">
-      <td>{{i+1}}</td>
-      <td>{{data.userName}}</td>
-      <td>{{data.email}}</td>
-      <td>{{data.userMobile}}</td>
-    </tr>
-  </tbody>
-  </table>
+  <div class="" *ngIf="displayedColumns">
+  <mat-form-field>
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+  </mat-form-field>
+</div>
+    <div class="example-container mat-elevation-z8" *ngIf="displayedColumns">
+      <mat-table [dataSource]="dataSource" matSort >
+        <!-- Invoice Column -->
+        <ng-container matColumnDef="invoice" *ngIf="rowCheck('invoice')">
+          <mat-header-cell *matHeaderCellDef mat-sort-header class="headerTble"> Invoice Id</mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.invoiceNumber}} </mat-cell>
+        </ng-container>
 
-  <table class="table table-hover" *ngIf="payable_receivable">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Invoice</th>
-      <th scope="col">Mobile</th>
-      <th scope="col">Amount</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let data of payable_receivable;let i = index">
-      <td>{{i+1}}</td>
-      <td>{{data.invoiceNumber}}</td>
-      <td>{{data.mobile}}</td>
-      <td>{{data.amount}}</td>
-    </tr>
-  </tbody>
-  </table>
+        <!-- Invoice Column -->
+        <ng-container matColumnDef="invoiceId" *ngIf="rowCheck('invoiceId')">
+          <mat-header-cell *matHeaderCellDef mat-sort-header class="headerTble"> Invoice Id</mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.invId}} </mat-cell>
+        </ng-container>
 
-  <table class="table table-hover" *ngIf="tickets">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Ticket Id</th>
-      <th scope="col">Subject</th>
-      <th scope="col">Description</th>
-      <th scope="col">CreatedDate</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let data of tickets;let i = index">
-      <td>{{i+1}}</td>
-      <td>{{data.ticketId}}</td>
-      <td>{{data.subject}}</td>
-      <td>{{data.description}}</td>
-      <td>{{data.createDate}}</td>
-    </tr>
-  </tbody>
-  </table>
+        <!-- Name Column -->
+        <ng-container matColumnDef="name"  *ngIf="rowCheck('name')">
+          <mat-header-cell *matHeaderCellDef mat-sort-header class="headerTble"> Name </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.userName}} </mat-cell>
+        </ng-container>
 
-  <table class="table table-hover" *ngIf="invoiceData">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Invoice Id</th>
-      <th scope="col">Total</th>
-      <th scope="col">Name</th>
-      <th scope="col">Mobile</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let data of invoiceData;let i = index">
-      <td>{{i+1}}</td>
-      <td>{{data.invId}}</td>
-      <td>{{data.total}}</td>
-      <td>{{data.userName}}</td>
-      <td>{{data.userMobile}}</td>
-    </tr>
-  </tbody>
-  </table>
+        <!-- Mobile Column -->
+        <ng-container matColumnDef="userMobile" *ngIf="rowCheck('userMobile')">
+          <mat-header-cell *matHeaderCellDef mat-sort-header class="headerTble"> Mobile </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.userMobile}} </mat-cell>
+        </ng-container>
 
-  <input type="number" [(ngModel)]="topCustomerRecords"  placeholder="No of records" *ngIf="topCustomer">
-  <table class="table table-hover" *ngIf="topCustomer">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Name</th>
-      <th scope="col">Mobile</th>
-      <th scope="col">BV</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let data of topCustomer | slice:0:topCustomerRecords;let i = index">
-      <td>{{i+1}}</td>
-      <td>{{data.userName}}</td>
-      <td>{{data.userMobile}}</td>
-      <td>{{data.bv}}</td>
-    </tr>
-  </tbody>
-  </table>
+        <!-- Mobile Column -->
+        <ng-container matColumnDef="mobile" *ngIf="rowCheck('mobile')">
+          <mat-header-cell *matHeaderCellDef mat-sort-header class="headerTble"> Mobile </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.mobile}} </mat-cell>
+        </ng-container>
+
+        <!-- Email Column -->
+        <ng-container matColumnDef="email" *ngIf="rowCheck('email')">
+          <mat-header-cell *matHeaderCellDef mat-sort-header class="headerTble"> Email </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.email}} </mat-cell>
+        </ng-container>
+
+        <!-- BV Column -->
+        <ng-container matColumnDef="bv" *ngIf="rowCheck('bv')">
+          <mat-header-cell *matHeaderCellDef mat-sort-header class="headerTble"> BV </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.bv}} </mat-cell>
+        </ng-container>
+
+        <!-- Amount Column -->
+        <ng-container matColumnDef="amount" *ngIf="rowCheck('amount')">
+          <mat-header-cell *matHeaderCellDef mat-sort-header class="headerTble"> Amount </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.amount}} </mat-cell>
+        </ng-container>
+
+        <!-- Total Column -->
+        <ng-container matColumnDef="total" *ngIf="rowCheck('total')">
+          <mat-header-cell *matHeaderCellDef mat-sort-header class="headerTble"> Total </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.total|number}} </mat-cell>
+        </ng-container>
+
+        <!-- ticketId Column -->
+        <ng-container matColumnDef="ticketId" *ngIf="rowCheck('ticketId')">
+          <mat-header-cell *matHeaderCellDef mat-sort-header class="headerTble"> Ticket ID </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.ticketId}} </mat-cell>
+        </ng-container>
+        <!-- Subject Column -->
+        <ng-container matColumnDef="subject" *ngIf="rowCheck('subject')">
+          <mat-header-cell *matHeaderCellDef mat-sort-header class="headerTble"> Subject </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.subject}} </mat-cell>
+        </ng-container>
+        <!-- Description Column -->
+        <ng-container matColumnDef="description" *ngIf="rowCheck('description')">
+          <mat-header-cell *matHeaderCellDef mat-sort-header class="headerTble"> Description </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.description}} </mat-cell>
+        </ng-container>
+        <!-- Date Column -->
+        <ng-container matColumnDef="createDate" *ngIf="rowCheck('createDate')">
+          <mat-header-cell *matHeaderCellDef mat-sort-header class="headerTble"> Created Date </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.createDate}} </mat-cell>
+        </ng-container>
+
+
+        <mat-header-row *matHeaderRowDef="displayedColumns" class="headerCss"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;">
+        </mat-row>
+      </mat-table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    </div>
   </div>
 </div>
-</div>
-<!-- routerLink="/userData/invoice" -->

@@ -3,17 +3,15 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
 
-.ng-valid[required], .ng-valid.required  {
-  border-left: 5px solid #42A948; /* green */
+
+body{
+  /* background-color: #1AC2A1; /* Green */
+  background-color: #F5F5F5; /* lightcrm */
+  /* background-color: #1abc9c; /* Green */
+  color: black;
+  font-family: Roboto;
 }
 
-.ng-invalid:not(form)  {
-  border-left: 5px solid #a94442; /* red */
-}
-body{
-  background-color: #1abc9c; /* Green */
-       color: #ffffff;
-}
 h1{
   text-align: center;
 }
@@ -26,6 +24,30 @@ h1{
 .inbxTxt{
   color: black;
 }
+.cstyle{
+  background-color: #ffffff;
+  border-radius: 10px;
+  margin: 2px;
+  padding: 10px;
+}
+.dataBox{
+  min-height: 355px;
+}
 .tableFlow{
+  max-height: 450px;
   overflow: auto;
+}
+.fntcss{
+  font-size: 1.2rem;
+}
+.headerTble{
+  font-size: x-large;
+  font-family: Roboto;
+  color: #FFF;
+}
+.headerCss{
+  background-color: #000;
+}
+.cursr{
+  cursor: pointer;
 }

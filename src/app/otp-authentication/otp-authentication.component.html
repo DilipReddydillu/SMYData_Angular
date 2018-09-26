@@ -1,66 +1,96 @@
-<div  *ngIf='!resetPwd' class="col-md-3 col-md-offset-4 otp-box signIn inbxTxt" >
+<div class="row justify-content-center " *ngIf='!resetPwd && !regSuccess'>
+<div class="col-5 box">
   <form (ngSubmit)="verifyOtp(); otpVerify.reset()" #otpVerify="ngForm" class="otp-verify">
     <div *ngIf='invalidOtp' class="alert alert-danger" (click)="invalidOtp = false">
       <strong>Invalid OTP</strong>
     </div>
-  <div class="form-group">
-    <label for="otp">Enter The One time password (OTP) that was sent to your mobile device:</label>
-    <input type="text" class="form-control" id="otp"
-           required
-           [(ngModel)]="otpValue" name="otp"
-           #otp="ngModel"/>
-  </div>
-  <button type="submit" class="btn btn-primary btn-md" >Submit</button>
-  <!-- <button type="submit" [disabled]='clicked' (click)="clicked = true" class="btn btn-primary btn-md" >Resend OTP</button> -->
-  </form>
-
-</div>
-
-<div *ngIf='resetPwd' class="col-md-3 col-md-offset-4 reset-pswd signIn inbxTxt" id="resetPswd">
-  <form (ngSubmit)="resetPswd(); pwdReset.reset()" #pwdReset="ngForm" class="pwd-form">
-    <div *ngIf='errorDisplay' class="alert alert-danger"  (click)="errorDisplay = false">
-      <strong>{{errMsg}}</strong>
-    </div>
-  <div class="form-group">
-    <label for="mobileNum">New Password:</label>
-    <input type="password" class="form-control" id="pwd"
-           required
-           [(ngModel)]="pwdValNew" name="pwd"
-           #pwd="ngModel"/>
-    <div [hidden]="pwd.valid || pwd.pristine"
-         class="alert alert-danger">
-       Password is required
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="mobileNum">Confirm Password:</label>
-    <input type="password" class="form-control" id="Cpwd"
-           required
-           [(ngModel)]="pwdValCnf" name="Cpwd"
-           #Cpwd="ngModel"/>
-    <div [hidden]="Cpwd.valid || Cpwd.pristine"
-         class="alert alert-danger">
-       Password is required
-    </div>
-  </div>
-  <button  type="submit" class="btn btn-primary btn-md" [disabled]="!pwdReset.form.valid">Submit</button>
-
-</form>
-</div>
-
-<div class="container" *ngIf='successRegPopUp'>
-  <!-- Modal -->
-    <div class="modal show fade" id="myModalRegister" role="dialog" >
-    <div class="modal-dialog">
-      <!-- Modal content-->
-      <div class="modal-content">
-				<br><br>
-        <div class="modal-body">
-          <h4>Your sign up was successful click continue to logIn to  your account</h4>
-					<button  type="submit" class="btn btn-primary btn-md" routerLink="/signIn">Continue</button>
+    <div class="form-group">
+      <label for="otp">Enter the one time password (OTP) that was sent to your mobile:</label>
+      <div class="input-group mb-2 mr-sm-2 inputBx">
+         <input
+            pattern="[0-9]{0,5}" maxlength="5" placeholder="OTP"
+            required autocomplete="off" required
+            [(ngModel)]="otpValue" name="otp"
+            #otp="ngModel"/>
+       </div>
+        <div class="errMsg" [hidden]="otp.pristine || otp.valid">
+          <span>Enter valid otp</span>
         </div>
-      </div>
+    </div>
+  <button type="submit" class="btn btn-success" >Submit</button>
+  <button (click)="sendOtp();invalidOtp=false" class="btn btn-primary">Resend OTP</button>
+  </form>
+</div>
+</div>
+<div class=" row justify-content-center m-3 alert alert-success" *ngIf='regSuccess'>
+  <strong>Your registration is successful !!&nbsp;&nbsp; </strong>
+   <span class="text-primary" (click)="successReg()"> Click here &nbsp;</span> to LogIn.
+</div>
+
+<div class="container" *ngIf="resetPwd">
+  <div class="row justify-content-center">
+      <div class="col-5 box">
+			<div class="header">
+				<h2>Reset Password</h2>
+			</div>
+      <span class="my-2" *ngIf="pswdResetSuccess">
+        <strong class="text-success">Password reset successful.&nbsp;
+        <span routerLink="/signIn" class="text-info link">click here</span>&nbsp;to login
+        </strong>
+      </span>
+			<div class="">
+				<form  (ngSubmit)="resetPswd();pwdReset.reset()" #pwdReset="ngForm">
+          <div class="form-group">
+            <div class="input-group inputBx" [ngClass]="focusPassword">
+               <div class="input-group-prepend">
+                 <div class="input-group-text grpTxt">
+                  <i class="fa fa-key"></i>
+                 </div>
+               </div>
+               <input type="password" name="password"
+               [matTooltipPosition]="position.value"matTooltip="Requires minimum 6 characters,at least 1 Uppercase, 1 Number and 1 of these special characters(!@#$%)"
+               required placeholder="Password *" autocomplete="off"
+               pattern="^(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[!@#$%]).{6,15}$" maxlength="15"
+               (focus)="focusFunction(password.pristine,password.valid,'focus','focusPassword')"
+               (focusout)="focusFunction(password.pristine,password.valid,'outfocus','focusPassword')"
+               [(ngModel)]="pwdValNew"
+               #password="ngModel"/>
+             </div>
+             <div class="errMsg" *ngIf="!pwdValNew && !regSuccess" [hidden]="password.pristine">
+               <span>Password is required </span>
+             </div>
+             <div class="errMsg" *ngIf="pwdValNew && !regSuccess" [hidden]="password.valid">
+               <span>Password requirment does not match</span>
+             </div>
+          </div>
+          <div class="form-group">
+            <div class="input-group inputBx" [ngClass]="focusCnfPassword">
+               <div class="input-group-prepend">
+                 <div class="input-group-text grpTxt">
+                  <i class="fa fa-key"></i>
+                 </div>
+               </div>
+               <input type="password" name="passwordCnf"
+               pattern="^(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[!@#$%]).{6,15}$"
+               (focus)="focusFunction(passwordCnf.pristine,passwordCnf.valid,'focus','focusCnfPassword')"
+               (focusout)="focusFunction(passwordCnf.pristine,passwordCnf.valid,'outfocus','focusCnfPassword')"
+                required placeholder="Confirm Password *" autocomplete="off"
+                [(ngModel)]="pwdValCnf" #passwordCnf="ngModel"/>
+             </div>
+             <div class="errMsg" *ngIf="!pwdValCnf && !regSuccess" [hidden]="passwordCnf.pristine">
+               <span>Password (Confirm) is required</span>
+             </div>
+             <div class="errMsg" *ngIf="pwdValCnf != pwdValNew && !regSuccess" [hidden]="!pwdValCnf || passwordCnf.valid">
+               <span> Passwords did not match.</span>
+             </div>
+          </div>
+          <div class="row justify-content-center">
+            <div class="col-8">
+              <button type="submit" [className]="pwdReset.form.valid ? 'btn btn-block btn-success' : 'btn btn-block btn-default'"  [disabled]="!pwdReset.form.valid" name="button">Submit</button>
+            </div>
+          </div>
+				</form>
+			</div>
     </div>
   </div>
-
 </div>

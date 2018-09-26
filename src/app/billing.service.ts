@@ -1,10 +1,12 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import {HttpClientModule, HttpClient, HttpHeaders} from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import {environment} from '../environments/environment';
 
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
+const urlProvider = environment.url;
 
 
 @Injectable()
@@ -14,80 +16,58 @@ export class BillingService {
 
 // add rewards method
   addReward(data){
-  console.log('insideService')
-  console.log(data);
- let url = 'http://localhost:8585/api/addRewards';
+ let url =  urlProvider + "/api/addRewards";
   return this.http.post(url,data)
 }
 
 //get rewards method
 getReward(){
-  let url = 'http://localhost:8585/api/getRewards';
+  let url =urlProvider +'/api/getRewards';
    return this.http.get(url)
  }
 
  // add discount method
    addDiscount(data){
-   console.log('insideService')
-   console.log(data);
-  let url = 'http://localhost:8585/api/savediscounts';
+  let url = urlProvider +'/api/savediscounts';
    return this.http.post(url,data)
  }
 
  //get discount method
  getDiscount(){
-   let url = 'http://localhost:8585/api/getdiscounts';
+   let url = urlProvider +'/api/getdiscounts';
     return this.http.get(url)
   }
 
     addInvoice(data){
-    console.log('insideService:addInvoice')
-    console.log(data);
-   let url = 'http://localhost:8585/api/createInvoice/false';
+   let url = urlProvider +'/api/createInvoice/false';
     return this.http.post(url,data)
   }
 
   // Receivables Service calls....
-    getReceivables(mobile){
-    console.log('insideService:getReceivables')
-    console.log("mobile:"+mobile);
-    let url = 'http://localhost:8585/api/getPayables/receivable/'+mobile;
-    return this.http.get(url,mobile)
+    getReceivables(){
+    let url = urlProvider +'/api/getPayables/receivable';
+    return this.http.get(url)
   }
   postReceivedAmount(data){
-    console.log('insideService:postReceivedAmount')
-    console.log("data:"+data); 
-     console.log(data);
-    let url = 'http://localhost:8585/api/savePayables/receivable/true';
+    let url = urlProvider +'/api/savePayables/receivable/true';
     return this.http.post(url,data)
   }
   addReceivables(data){
-    console.log('insideService:addReceivables')
-    console.log("data:"+data);
-       console.log(data);
-    let url = 'http://localhost:8585/api/savePayables/receivable/false';
+    let url = urlProvider +'/api/savePayables/receivable/false';
     return this.http.post(url,data)
   }
 
 // Payables Service calls....
-  getPayables(mobile){
-  console.log('insideService:getPayables')
-  console.log("mobile:"+mobile);
-  let url = 'http://localhost:8585/api/getPayables/payable/'+mobile;
-  return this.http.get(url,mobile)
+  getPayables(){
+  let url = urlProvider +'/api/getPayables/payable';
+  return this.http.get(url)
 }
   postPayOffAmount(data){
-  console.log('insideService:postpayoffAmount')
-  console.log("data:"+data);
-  console.log(data);
-  let url = 'http://localhost:8585/api/savePayables/payable/true';
+  let url = urlProvider +'/api/savePayables/payable/true';
   return this.http.post(url,data)
  }
  addPayables(data){
- console.log('insideService:addReceivables')
- console.log("data:"+data);
-   console.log(data);
- let url = 'http://localhost:8585/api/savePayables/payable/false';
+ let url = urlProvider +'/api/savePayables/payable/false';
  return this.http.post(url,data)
 }
 } // BillingService End

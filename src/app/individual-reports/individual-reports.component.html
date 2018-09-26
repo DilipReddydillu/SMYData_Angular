@@ -1,18 +1,14 @@
-
-<!-- Payables Details -->
-<div class="border border-success"  style="padding:30px;margin:30px">
-  <div class="row">
-    <div class="col-sm">
-    </div>
-    <div class="col-sm"> <h1>REPORTS</h1></div>
-    <div class="col-sm">
-    </div>
+<div class="row cstyle justify-content-center">
+ <div class="">
+   <h2>REPORTS</h2>
   </div>
+</div>
+
+<div class="cstyle">
   <div class="row">
-    <!-- Table -->
       <table class="table table-bordered table-hover" >
         <thead class="thead-light">
-          <tr>
+          <tr class="fntcss">
             <th scope="col">#</th>
             <th scope="col">DATE</th>
             <th scope="col">Total Income</th>
@@ -27,8 +23,8 @@
             <td>{{data.income}}</td>
             <td>{{data.expendeture}}</td>
             <td>
-              <button type="button" *ngIf="data.income > data.expendeture" class="btn btn-success" name="button"></button>
-              <button type="button" *ngIf="data.income < data.expendeture" class="btn btn-danger" name="button"></button>
+              <button type="button" *ngIf="data.income > data.expendeture" class="btn btn-success" name="button">{{data.income - data.expendeture}}</button>
+              <button type="button" *ngIf="data.income < data.expendeture" class="btn btn-danger" name="button">{{data.income - data.expendeture}}</button>
             </td>
           </tr>
         </tbody>

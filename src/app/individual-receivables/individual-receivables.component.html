@@ -1,56 +1,47 @@
+<div class="row cstyle justify-content-center">
+ <div class="">
+   <h2>Receivables</h2>
+  </div>
+</div>
 
-<!-- Payables Details -->
-<div class="border border-success"  style="padding:30px;margin:30px">
-  <div class="row">
-    <div class="col-sm">
-    </div>
-    <div class="col-sm"> <h1>RECEIVABLES</h1></div>
-    <div class="col-sm">
-    </div>
-  </div>
-  <div class="row">
-    <!-- Table -->
-      <table class="table table-bordered table-hover" >
-        <thead class="thead-light">
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Income Source</th>
-            <th scope="col">Name</th>
-            <!-- <th scope="col">Due Date</th> -->
-            <!-- <th scope="col">Repeats</th> -->
-            <th scope="col">Amount</th>
-            <th scope="col"></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let data of receivableDetails;let i = index; let lastEl = last;">
-          <!-- *ngFor="let data of model;"> -->
-            <td>{{i+1}}</td>
-            <td>
-              <!-- <select   [(ngModel)]='data.category' >
-                  <option *ngFor="let item of categoryList" value={{item}}>
-                      {{item}}
-                  </option>
-              </select> -->
-              <input type="text"  [(ngModel)]='data.category' name="" value="" placeholder="Source">
-            </td>
-            <td>
-              <input type="text"  [(ngModel)]='data.name' name="" value="" placeholder="Name">
-            </td>
-            <td>
-              <input type="text"  [(ngModel)]='data.amount' name="amount" value="" placeholder="Amount">
-            </td>
-            <td *ngIf='lastEl'>
-              <button type="button" (click)='addRow(i)' class="btn btn-success btn-sm">
-                <span class="glyphicon glyphicon-plus"></span>
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+<div class="row cstyle p-3">
+  <div class="row col-12">
+  <div class="inbxTxt tableFlow col-12">
+    <table class="table table-bordered table-hover" >
+      <thead class="thead-light">
+        <tr class="fntcss">
+          <th scope="col">#</th>
+          <th scope="col">Income Source</th>
+          <th scope="col">Name</th>
+          <!-- <th scope="col">Due Date</th> -->
+          <!-- <th scope="col">Repeats</th> -->
+          <th scope="col">Amount</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of receivableDetails;let i = index; let lastEl = last;">
+          <td>{{i+1}}</td>
+          <td>
+            <input type="text" class="tablecss"  [(ngModel)]='data.category' name="" value="" placeholder="Source">
+          </td>
+          <td>
+            <input type="text" class="tablecss"  [(ngModel)]='data.name' name="" value="" placeholder="Name">
+          </td>
+          <td>
+            <input type="text" class="tablecss"  [(ngModel)]='data.amount' name="amount" value="" placeholder="Amount">
+          </td>
+          <td *ngIf='lastEl'>
+            <button type="button" (click)='addRow(i)' class="btn btn-success btn-sm">
+              <span >+</span>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div><hr>
-   <div class="row">
-    <button type="button" class="btn btn-primary" (click)="addReceiveData(receivableDetails)" name="button">Submit</button>
-    <hr>
+  <div class="row col-12">
+    <button type="button" class="btn btn-block btn-success fntcss" (click)="addReceiveData(receivableDetails)" name="button">Submit</button>
   </div>
+</div>
 </div>

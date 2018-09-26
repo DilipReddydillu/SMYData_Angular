@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataService } from '../data.service';
 import { BillingService } from '../billing.service';
 import { ToastsManager } from 'ng5-toastr/ng5-toastr';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 
 @Component({
   selector: 'app-receivables',
@@ -19,86 +20,90 @@ email;
 address;
 model;
 addNew;
+customerMobile;
 newReceivable ={};
+
+
+dataSource: MatTableDataSource<any>;
+displayedColumns = ['invoice','mobile','date','amount','receive'];
+@ViewChild(MatPaginator) paginator: MatPaginator;
+@ViewChild(MatSort) sort: MatSort;
+
   constructor(private _demoService: DataService,private billingService: BillingService,private toastr:ToastsManager) {
-    this.newReceivable={invoiceNumber:'',amount:'',desc:'',mobile:''};
+    this.newReceivable={};
+    this._demoService.changebuPlanCss("0");
    }
 
   ngOnInit() {
-    //this.model = [{date:new Date(),invoice:123123,amount:4000,received:null},{data:new Date(),invoice:123123,amount:4000,received:null}];
+    this._demoService.tempCustomerMobile.subscribe(customerMobile => this.customerMobile = customerMobile)
+    this.getReceivablesData();
   }
-  verifyUser(){
-    this._demoService.customerExist(this.mobile).subscribe(
-       data => {
-         if(data != null && Object.keys(data).length<=0){
-            this.userEntry = true;
-         }else{
-           this.name = data[0].userName;
-            this.getReceivablesData(this.mobile);
-          }
-       },
-       error => {
-         this.toastr.info("Could Not Fetch Data!! Try Again..",'Error',{toastLife: '5000'});
-       }
-    );
+
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
   }
-  userDetails(name,mail,address){
-    console.log(name);
-    this._demoService.createUser({userName:this.userName,email:this.email,address:this.address,userMobile:this.mobile}).subscribe(
-       data => {
-         this.userEntry = false;
-         this.model = true;
-       },
-       error => {
-         this.toastr.error("Could Not Save Data!! Try Again..",'Error',{toastLife: '5000'});
+
+  getReceivablesData(){
+    this.model = true;
+    this.billingService.getReceivables().subscribe(data => {
+      if(data != null && Object.keys(data).length>=0){
+        if(data[0] && data[0]['paybleReceivables'].length > 0){
+        let dataObj  = data[0]['paybleReceivables'];
+        this.dataSource = new MatTableDataSource(dataObj);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        this.applyFilter(this.customerMobile);
+      }else{
+        this.dataSource = new MatTableDataSource([]);
+      }
+      }else{
+        this.dataSource = new MatTableDataSource([]);
+        this.toastr.info("No Records Found",'Info',{toastLife: '3000'});
        }
-    );
+    },
+    error => {
+      this.toastr.error("Could Not Fetch Data!! Try Again..",'Error',{toastLife: '3000'});
+    })
   }
 
   receiveAmount(data){
-    let dataList = [];
-    data.mobile = this.mobile;
-    dataList.push(data);
-    console.log(data)
-    this.billingService.postReceivedAmount(dataList).subscribe(data => {
-      if(data != null && Object.keys(data).length>=0){
-        this.toastr.success("",'Success',{toastLife: '5000'});
-         this.model = data[0];
+    let arrList = [data];
+    this.billingService.postReceivedAmount(arrList).subscribe(data => {
+      this.customerMobile = "";
+      if(data){
+        this.toastr.success("",'Success',{toastLife: '3000'});
+        this.getReceivablesData();
       }else{
-        this.toastr.error("No Records Found",'Error',{toastLife: '5000'});
+        this.getReceivablesData();
+        this.toastr.info("No Records Found",'Info',{toastLife: '3000'});
        }
     },
     error => {
-      this.toastr.error("Could Not Save Data!! Try Again..",'Error',{toastLife: '5000'});
+      this.toastr.error("Could Not Save Data!! Try Again..",'Error',{toastLife: '3000'});
     })
   }
+
   addReceivable(data){
-    let dataList = [];
-    data.mobile = this.mobile;
-    dataList.push(data)
-    console.log(data)
-    this.billingService.addReceivables(dataList).subscribe(data => {
+    let arrList =[data]
+    this.customerMobile = "";
+    this.billingService.addReceivables(arrList).subscribe(data => {
         this.newReceivable = {};
-        this.model = data[0];
-      this.toastr.success("Saved successfully",'Success',{toastLife: '5000'});
+        if(data != null && Object.keys(data).length>=0){
+          this.toastr.success("Saved successfully",'Success',{toastLife: '3000'});
+          this.getReceivablesData();
+     }else{
+       this.getReceivablesData();
+     }
+     this.addNew = false;
     },
     error => {
-      this.toastr.error("Could Not Save Data!! Try Again..",'Error',{toastLife: '5000'});
+      this.addNew = false;
+      this.newReceivable = {};
+      this.toastr.error("Could Not Save Data!! Try Again..",'Error',{toastLife: '3000'});
     })
   }
-  getReceivablesData(mobile){
-    this.billingService.getReceivables(mobile).subscribe(data => {
-      console.log(data)
-      if(data != null && Object.keys(data).length>=0){
-         this.model = data[0];
-      }else{
-        this.toastr.error("No Records Found",'Error',{toastLife: '5000'});
-       }
-    },
-    error => {
-      this.toastr.error("Could Not Fetch Data!! Try Again..",'Error',{toastLife: '5000'});
-    })
-  };
 
    addNewFun(){
     this.addNew = true;

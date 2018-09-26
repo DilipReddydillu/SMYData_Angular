@@ -14,7 +14,6 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
   styleUrls: ['./sign-in.component.css']
 })
 export class SignInComponent  {
-//@Output() id: string;
 messageSource:number;
   cookieValue = 'UNKNOWN';
   public model: any = {mobile:'',password:''};
@@ -28,7 +27,12 @@ messageSource:number;
     view = true;
     showProfile;
     userType;
-    public pattern_mobile = /([0-9]){10}/g;
+    validMobile = false;
+    errMsg;
+    focusMobile;
+    focusPassword;
+    loginErr;
+    public pattern_mobile = /^\d{10}$/;
 
 
     constructor(private _demoService: DataService, private router: Router, private cookieService: CookieService,  private toastr:ToastsManager) { }
@@ -36,9 +40,7 @@ messageSource:number;
     ngOnInit(): void {
       this._demoService.userTypeVal.subscribe(userType => this.userType = userType)
       this._demoService.cast.subscribe(messageSource => this.messageSource = messageSource)
-      console.log('message::'+this.messageSource);
       this.allCookies = this.cookieService.getAll();
-      console.log(this.allCookies);
       if(this.allCookies && this.allCookies.rememberMeVal == 'TRUE'){
         this.model.mobile = this.allCookies.mobile;
         this.model.password = this.allCookies.pswd;
@@ -47,8 +49,8 @@ messageSource:number;
  };
 
 
+
     onSubmit() {
-    console.log(this.model)
       this.logInUser(this.model,this.userType)
       if(this.rememberMe){
         this.cookieService.set( 'mobile', this.model.mobile );
@@ -60,7 +62,6 @@ messageSource:number;
     };
 
     sendOtp(){
-      console.log(this.mobileNumVal);
           this.router.navigate(['/', 'otpVerification']);
           document.getElementById('modalWindow').click();
           this.cookieService.set('resetPwdMobile',this.mobileNumVal);
@@ -77,42 +78,74 @@ messageSource:number;
 
      logInUser(data,type) {
          let JsonData = data;
+         this.loginErr = false;
          this._demoService.logInUser(JsonData,type).subscribe(
             data => {
-              if(data == true){
-              console.log(data)
-              console.log("valid user!");
-            if (type == 'business') {
+               console.log(data);
+              if(data[0] == "true"){
+            if (data[1] == "business") {
               this.showProfile = true;
               this.submitted = true;
               this._demoService.changeProfile('true')
               this.router.navigate(['/', 'userData']);
-            }else if(type == 'individual'){
+            }else if(data[1] == 'individual'){
+              this.showProfile = true;
+              this.submitted = true;
+              this._demoService.changeProfile('true')
+              this._demoService.changeindProfile('true')
               this.router.navigate(['/', 'individualDetails']);
-            }
-              return true;
             }else{
-              console.error("not registered!");
-              this.loginFail =true;
+              this.loginErr = true;
+              //this.toastr.error('Could not login please try again later', 'Error',{toastLife: '5000'});
+            }
+          }else{
+              this.loginErr = true;
+              //this.toastr.error('Login failed! Invalid mobile/password', 'Error',{toastLife: '5000'});
             }
             },
             error => {
-              console.error("not registered!");    
-              this.loginFail =true;
-              //this._demoService.changeProfile('true')
-              return Observable.throw(error);
+              this.loginErr = true;
+              //this.toastr.error('Login failed! Invalid mobile/password', 'Error',{toastLife: '5000'});
             }
          );
        }
 
+       doesUserExist(val,valid){
+         if(val.length == 10 && valid){
+        this._demoService.doesUserExist({mobile:val}).subscribe(
+            data => {
+              let res = data;
+              console.log(res)
+              if (res != undefined && res[0] == 'success') {
+                this.errMsg ="Mobile Number does not exist";
+              }else if(res != undefined && res[0] == "Mobile Number already exist"){
+                  this.errMsg = "";
+              }
+            },
+            error => {
+            }
+         );
+       }
+     }
+     frgtPswd(){
+        document.forms['otpForm'].reset()
+     }
+       focusFunction(pristine,valid,val,type){
+         if(val == 'focus'){
+          this[type] = "focusGreen";
+        }
+        else if (!pristine && !valid) {
+          this[type] = "focusRed";
+        }
+        if(pristine && (val=='outfocus')){
+          this[type] = "";
+        }
+       }
        validation(){
-         console.log("in validation method:");
-         if (!this.pattern_mobile.test(this.model.mobile)) {
-                 this.toastr.error("Please enter valid mobile number", 'Error',[{dismiss: 'click'},{maxShown:'1'}]);
+         if (!this.pattern_mobile.test(this.model.mobile))
                  this.model.mobile = '';
-           }else{
-             this.toastr.clearAllToasts();
-           }
          }
+         errMsgCheck(valid){
 
+         }
 }

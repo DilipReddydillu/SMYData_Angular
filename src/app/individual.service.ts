@@ -2,10 +2,12 @@ import { Injectable, EventEmitter } from '@angular/core';
 //import {Observable} from 'rxjs/Observable';
 import {HttpClientModule, HttpClient, HttpHeaders} from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import {environment} from '../environments/environment';
 
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
+const urlProvider = environment.url;
 
 
 @Injectable()
@@ -16,30 +18,30 @@ export class IndividualService {
   addPayData(data) {
       let body = JSON.stringify(data);
       console.log(data)
-      let url = 'http://localhost:8585/api/payable/add';
+      let url =  urlProvider + '/api/payable/add';
       console.log(url)
       return this.http.post(url, body, httpOptions);
   }
 
   viewMyData(){
- let url = 'http://localhost:8585/api/viewMyData';
+ let url =  urlProvider + '/api/viewMyData';
   return this.http.get(url)
 }
 
   addReceiveData(data) {
       let body = JSON.stringify(data);
       console.log(data)
-      let url = 'http://localhost:8585/api/receivable/add';
+      let url =  urlProvider + '/api/receivable/add';
       console.log(url)
       return this.http.post(url, body, httpOptions);
   }
 
   getReceiveData(){
- let url = 'http://localhost:8585/api/getReceiveData';
+ let url =  urlProvider + '/api/getReceiveData';
   return this.http.get(url)
 }
   getReports(){
- let url = 'http://localhost:8585/api/getReports';
+ let url =  urlProvider + '/api/getReports';
   return this.http.get(url)
 }
 

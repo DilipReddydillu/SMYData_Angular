@@ -1,0 +1,25 @@
+.inbox{
+  width: 50px;
+}
+.listcss{
+    width: 254px;
+    text-align: center;
+    font-size: 1.5rem;
+    border-radius: 50px;
+    background-color: #E9ECEF;
+}
+.listcssBtn{
+    width: 254px;
+    text-align: center;
+    font-size: 1.5rem;
+    border-radius: 50px;
+}
+.thsize{
+  width: 180px;
+}
+.tablecss{
+  font-size: 20px;
+  width: 150px;
+  height: 32px;
+  font-weight: bold;
+}

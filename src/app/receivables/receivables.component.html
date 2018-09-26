@@ -1,97 +1,133 @@
-<div class="container-fluid  border border-success center20">
-
-<h1>
-  Receivables
-</h1>
-<div class="col-md-4 col-md-offset-4">
-  <div class="input-group" *ngIf='!userEntry'>
-  <input type="text" class="form-control" [(ngModel)]='mobile' placeholder="Enter Mobile Number" aria-label="Recipient's username" aria-describedby="basic-addon2">
-  <div class="input-group-append">
-    <button class="btn btn-outline-secondary" (click)="verifyUser()" type="button">Submit</button>
+<div class="row cstyle justify-content-center">
+ <div class="">
+   <h2>Receivables</h2>
   </div>
 </div>
 
-<form *ngIf='userEntry'>
-  <div class="form-group row">
-    <label  class="col-sm-2 col-form-label col-form-label-sm">Name</label>
-    <div class="col-sm-10">
-      <input type="text" class="form-control form-control-sm" name='username'  [(ngModel)]="userName" placeholder="Name">
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Email</label>
-    <div class="col-sm-10">
-      <input type="email" class="form-control form-control-sm" name='mail' [(ngModel)]='email' placeholder="Email">
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Address</label>
-    <div class="col-sm-10">
-      <input type="text" class="form-control form-control-sm" name='addr' [(ngModel)]='address'  placeholder="Address">
-    </div>
-  </div>
-  <button class="btn btn-success" type="button" (click)='userDetails(userName,email,address)' name="button">Submit</button>
-</form>
-</div>
 <!-- Receivables Details -->
-<div class="border border-success"  style="padding:30px;margin:30px" *ngIf = "model">
-  <div class="row">
-    <div class="col-sm">
-      <h5>Name : {{name}}</h5>
-    </div>
-    <div class="col-sm"></div>
-    <div class="col-sm">
-      <h5>Balance Amount To Receive : {{model.balAmount}}</h5>
-    </div>
-  </div>
-  <div class="row">
+<div class="cstyle dataBox p-3">
+  <div class="row mt-2">
     <!-- Table -->
-      <table class="table table-bordered table-hover" >
-        <thead class="thead-light">
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Date</th>
-            <th scope="col">Invoice</th>
-            <th scope="col">Amount</th>
-            <th scope="col">Receive</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let data of model.paybleReceivables;let i = index">
-          <!-- *ngFor="let data of model;"> -->
-            <td>{{i+1}}</td>
-            <td>
-              {{data.date}}
-            </td>
-            <td>
-              {{data.invoiceNumber}}
-            </td>
-            <td>
-              {{data.amount}}
-            </td>
-            <td style="width:250px">
-              <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Amount" [(ngModel)]="data.received">
+    <div class="col-md-12 col-sm-11 tableFlow">
+      <mat-form-field>
+        <input matInput (keyup)="applyFilter($event.target.value)" [ngModel]="this.customerMobile" placeholder="Filter">
+      </mat-form-field>
+      <div class="example-container mat-elevation-z8">
+        <mat-table [dataSource]="dataSource" matSort>
+
+          <!-- Invoice Column -->
+          <ng-container matColumnDef="invoice">
+            <mat-header-cell *matHeaderCellDef mat-sort-header class="headerTble"> Invoice </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.invoiceNumber}} </mat-cell>
+          </ng-container>
+
+          <!-- Mobile Column -->
+          <ng-container matColumnDef="mobile">
+            <mat-header-cell *matHeaderCellDef mat-sort-header class="headerTble"> Mobile </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.mobile}} </mat-cell>
+          </ng-container>
+
+          <!-- Date Column -->
+          <ng-container matColumnDef="date">
+            <mat-header-cell *matHeaderCellDef mat-sort-header class="headerTble"> Date </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.createDate}} </mat-cell>
+          </ng-container>
+
+          <!-- Amount Column -->
+          <ng-container matColumnDef="amount" >
+            <mat-header-cell *matHeaderCellDef mat-sort-header class="headerTble"> Amount </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.amount}} </mat-cell>
+          </ng-container>
+
+          <!-- PayOff Column -->
+          <ng-container matColumnDef="receive">
+            <mat-header-cell *matHeaderCellDef mat-sort-header class="headerTble"> Receive </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <div class="input-group m-1">
+                <input  class="form-control" placeholder="Amount" [(ngModel)]="row.received">
                 <div class="input-group-append">
-                  <button class="btn btn-outline-secondary" (click)='receiveAmount(data)' type="button">Receive</button>
+                  <button class="btn btn-success " (click)='receiveAmount(row)' type="button">Recieve</button>
                 </div>
               </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-  </div><hr>
-  <div class="row">
-    <button type="button" class="btn btn-primary" (click)="addNewFun()" name="button">Add New Receivable</button>
-    <hr>
-    <div class="input-group mb-3" *ngIf="addNew">
-      <input type="text" class="form-control" placeholder="Invoice" [(ngModel)]="newReceivable.invoiceNumber"><br><br>
-      <input type="text" class="form-control" placeholder="Amount" [(ngModel)]="newReceivable.amount"><br><br>
-      <input type="text" class="form-control" placeholder="Description" [(ngModel)]="newReceivable.desc">
-      <div class="input-group-append">
-        <button class="btn btn-outline-secondary" (click)='addReceivable(newReceivable)' type="button">Submit</button>
+             </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns" class="headerCss"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;">
+          </mat-row>
+        </mat-table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
       </div>
     </div>
   </div>
-</div>
+  <hr>
+  <div class="row mt-2">
+    <div class="col"></div>
+    <div class="col-12">
+      <button type="button" class="btn btn-success fntcss btn-block" (click)="addNewFun()" name="button">Add New Receivable</button>
+    </div>
+    <div class="col"></div>
+  </div>
+  <hr>
+  <div class="row mt-2" *ngIf="addNew">
+    <div class="col"></div>
+    <div class="col-8">
+      <form #userForm="ngForm">
+        <div class="row">
+        <div class="col-6">
+        <div class="form-group">
+          <label  class="col-form-label">Invoice Id</label>
+          <div class="">
+            <input type="text" required class="form-control form-control-sm usrInpt" name='id'  [(ngModel)]="newReceivable.invoiceNumber" placeholder="Enter Invoice Id">
+          </div>
+        </div>
+        <div class="form-group">
+          <label  class="col-form-label">Name</label>
+          <div class="">
+            <input type="text" required class="form-control form-control-sm usrInpt" name='username'  [(ngModel)]="userName" placeholder="Enter Name">
+          </div>
+        </div>
+        <div class="form-group">
+          <label  class="col-form-label">Mobile</label>
+          <div class="">
+            <input type="text" required class="form-control form-control-sm usrInpt"
+             name='mobileNum'  #mobileNum="ngModel" id="mobileNum" pattern="[0-9]{10}"  [(ngModel)]="newReceivable.mobile" placeholder="Enter Mobile">
+             <div [hidden]="mobileNum.valid || mobileNum.pristine"
+ 		             class="alert alert-danger">
+ 		           Enter valid mobile number
+ 		        </div>
+          </div>
+        </div>
+        </div>
+        <div class="col-6">
+          <div class="form-group">
+            <label for="colFormLabelSm"  class="col-form-label">Amount</label>
+            <div class="">
+              <input type="text" required pattern="[0-9]{0,10}" id="amount" #amount="ngModel" class="form-control form-control-sm usrInpt"
+              name='amount' [(ngModel)]='newReceivable.amount' placeholder="Enter Amount">
+              <div [hidden]="amount.valid || amount.pristine"
+              class="alert alert-danger">
+              Only numbers are allowed
+            </div>
+          </div>
+        </div>
+          <div class="form-group">
+             <label for="email">Email Address</label>
+             <input type="text" class="form-control" id="email"
+             [(ngModel)]="newReceivable.email" name="email">
+          </div>
+        <div class="form-group">
+          <label for="colFormLabelSm"  class="col-form-label">Description</label>
+          <div class="">
+            <input type="text" class="form-control form-control-sm usrInpt" name='Description' [(ngModel)]='newReceivable.desc' placeholder="Enter Description">
+          </div>
+        </div>
+        </div>
+      </div>
+
+        <button class="btn btn-success btn-block fntcss" [disabled]="!userForm.form.valid" type="button" (click)='addReceivable(newReceivable)' name="button">Submit</button>
+      </form>
+    </div>
+    <div class="col"></div>
+  </div>
 </div>

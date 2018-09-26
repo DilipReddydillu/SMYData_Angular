@@ -1,0 +1,29 @@
+.inputStyle{
+  width: 100px;
+}
+.fixWidth{
+  width: 50px;
+}
+.cstyle{
+  background-color: #ffffff;
+  border-radius: 10px;
+  margin: 2px;
+}
+.thsize{
+  width: 180px;
+}
+.tablecss{
+  font-size: 20px;
+  width: 150px;
+  height: 32px;
+  font-weight: bold;
+}
+.usrInpt{
+  height: 40px;
+}
+.mrglv{
+  margin-left: 34px;
+}
+.indx{
+  width: 25px;
+}

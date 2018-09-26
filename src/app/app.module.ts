@@ -4,12 +4,14 @@ import { FormsModule }   from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
-//import {ToasterModule, ToasterService} from 'angular5-toaster';
 import {ToastModule} from 'ng5-toastr/ng5-toastr';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatTableModule,MatPaginatorModule } from '@angular/material';
+import {MatTableModule,MatPaginatorModule,MatSortModule } from '@angular/material';
 import {CdkTableModule} from '@angular/cdk/table';
+import {MatInputModule} from '@angular/material';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
+import { AppRoutingModule } from './app-routing/app-routing.module';
 import { AppComponent } from './app.component';
 import { SignupComponent } from './signup/signup.component';
 import { SignInComponent } from './sign-in/sign-in.component';
@@ -20,9 +22,7 @@ import {IndividualService} from './individual.service';
 import { OtpAuthenticationComponent } from './otp-authentication/otp-authentication.component';
 import { RewardsComponent } from './rewards/rewards.component';
 import { DiscountsComponent } from './discounts/discounts.component';
- import { InvoiceComponent } from './invoice/invoice.component';
-// import {MatButtonModule, MatCheckboxModule} from '@angular/material';
-// import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { InvoiceComponent } from './invoice/invoice.component';
 import { SelectInvoiceComponent } from './select-invoice/select-invoice.component';
 import { PayablesComponent } from './payables/payables.component';
 import { ReceivablesComponent } from './receivables/receivables.component';
@@ -34,43 +34,13 @@ import { IndividualDetailsComponent } from './individual-details/individual-deta
 import { IndividualReceivablesComponent } from './individual-receivables/individual-receivables.component';
 import { IndividualPayablesComponent } from './individual-payables/individual-payables.component';
 import { IndividualReportsComponent } from './individual-reports/individual-reports.component';
+import { LandingPageComponent } from './landing-page/landing-page.component';
+import { AuthGuard } from './auth-guard/auth-guard';
+import { RegisterComponent } from './register/register.component';
+import { BusinessUsersComponent } from './business-users/business-users.component';
+import { IndividualUsersComponent } from './individual-users/individual-users.component';
+import { InvoiceGenerationComponent } from './invoice-generation/invoice-generation.component';
 
-
-
-
-const appRoutes: Routes = [
-  { path: 'select', component: SelectLoginTypeComponent },
-  { path: 'signIn', component: SignInComponent },
-  { path: 'signUp', component: SignupComponent },
-  { path: 'IndividualReg', component: IndividualRegistrationComponent },
-  { path: 'individualDetails', component: IndividualDetailsComponent,
-  children: [
-    {path: 'payables', component: IndividualPayablesComponent},
-    {path: 'receivables', component: IndividualReceivablesComponent},
-    {path: 'reports', component: IndividualReportsComponent},
-  ]
-},
-{path: 'salesReport', component: SalesReportComponent},
-  { path: 'userData', component: UserDataComponent,
-    children: [
-      {path: 'invoice', component: SelectInvoiceComponent},
-      {path: 'payables', component: PayablesComponent},
-      {path: 'receivables', component: ReceivablesComponent},
-      {path: 'salesReport', component: SalesReportComponent},
-      {path: 'raiseTicket', component: RaiseTicketComponent},
-      {path: 'discounts', component: DiscountsComponent},
-      {path: 'invoiceTemplate', component: InvoiceComponent},
-      {path: 'businessPlan', component: RewardsComponent},
-      {path: 'myInfo', component: SignupComponent},
-      {path: 'addNew', component: SignupComponent},
-    ]},
-  { path: 'otpVerification', component: OtpAuthenticationComponent },
-  { path: 'myRewards', component: RewardsComponent },
-  { path: '',
-    redirectTo: '/signIn',
-    pathMatch: 'full'
-  }
-];
 
 @NgModule({
   declarations: [
@@ -92,7 +62,12 @@ const appRoutes: Routes = [
     IndividualDetailsComponent,
     IndividualReceivablesComponent,
     IndividualPayablesComponent,
-    IndividualReportsComponent
+    IndividualReportsComponent,
+    LandingPageComponent,
+    RegisterComponent,
+    BusinessUsersComponent,
+    IndividualUsersComponent,
+    InvoiceGenerationComponent
   ],
   imports: [
     BrowserModule,
@@ -101,16 +76,14 @@ const appRoutes: Routes = [
     BrowserAnimationsModule,
     MatTableModule,
     MatPaginatorModule,
+    MatSortModule,
     CdkTableModule,
-    //ToasterModule,
-    ToastModule.forRoot(),
-    // MatButtonModule, MatCheckboxModule,
-    RouterModule.forRoot(
-      appRoutes,
-      { enableTracing: true } // <-- debugging purposes only
-    )
+    MatInputModule,
+    MatTooltipModule,
+    AppRoutingModule,
+    ToastModule.forRoot()
   ],
-  providers: [CookieService, DataService, BillingService,IndividualService],
+  providers: [CookieService, DataService, BillingService,IndividualService,AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

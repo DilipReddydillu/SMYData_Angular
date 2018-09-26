@@ -1,9 +1,9 @@
 <div class="container">
 <div class="row align-items-center" style="margin:50px">
   <div class="col" style="margin-top:80px">
-    <button type="button" (click)="selectUser('business')" [routerLink]="['/signIn']" class="btn btn-danger btn-lg btn-block rad"><h1>Business LogIn</h1></button>
+    <button type="button" (click)="selectUser('business')" [routerLink]="['/signIn']" class="btn btn-primary btn-lg btn-block rad"><h1>Business LogIn</h1></button>
   <hr>
-    <button type="button" (click)="selectUser('individual')" class="btn btn-danger btn-lg btn-block rad"><h1>Individual LogIn</h1></button>
+    <button type="button" disabled (click)="selectUser('individual')" class="btn  btn-primary btn-lg btn-block rad"><h1>Individual LogIn</h1></button>
   </div>
 </div>
 </div>

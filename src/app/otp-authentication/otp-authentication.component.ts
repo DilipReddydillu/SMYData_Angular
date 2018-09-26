@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
 import {Router} from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
-
-
-
+import {FormControl} from '@angular/forms';
+import {TooltipPosition} from '@angular/material';
+import { ToastsManager } from 'ng5-toastr/ng5-toastr';
 
 @Component({
   selector: 'app-otp-authentication',
@@ -12,6 +12,8 @@ import { CookieService } from 'ngx-cookie-service';
   styleUrls: ['./otp-authentication.component.css']
 })
 export class OtpAuthenticationComponent {
+  positionOptions: TooltipPosition[] = ['after', 'before', 'above', 'below', 'left', 'right'];
+ position = new FormControl(this.positionOptions[0]);
 
   messageSource:any;
   otpValue:any;
@@ -23,43 +25,86 @@ export class OtpAuthenticationComponent {
   errMsg:string;
   mobile:any;
   successRegPopUp:boolean;
-
-    constructor(private data: DataService, private router: Router,  private cookieService: CookieService) { }
+  mobileNumber:number;
+  regSuccess:boolean;
+  userType:string;
+  pswdResetSuccess:boolean;
+  regDataObj:any;
+  focusPassword;focusCnfPassword
+    constructor(private dataService: DataService, private router: Router,  private cookieService: CookieService, private toastr: ToastsManager) { }
   ngOnInit() {
     this.resetPwd = false;
-    this.data.cast.subscribe(messageSource => this.messageSource = messageSource)
-    console.log('message::'+this.messageSource);
+    this.dataService.cast.subscribe(messageSource => this.messageSource = messageSource)
+    this.dataService.mobileTemp.subscribe(mobileNum => this.mobileNumber = mobileNum)
+    this.dataService.userTypeVal.subscribe(userType => this.userType = userType)
+  }
+  sendOtp(){
+        this.dataService.sendOtp(this.mobileNumber).subscribe(
+           data => {
+             this.dataService.changeMessage(data+'Regi')
+           },
+           error => {
+           }
+        );
   }
 
   verifyOtp(){
-  this.data.cast.subscribe(messageSource => this.messageSource = messageSource)
-  console.log('verifyOtp::'+this.messageSource);
+  this.dataService.cast.subscribe(messageSource => this.messageSource = messageSource)
+  this.dataService.cast.subscribe(regData => this.regDataObj = regData)
   if(this.messageSource == (this.otpValue+'Regi')){
-    this.successRegPopUp = true;
-   this.router.navigate(['/', 'signIn']);
+    this.userRegistration(this.regDataObj);
   }else if(this.messageSource == this.otpValue){
     this.resetPwd = true;
   }else{
     this.invalidOtp = true;
   }
 }
+
+userRegistration(dataJson){
+this.dataService.registerUserIndividual
+(dataJson).subscribe(
+    data => {
+      console.log(data)
+          if (data!= null && data[0] == 'success') {
+            this.regSuccess = true;
+            return true;
+          }else{
+            this.router.navigate(['/', 'signIn']);
+            this.toastr.error("Registration failed. Could not save the details", 'Error',{toastLife: '3000'});
+          }
+    },
+    error => {
+        this.toastr.error('Registration failed. Please try again', 'Error',{toastLife: '3000'});
+        this.router.navigate(['/', 'signIn']);
+    }
+);
+}
   resetPswd(){
-    if (this.pwdValNew == this.pwdValCnf) {
       this.mobile = this.cookieService.get('resetPwdMobile');
-      this.data.resetpassword(this.pwdValNew,this.mobile).subscribe(
+      this.dataService.resetpassword(this.pwdValNew,this.mobile).subscribe(
          data => {
-           this.router.navigate(['/', 'signIn']);
-           return true;
+          this.pswdResetSuccess = true;
+          this.pwdValNew = this.pwdValCnf = "";
          },
          error => {
            this.errorDisplay = true;
            this.errMsg = 'Could not Reset the password. Try Again';
          }
       );
-    }else{
-      this.errorDisplay = true;
-      this.errMsg = 'Password Match error';
-    }
   }
+  focusFunction(pristine,valid,event,type){
+    if(event == 'focus'){
+     this[type] = "focusGreen";
+   }
+   else if (!pristine && !valid) {
+     this[type] = "focusRed";
+   }
+   if(pristine && (event == 'outfocus')){
+     this[type] = "";
+   }
+  }
+  successReg(){
+    this.router.navigate(['/', 'signIn']);
+   }
 
 }

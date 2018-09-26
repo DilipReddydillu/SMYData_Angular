@@ -1,0 +1,469 @@
+<div class="container">
+  <div class="row justify-content-center">
+      <div class="col-5 box">
+      <div class="registeropt my-3" >
+        <div class="regLink" [ngClass]="{'selected':business}" (click)="regForm(true)">
+        Business
+        </div>
+        <div class="regLink" [ngClass]="{'selected':!business}" (click)="regForm(false)">
+          Individual
+        </div>
+      </div>
+			<div class="business" *ngIf="business">
+				<form  (ngSubmit)="onSubmit(model);" #signup="ngForm" id="register">
+								<div class="form-group">
+									<div class="input-group inputBx" [ngClass]= "{focusGreen:focusBuName,focusRed:focusBuName == 'red' ? true : flase,isDisabled:isDisabled}">
+										 <div class="input-group-prepend">
+											 <div class="input-group-text grpTxt">
+												 <i class="fa  fa-id-card" aria-hidden="true"></i>
+											 </div>
+										 </div>
+                     <input name="name" autocomplete="off"
+                     required placeholder="Company Name / Business Name *"
+                     (focus)="focusFunction(name.pristine,name.valid,'focus','focusBuName')"
+                     (focusout)="focusFunction(name.pristine,name.valid,'outfocus','focusBuName')"
+                     [(ngModel)]="model.businessDetails[0].companyName" #name="ngModel"/>
+									 </div>
+                    <div class="errMsg" *ngIf="!model.businessDetails[0].companyName" [hidden]="name.pristine || name.valid">
+                      <span>Company Name / Business Name is required</span>
+                    </div>
+								</div>
+								<div class="form-group">
+									<div class="input-group inputBx" [ngClass]= "{focusGreen:focusOwnerName == 'green' ? true : flase,focusRed:focusOwnerName == 'red' ? true : flase,isDisabled:isDisabled}">
+										 <div class="input-group-prepend">
+											 <div class="input-group-text grpTxt">
+												 <i class="fa fa-user" aria-hidden="true"></i>
+											 </div>
+										 </div>
+                     <input type="text"  autocomplete="off"
+                     required placeholder="Owner Name / Manager Name *"
+                     (focus)="focusFunction(ownername.pristine,ownername.valid,'focus','focusOwnerName')"
+                     (focusout)="focusFunction(ownername.pristine,ownername.valid,'outfocus','focusOwnerName')"
+                     [(ngModel)]="model.ownerName" name="ownername"
+                     #ownername="ngModel" />
+									 </div>
+                    <div class="errMsg"  *ngIf="!model.businessDetails[0].ownerName" [hidden]="ownername.pristine || ownername.valid">
+                      <span> Owner Name / Manager Name is required</span>
+                    </div>
+								</div>
+								<div class="form-group">
+									<div class="input-group inputBx" [ngClass]= "{focusGreen:focusMobile == 'green' ? true : flase,focusRed:focusMobile == 'red' ? true : flase,isDisabled:isDisabled}">
+										 <div class="input-group-prepend">
+											 <div class="input-group-text grpTxt">
+												 <i class="fa fa-phone-square" aria-hidden="true"></i>
+											 </div>
+										 </div>
+                     <input type="text" name="mobile"  autocomplete="off"
+                      required placeholder="Mobile Number *" autocomplete="off"
+                      (focus)="focusFunction(mobile.pristine,mobile.valid,'focus','focusMobile');mobileValidCheck = false"
+                      (focusout)="focusFunction(mobile.pristine,mobile.valid,'outfocus','focusMobile');mobileValidCheck = true;"
+                      (keyup)="doesUserExist(model)"
+                      pattern="[0-9]{10}" maxlength="10"
+                      [(ngModel)]="model.mobile"
+                      #mobile="ngModel"/>
+									 </div>
+                    <div class="errMsg" *ngIf="!model.mobile && !userExistCheck" [hidden]="mobile.pristine">
+                      <span>Mobile number is required</span>
+                    </div>
+                    <div class="errMsg" *ngIf="model.mobile && mobileValidCheck" [hidden]="mobile.valid">
+                      <span>Please provide valid mobile number</span>
+                    </div>
+                    <div class="errMsg" *ngIf="!mobile.pristine && userExistCheck">
+                      <strong>{{userExistCheck}}</strong>
+                    </div>
+								</div>
+                <div class="form-group">
+									<div class="input-group inputBx" [ngClass]= "{focusGreen:focusEmail == 'green' ? true : flase,focusRed:focusEmail== 'red' ? true : flase,isDisabled:isDisabled}">
+										 <div class="input-group-prepend">
+											 <div class="input-group-text grpTxt">
+												 <i class="fa fa-envelope" aria-hidden="true"></i>
+											 </div>
+										 </div>
+                     <input type="email" name="email"  autocomplete="off"
+                     required placeholder="Email Address *" autocomplete="off"
+                     pattern="^[\w\.]+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$"
+
+                     (focus)="focusFunction(email.pristine,email.valid,'focus','focusEmail');emailValidCheck = false"
+                     (focusout)="focusFunction(email.pristine,email.valid,'outfocus','focusEmail');emailValidCheck = true"
+                     (keyup)="doesUserExist(model)"
+                     [(ngModel)]="model.email" #email="ngModel"/>
+									 </div>
+                    <div class="errMsg" *ngIf="!model.email && !emailExistCheck" [hidden]="email.pristine">
+                      <span>Email id is required</span>
+                    </div>
+                    <div class="errMsg" *ngIf="model.email && emailValidCheck" [hidden]="email.valid">
+                      <span>Please provide valid email id</span>
+                    </div>
+                    <div class="errMsg" *ngIf="!email.pristine && emailExistCheck">
+                      <strong>{{emailExistCheck}}</strong>
+                    </div>
+								</div>
+                <div class="form-group">
+									<div class="input-group inputBx" [ngClass]= "{focusGreen:focusPassword == 'green' ? true : flase,focusRed:focusPassword== 'red' ? true : flase,isDisabled:isDisabled ? true : flase}">
+										 <div class="input-group-prepend">
+											 <div class="input-group-text grpTxt">
+												<i class="fa fa-key"></i>
+											 </div>
+										 </div>
+                     <input type="password" name="password"  autocomplete="off"
+                     matTooltipPosition="right" matTooltipClass="tooltipCss"
+                     matTooltip="Requires minimum 6 characters,at least 1 Uppercase, 1 Number and 1 of these special characters(!@#$%)"
+                     required placeholder="Password *" autocomplete="off"
+                     pattern="^(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[!@#$%]).{6,15}$" maxlength="15"
+                     (focus)="focusFunction(password.pristine,password.valid,'focus','focusPassword');pswdValidCheck=false"
+                     (focusout)="focusFunction(password.pristine,password.valid,'outfocus','focusPassword');pswdValidCheck=true"
+                     [(ngModel)]="model.password"
+                     #password="ngModel"/>
+									 </div>
+                   <div class="errMsg" *ngIf="!model.password" [hidden]="password.pristine">
+                     <span>Password is required </span>
+                   </div>
+                   <div class="errMsg" *ngIf="model.password && pswdValidCheck" [hidden]="password.valid">
+                     <span>Password requirment does not match</span>
+                   </div>
+								</div>
+                <div class="form-group">
+									<div class="input-group inputBx" [ngClass]= "{focusGreen:focusCnfPassword == 'green' ? true : flase,focusRed:focusCnfPassword== 'red' ? true : flase,isDisabled:isDisabled ? true : flase}">
+										 <div class="input-group-prepend">
+											 <div class="input-group-text grpTxt">
+												<i class="fa fa-key"></i>
+											 </div>
+										 </div>
+                     <input type="password" name="passwordCnf"  autocomplete="off"
+                    [matTooltipPosition]="position.value" matTooltipClass="tooltipCss"
+                    matTooltip="Requires minimum 6 characters,at least 1 Uppercase, 1 Number and 1 of these special characters(!@#$%)"
+                     pattern="^(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[!@#$%]).{6,15}$"
+                     (focus)="focusFunction(passwordCnf.pristine,passwordCnf.valid,'focus','focusCnfPassword');pswdCnfValidCheck =false"
+                     (focusout)="focusFunction(passwordCnf.pristine,passwordCnf.valid,'outfocus','focusCnfPassword');pswdCnfValidCheck =true"
+                      required placeholder="Confirm Password *" autocomplete="off"
+                      [(ngModel)]="model.passwordCnf" #passwordCnf="ngModel"/>
+									 </div>
+                   <div class="errMsg" *ngIf="!model.passwordCnf" [hidden]="passwordCnf.pristine">
+                     <span>Password (Confirm) is required</span>
+                   </div>
+                   <div class="errMsg" *ngIf="model.passwordCnf != model.password && pswdCnfValidCheck" [hidden]="!model.passwordCnf || passwordCnf.valid">
+                     <span> Passwords did not match.</span>
+                   </div>
+								</div>
+								<div class="form-group">
+									<div class="input-group inputBx" [ngClass]= "{focusGreen:focusBuAddr == 'green' ? true : flase,focusRed:focusBuAddr== 'red' ? true : flase,isDisabled:isDisabled ? true : flase}">
+										 <div class="input-group-prepend">
+											 <div class="input-group-text grpTxt">
+												 <i class="fa fa-university" aria-hidden="true"></i>
+											 </div>
+										 </div>
+                     <input name="businessAddr"  autocomplete="off"
+                     required placeholder="Business Address *"
+                     (focus)="focusFunction(businessAddr.pristine,businessAddr.valid,'focus','focusBuAddr')"
+                     (focusout)="focusFunction(businessAddr.pristine,businessAddr.valid,'outfocus','focusBuAddr')"
+                     [(ngModel)]="model.businessDetails[0].businessAddress" #businessAddr="ngModel"/>
+									 </div>
+                    <div class="errMsg" *ngIf="!model.businessDetails[0].businessAddress" [hidden]="businessAddr.pristine">
+                      <span>Business Address is required</span>
+                    </div>
+								</div>
+
+
+          <div class="form-group">
+            <div class="input-group inputBx" [ngClass]= "{focusGreen:focusPin == 'green' ? true : flase,focusRed:focusPin =='red'? true : flase,isDisabled:isDisabled ? true : flase}">
+               <div class="input-group-prepend">
+                 <div class="input-group-text grpTxt">
+                   <i class="fa fa-map-marker" aria-hidden="true"></i>
+                 </div>
+               </div>
+               <input name="pin" style="width:60%"  autocomplete="off"
+               required placeholder="Pin Code *" maxlength="6" pattern="[0-9]{6}"
+               (focus)="focusFunction(pin.pristine,pin.valid,'focus','focusPin');pinValidCheck = false"
+               (focusout)="focusFunction(pin.pristine,pin.valid,'outfocus','focusPin');pinValidCheck = true"
+               [(ngModel)]="model.businessDetails[0].pinCode" #pin="ngModel"/>
+               <div class="input-group-append">
+                 <button type="button" class="btn btn-success btn-md getloc"
+                 [disabled]="!model.businessDetails[0].pinCode || !pin.valid"
+                 (click)="addressDetails(pin.value)">
+                 Get Location
+               </button>
+               </div>
+             </div>
+              <div class="errMsg" *ngIf="!model.businessDetails[0].pinCode" [hidden]="pin.pristine">
+                <span>Pin code is required</span>
+              </div>
+              <div class="errMsg" *ngIf="model.businessDetails[0].pinCode && pinValidCheck" [hidden]="pin.valid">
+                <span>Please provide valid pin code</span>
+              </div>
+              <div class="errMsg" *ngIf="showAddrMsg && (!model.businessDetails[0].city || !model.businessDetails[0].state || !model.businessDetails[0].country)">
+                <span>Could not fetch the location details.Please provide the following details</span>
+              </div>
+          </div>
+          <div  class="flexDiv" *ngIf="showAddr">
+         <div class="form-group flex-item">
+             <div class="input-group inputBx" [ngClass]= "{focusGreen:focusCity == 'green' ? true : flase,focusRed:focusCity == 'red',isDisabled:isDisabled ? true : flase}">
+                <input  name="city" class="locDeatils"  autocomplete="off"
+                required placeholder="City *"
+                (focus)="focusFunction(city.pristine,city.valid,'focus','focusCity')"
+                (focusout)="focusFunction(city.pristine,city.valid,'outfocus','focusCity')"
+                [(ngModel)]="model.businessDetails[0].city" #city="ngModel"/>
+              </div>
+               <div class="errMsg" [hidden]="city.pristine || city.valid">
+                 <span>City is required</span>
+               </div>
+         </div>
+         <div class="form-group flex-item flex-item-middle">
+           <div class="input-group inputBx" [ngClass]= "{focusGreen:focusState == 'green' ? true : flase,focusRed:focusBuAddr== 'red' ? true : flase,isDisabled:isDisabled ? true : flase}">
+              <input  name="state" class="locDeatils"  autocomplete="off"
+              required placeholder="State *"
+              (focus)="focusFunction(state.pristine,state.valid,'focus','focusState')"
+              (focusout)="focusFunction(state.pristine,state.valid,'outfocus','focusState')"
+              [(ngModel)]="model.businessDetails[0].state" #state="ngModel"/>
+            </div>
+             <div class="errMsg" [hidden]="state.pristine || state.valid">
+               <span>State is required</span>
+             </div>
+         </div>
+         <div class="form-group flex-item flex-item-last">
+           <div class="input-group inputBx" [ngClass]= "{focusGreen:focusCountry == 'green' ? true : flase,focusRed:focusCountry== 'red' ? true : flase,isDisabled:isDisabled ? true : flase}">
+              <input  name="country" class="locDeatils"  autocomplete="off"
+              required placeholder="Country *"
+              (focus)="focusFunction(country.pristine,country.valid,'focus','focusCountry')"
+              (focusout)="focusFunction(country.pristine,country.valid,'outfocus','focusCountry')"
+              [(ngModel)]="model.businessDetails[0].country" #country="ngModel"/>
+            </div>
+             <div class="errMsg" [hidden]="country.pristine || country.valid">
+               <span>Country is required</span>
+             </div>
+         </div>
+      </div>
+      <!-- website -->
+      <div class="form-group">
+        <div class="input-group inputBx" [ngClass]= "{focusGreen:focusWebsite == 'green' ? true : flase,focusRed:focusWebsite== 'red' ? true : flase,isDisabled:isDisabled ? true : flase}">
+           <div class="input-group-prepend">
+             <div class="input-group-text grpTxt">
+               <i class="" aria-hidden="true"></i>
+             </div>
+           </div>
+           <input  name="website"  autocomplete="off"
+           placeholder="Website"
+           [(ngModel)]="model.businessDetails[0].website" #website="ngModel"/>
+         </div>
+          <div class="errMsg" [hidden]="website.pristine || website.valid">
+            <span>Website is required</span>
+          </div>
+      </div>
+      <!--  -->
+      <div class="dropdown-flex">
+         <div class="form-group dropdown-category" >
+            <select name="category" ngModel class="form-control" id="category"
+            required
+            [(ngModel)]="model.businessDetails[0].category" name="category"
+            #category="ngModel">
+            <option value="" disabled>Business Category *</option>
+            <option *ngFor="let data of categoryInfo" [ngValue]="data.id">
+            {{ data.name }}
+            </option>
+            </select>
+         </div>
+         <div class="form-group dropdown-register" >
+            <select name="reg" ngModel class="form-control"
+            required (change)="idProofValidate(model.businessDetails[0].reg)"
+            [(ngModel)]="model.businessDetails[0].reg" name="reg"
+            #reg="ngModel">
+            <option value="" disabled>Registration Info *</option>
+            <option *ngFor="let data of registerInfo" [ngValue]="data.id">
+            {{ data.name }}
+            </option>
+            </select>
+         </div>
+      </div>
+      <!--  -->
+      <div class="form-group" *ngIf='model.businessDetails[0].reg'>
+        <div class="input-group inputBx" [ngClass]= "{focusGreen:focusregDetails == 'green' ? true : flase,focusRed:focusregDetails== 'red' ? true : flase,isDisabled:isDisabled ? true : flase}">
+           <div class="input-group-prepend">
+             <div class="input-group-text grpTxt">
+               <i class="" aria-hidden="true"></i>
+             </div>
+           </div>
+           <input name="regDetails"  autocomplete="off"
+           required placeholder="Enter Id Proof Number *" [maxlength]="maxLn"
+           (focus)="focusFunction(regDetails.pristine,regDetails.valid,'focus','focusregDetails')"
+           (focusout)="focusFunction(regDetails.pristine,regDetails.valid,'outfocus','focusregDetails')"
+           (blur)="idProofValidate(model.businessDetails[0].reg,regDetails.value);"
+            [(ngModel)]="model.businessDetails[0].regProof"
+            #regDetails="ngModel"/>
+          </div>
+          <div class="errMsg" [hidden]="regDetails.valid || regDetails.pristine">
+            <span>{{idProofErrMsg}}</span>
+          </div>
+      </div>
+        <div class="form-group">
+      <div class="input-group inputBx" >
+        <input type="file" [(ngModel)]="filedata1" name ='file' #file='ngModel' (change)="selectFile($event)" placeholder="Upload Id Proof Doc" accept=".png,.jpg,.jpeg" required>
+      </div>
+      <div class="errMsg" [hidden]="file.valid || file.pristine">
+        <span>invalid file upload format.Only JPG and PNG files are allowed.</span>
+      </div>
+      </div>
+      <!-- Terms and conditions -->
+      <!-- <div class="form-group">
+        <span class="input-group-append">
+        <input class="tNc input-group" required name="tnc" id="tnc"
+        [(ngModel)]="model.tnc"
+        #tnc="ngModel" type="checkbox"/>  I read and accept terms and conditions *</span>
+      </div> -->
+     <!-- Sign Up button -->
+        <div class="row justify-content-center">
+          <div class="col-8">
+            <button type="submit" [className]="signup.form.valid ? 'btn btn-block btn-success' : 'btn btn-block btn-default'"  [disabled]="!signup.form.valid || userExistCheck || emailExistCheck" name="button">SIGN UP</button>
+          </div>
+        </div>
+				</form>
+			</div>
+
+      <!-- Individual Form -->
+      <div class="business" *ngIf="!business">
+        <form  (ngSubmit)="onSubmit(individual);" #signup="ngForm" id="register">
+                <div class="form-group">
+                  <div class="input-group inputBx" [ngClass]= "{focusGreen:focusFname == 'green' ? true : flase,focusRed:focusFname== 'red' ? true : flase,isDisabled:isDisabled ? true : flase}">
+                     <div class="input-group-prepend">
+                       <div class="input-group-text grpTxt">
+                         <i class="fa  fa-user" aria-hidden="true"></i>
+                       </div>
+                     </div>
+                     <input name="fname"  autocomplete="off"
+                     required placeholder="First Name *"
+                     (focus)="focusFunction(fname.pristine,fname.valid,'focus','focusFname')"
+                     (focusout)="focusFunction(fname.pristine,fname.valid,'outfocus','focusFname')"
+                     [(ngModel)]="individual.ownerName" #fname="ngModel"/>
+                   </div>
+                    <div class="errMsg" *ngIf="!individual.fName" [hidden]="fname.pristine || fname.valid">
+                      <span>First Name is required</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                  <div class="input-group inputBx">
+                     <div class="input-group-prepend">
+                       <div class="input-group-text grpTxt">
+                         <i class="fa fa-user" aria-hidden="true"></i>
+                       </div>
+                     </div>
+                     <input  autocomplete="off"
+                   placeholder="Last Name"
+                     [(ngModel)]="individual.lastName" name="ownername"
+                     #ownername="ngModel" />
+                   </div>
+                </div>
+                <div class="form-group">
+                  <div class="input-group inputBx" [ngClass]= "{focusGreen:focusMobile == 'green' ? true : flase,focusRed:focusMobile== 'red' ? true : flase,isDisabled:isDisabled ? true : flase}">
+                     <div class="input-group-prepend">
+                       <div class="input-group-text grpTxt">
+                         <i class="fa fa-phone-square" aria-hidden="true"></i>
+                       </div>
+                     </div>
+                     <input name="mobile"  autocomplete="off"
+                      required placeholder="Mobile Number *" autocomplete="off"
+                      (focus)="focusFunction(mobile.pristine,mobile.valid,'focus','focusMobile');mobileValidCheck = false"
+                      (focusout)="focusFunction(mobile.pristine,mobile.valid,'outfocus','focusMobile');mobileValidCheck = true"
+                      (keyup)="doesUserExist(individual);"
+                      pattern="[0-9]{10}" maxlength="10"
+                      [(ngModel)]="individual.mobile"
+                      #mobile="ngModel"/>
+                   </div>
+                    <div class="errMsg" *ngIf="!individual.mobile && !userExistCheck" [hidden]="mobile.pristine">
+                      <span>Mobile number is required</span>
+                    </div>
+                    <div class="errMsg" *ngIf="individual.mobile && mobileValidCheck" [hidden]="mobile.valid">
+                      <span>Please provide valid mobile number</span>
+                    </div>
+                    <div class="errMsg" *ngIf="mobilecheck">
+                      <span>Mobile number already exist</span>
+                    </div>
+                    <div class="errMsg" *ngIf="individual.mobile && userExistCheck">
+                      <strong>{{userExistCheck}}</strong>
+                    </div>
+                </div>
+                <div class="form-group">
+                  <div class="input-group inputBx" [ngClass]= "{focusGreen:focusEmail == 'green' ? true : flase,focusRed:focusEmail== 'red' ? true : flase,isDisabled:isDisabled ? true : flase}">
+                     <div class="input-group-prepend">
+                       <div class="input-group-text grpTxt">
+                         <i class="fa fa-envelope" aria-hidden="true"></i>
+                       </div>
+                     </div>
+                     <input type="email" name="email"  autocomplete="off"
+                     required placeholder="Email Address *" autocomplete="off"
+                     pattern="^[\w\.]+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$"
+                     (focus)="focusFunction(email.pristine,email.valid,'focus','focusEmail');emailValidCheck = false"
+                     (focusout)="focusFunction(email.pristine,email.valid,'outfocus','focusEmail');emailValidCheck = true"
+                     (keyup)="doesUserExist(individual)"
+                     [(ngModel)]="individual.email" #email="ngModel"/>
+                   </div>
+                    <div class="errMsg" *ngIf="!individual.email && !emailExistCheck" [hidden]="email.pristine">
+                      <span>Email id is required</span>
+                    </div>
+                    <div class="errMsg" *ngIf="individual.email && emailValidCheck" [hidden]="email.valid">
+                      <span>Please provide valid email id</span>
+                    </div>
+                    <div class="errMsg" *ngIf="individual.email && emailExistCheck">
+                      <strong>{{emailExistCheck}}</strong>
+                    </div>
+                </div>
+                <div class="form-group">
+                  <div class="input-group inputBx" [ngClass]= "{focusGreen:focusPassword == 'green' ? true : flase,focusRed:focusPassword== 'red' ? true : flase,isDisabled:isDisabled ? true : flase}">
+                     <div class="input-group-prepend">
+                       <div class="input-group-text grpTxt">
+                        <i class="fa fa-key"></i>
+                       </div>
+                     </div>
+                     <input type="password" name="password"  autocomplete="off"
+                     matTooltipPosition="right" matTooltipClass="tooltipCss"
+                    matTooltip="Requires minimum 6 characters,at least 1 Uppercase, 1 Number and 1 of these special characters(!@#$%)"                     required placeholder="Password *" autocomplete="off"
+                     pattern="^(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[!@#$%]).{6,15}$" maxlength="15"
+                     (focus)="focusFunction(password.pristine,password.valid,'focus','focusPassword');pswdValidCheck= false"
+                     (focusout)="focusFunction(password.pristine,password.valid,'outfocus','focusPassword');pswdValidCheck= true"
+                     [(ngModel)]="individual.password"
+                     #password="ngModel"/>
+                   </div>
+                   <div class="errMsg" *ngIf="!individual.password" [hidden]="password.pristine">
+                     <span>Password is required </span>
+                   </div>
+                   <div class="errMsg" *ngIf="individual.password && pswdValidCheck" [hidden]="password.valid">
+                     <span>Password requirment does not match</span>
+                   </div>
+                </div>
+                <div class="form-group">
+                  <div class="input-group inputBx" [ngClass]= "{focusGreen:focusCnfPassword == 'green' ? true : flase,focusRed:focusCnfPassword== 'red' ? true : flase,isDisabled:isDisabled ? true : flase}">
+                     <div class="input-group-prepend">
+                       <div class="input-group-text grpTxt">
+                        <i class="fa fa-key"></i>
+                       </div>
+                     </div>
+                     <input type="password" name="passwordCnf"  autocomplete="off"
+                     matTooltipPosition="right" matTooltipClass="tooltipCss"
+                      matTooltip="Requires minimum 6 characters,at least 1 Uppercase, 1 Number and 1 of these special characters(!@#$%)"                     pattern="^(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[!@#$%]).{6,15}$"
+                     (focus)="focusFunction(passwordCnf.pristine,passwordCnf.valid,'focus','focusCnfPassword');pswdCnfValidCheck =false"
+                     (focusout)="focusFunction(passwordCnf.pristine,passwordCnf.valid,'outfocus','focusCnfPassword');pswdCnfValidCheck =true"
+                      required placeholder="Confirm Password *" autocomplete="off"
+                      [(ngModel)]="individual.passwordCnf" #passwordCnf="ngModel"/>
+                   </div>
+                   <div class="errMsg" *ngIf="!individual.passwordCnf" [hidden]="passwordCnf.pristine">
+                     <span>Password (Confirm) is required</span>
+                   </div>
+                   <div class="errMsg" *ngIf="individual.passwordCnf != individual.password && pswdCnfValidCheck" [hidden]="!individual.passwordCnf || passwordCnf.valid">
+                     <span> Passwords did not match.</span>
+                   </div>
+                </div>
+      <!-- Terms and conditions -->
+      <!-- <div class="form-group">
+        <span class="input-group-append">
+        <input type="checkbox" class="tNc input-group" required name="tnc"
+          [(ngModel)]="individual.tnc" #tnc="ngModel"/> I read and accept terms and conditions * </span>
+      </div> -->
+     <!-- Sign Up button -->
+        <div class="row justify-content-center">
+          <div class="col-8">
+            <button type="submit" [className]="signup.form.valid ? 'btn btn-block btn-success' : 'btn btn-block btn-default'"  [disabled]="!signup.form.valid || userExistCheck || emailExistCheck" name="button">SIGN UP</button>
+          </div>
+        </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>

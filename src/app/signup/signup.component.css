@@ -1,11 +1,10 @@
 .signUp{
   /* width: auto; */
   /* background: linear-gradient(green, yellow, green); */
-  /* background-color: #FFF; */
+  background-color: #ffffff;
   border-radius: 10px;
   border: 1px solid;
    box-shadow: 5px 10px #888888;
-  margin-top: 10px;
 	-webkit-box-shadow: 0 10px 6px -6px #777;
 	-moz-box-shadow: 0 10px 6px -6px #777;
 	 box-shadow: 0 10px 6px -6px #777;
@@ -40,4 +39,19 @@
 
 .flex-item-buAdd{
   width: 70%
+}
+.locationBtn{
+  margin-top: 31px;
+}
+.listBu{
+  cursor: pointer;
+  text-transform: capitalize;
+}
+.listBu:hover{
+  background-color: cornflowerblue;
+  text-decoration: underline;
+}
+.listItms{
+  text-align: center;
+  width: 50%
 }

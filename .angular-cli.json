@@ -6,7 +6,7 @@
   "apps": [
     {
       "root": "src",
-      "outDir": "E:/Project/JavaCode-master/src/main/resources/static",
+      "outDir": "E:/Project/JavaCode/src/main/resources/static",
       "assets": [
         "assets",
         "favicon.ico"
@@ -20,6 +20,7 @@
       "prefix": "app",
       "styles": [
         "../node_modules/bootstrap/dist/css/bootstrap.min.css",
+        "lib/font-awesome-4.7.0/css/font-awesome.css",
           "styles.css"
       ],
       "scripts": [],

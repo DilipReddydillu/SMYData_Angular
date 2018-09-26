@@ -1,117 +1,128 @@
-<div class="container-fluid border border-success center20">
-<h1>Invoice</h1>
-<div class="col-md-4 col-md-offset-4" *ngIf='!invoice'>
-      <div class="input-group center" *ngIf='!userEntry'>
-      <input type="text" class="form-control" [(ngModel)]='mobile' placeholder="Enter Mobile Number" aria-label="Recipient's username" aria-describedby="basic-addon2">
+  <div class="row cstyle justify-content-center">
+   <div class="">
+     <h2>Invoice</h2>
+    </div>
+  </div>
+<div class="row cstyle dataBox" *ngIf='!invoice'>
+  <div class="col"> </div>
+  <div class="col-md-5 col-sm-12">
+    <div class="input-group col align-self-center" style="margin-top:50px" *ngIf='!userEntry'>
+      <input type="text" class="form-control" [(ngModel)]='mobile'  maxlength="10" placeholder="Enter Mobile Number" style="height:50px">
       <div class="input-group-append">
-        <button class="btn btn-outline-secondary" (click)="verifyUser()" type="button">Submit</button>
+        <button class="btn btn-success fntcss" (click)="verifyUser()" type="button">Submit</button>
       </div>
+    </div>
+    <form *ngIf='userEntry' #userForm="ngForm">
+      <div class="form-group">
+        <label  class="col-form-label">Name</label>
+        <div class="">
+          <input type="text" required class="form-control form-control-sm usrInpt" name='username'  [(ngModel)]="userName" placeholder="Name">
+        </div>
       </div>
-
-<form *ngIf='userEntry'>
-  <div class="form-group row">
-    <label  class="col-sm-2 col-form-label col-form-label-sm">Name</label>
-    <div class="col-sm-10">
-      <input type="text" class="form-control form-control-sm" name='username'  [(ngModel)]="userName" placeholder="Name">
-    </div>
+      <div class="form-group">
+        <label for="colFormLabelSm" class="col-form-label">Email</label>
+        <div class="">
+          <input type="email" required class="form-control form-control-sm usrInpt" name='mail' [(ngModel)]='email' placeholder="Email">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="colFormLabelSm" class="col-form-label col-form-label-sm">Address</label>
+        <div class="">
+          <input type="text" class="form-control form-control-sm usrInpt" name='addr' [(ngModel)]='address'  placeholder="Address">
+        </div>
+      </div>
+      <button class="btn btn-success btn-block fntcss" [disabled]="!userForm.form.valid" type="button" (click)='userDetails(userName,email,address)' name="button">Submit</button>
+    </form>
   </div>
-  <div class="form-group row">
-    <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Email</label>
-    <div class="col-sm-10">
-      <input type="email" class="form-control form-control-sm" name='mail' [(ngModel)]='email' placeholder="Email">
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Address</label>
-    <div class="col-sm-10">
-      <input type="text" class="form-control form-control-sm" name='addr' [(ngModel)]='address'  placeholder="Address">
-    </div>
-  </div>
-  <button class="btn btn-success" type="button" (click)='userDetails(userName,email,address)' name="button">Submit</button>
-</form>
+  <div class="col"></div>
 </div>
 
+<div class="row cstyle dataBox"   *ngIf='invoice' style="font-family: Rokkitt, serif;">
 <!--generated invoice  -->
-<div class="invoiceCreation container border border-success center20 tableFlow" *ngIf='invoice' >
+<div class="invoiceCreation container" >
   <div class="row">
-    <div class="col-sm" [hidden]='InvGen'>
-      <h5>{{userName | uppercase}}</h5>
-      <h5>{{mobile}}</h5>
-      <h5>{{email}}</h5>
-      <h5>{{address}}</h5>
-    </div>
     <div class="col-sm">
-      <img src={{imageUrl()}}  style="width:100px;height:100px">
+      <h6><span>{{userName | uppercase}}</span> | <span>{{mobile}}</span></h6>
+      <h6><span>{{email}}</span> | <span>{{address}}</span></h6>
     </div>
-    <div class="col-sm" [hidden]='InvGen'>
-      <h5>Total BV = {{BV}}</h5>
-      <h5>Total Points = {{rewardPoints}}</h5>
+    <div class="col-sm" >
+      <img src={{imageUrl()}}  style="width:50px;height:50px;border-radius:50px">
     </div>
+    <div class="col-sm" >
+      <h6>Total BV={{BV}} | RewardPoints={{rewardPoints}}</h6>
+      <h6>Payables={{totalPayable}} | Receivables={{totalReceivable}}</h6>
+    </div>
+  </div><br>
+  <div class="row">
+    <div class=" col-md-12" style="overflow:auto;max-height:300px">
+    <table class="table">
+    <thead class="thead-light fntcss">
+      <tr>
+        <th>#</th>
+        <th>Item Name</th>
+        <th>Quantity</th>
+        <th>Rate</th>
+        <th>Total Amount</th>
+        <th [hidden]='InvGen'>
+          <button type="button"  (click)='addRow(0)' class="btn btn-success btn-sm">
+          <span>+</span>
+          </button>
+      </th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of invoiceList;let i = index; let lastEl = last; let firstEl = first">
+        <td class="indx">{{i+1}}</td>
+        <td class="tablecss">
+          <select [(ngModel)]='invoiceList[i].item' [disabled]='InvGen' class="tablecss" style="width:200px;">
+              <option *ngFor="let item of items" value={{item}}>
+                  {{item}}
+              </option>
+          </select>
+        </td>
+        <td class="tablecss">
+          <input class="tablecss"  type="number" min="0" (blur)='calcTotal()' [(ngModel)]='invoiceList[i].quantity' [disabled]='InvGen'/>
+        </td>
+        <td class="tablecss">
+          <input class="tablecss"  type="number" min="0" (blur)='calcTotal()' [(ngModel)]='invoiceList[i].rate' [disabled]='InvGen'/>
+        </td>
+        <td class="tablecss">
+          <input class="tablecss" readonly value="{{invoiceList[i].rate  * invoiceList[i].quantity | currency:'RS '}}"  [disabled]='InvGen'>
+        </td>
+        <td *ngIf='!firstEl'  [hidden]='InvGen'>
+          <button type="button"   (click)='deleteRow(i);calcTotal()' class="btn btn-danger btn-sm">
+            <span>-</span>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
   </div>
-  <table class="table">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Item</th>
-      <th scope="col">Quantity</th>
-      <th scope="col">Rate</th>
-      <th scope="col">Total</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let data of invoiceList;let i = index; let lastEl = last; let firstEl = first">
-      <td>{{i+1}}</td>
-      <td>
-        <select [(ngModel)]='invoiceList[i].item' [disabled]='InvGen'>
-            <option *ngFor="let item of items" value={{item}}>
-                {{item}}
-            </option>
-        </select>
-      </td>
-      <td>
-        <input class="quantity"  type="number" min="0" (blur)='calcTotal()' [(ngModel)]='invoiceList[i].quantity' [disabled]='InvGen'/>
-      </td>
-      <td>
-        <input class="rate"  type="number" min="0" (blur)='calcTotal()' [(ngModel)]='invoiceList[i].rate' [disabled]='InvGen'/>
-      </td>
-      <td>
-        <input  value="{{invoiceList[i].rate  * invoiceList[i].quantity | currency:'RS '}}"  [disabled]='InvGen'>
-      </td>
-      <td *ngIf='!firstEl'  [hidden]='InvGen'>
-        <button type="button"   (click)='deleteRow(i)' class="btn btn-danger btn-sm">
-          <span class="glyphicon glyphicon-minus"></span>
-        </button>
-      </td>
-      <td *ngIf='lastEl' [hidden]='InvGen'>
-        <button type="button"  (click)='addRow(i)' class="btn btn-success btn-sm">
-          <span class="glyphicon glyphicon-plus"></span>
-        </button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+</div>
 <hr>
 <div class="row">
-  <div class="col-sm">
-    <h5>Discount:<input  type="number" min="0" max="1000" (blur)='calcTotal()' [(ngModel)]='discounts' [disabled]='InvGen' />%</h5>
-    <h5>Rewards:<input  type="number" min="0" max="1000" (blur)='calcTotal()' [(ngModel)]='rewards' [disabled]='InvGen' /></h5>
-      <h5>Credit :<input type="number" min="0" max="100000" [(ngModel)]='credit'  [disabled]='InvGen'/></h5>
+  <div class="col-md-4 col-sm-6">
+    <h6><span>Discount </span><input  class="fixWidth"  (blur)='calcTotal()' [(ngModel)]='discounts' [disabled]='InvGen' />%</h6>
+    <h6><span>Rewards </span>  <input   class="fixWidth"  (blur)='calcTotal()' [(ngModel)]='rewards' [disabled]='InvGen' /></h6>
+    <h6><span>Credit  </span> <input  class="fixWidth" (blur)='calcTotal()' [(ngModel)]='credit'   [disabled]='InvGen' style="margin-left:16px;width:80px"/></h6>
   </div>
-  <div class="col-sm">
+  <div class="col-md-4">
   </div>
-  <div class="col-sm">
-    <h5>SubTotal:{{subTotal}}</h5>
-    <h5>GST:<input  type="number" min="0" max="1000" (blur)='calcTotal()' [(ngModel)]='gst' [disabled]='InvGen' />%</h5>
-    <h5>Total:{{total}}</h5>
-    <h5>PAID : {{total - credit}}</h5>
+  <div class="col-md-4 col-sm-6">
+    <h6>SubTotal <span class="mrglv" style="margin-left:0px"> {{subTotal | number}}</span></h6>
+    <h6>GST <span class="mrglv" style="margin-left:32px"> <input class="fixWidth"  (blur)='calcTotal()' [(ngModel)]='gst' [disabled]='InvGen' />%</span></h6>
+    <h6>Total <span class="mrglv" style="margin-left:32px"> {{total | number}}</span></h6>
+    <h6>Paid <span class="mrglv" style="margin-left:37px"> {{total - credit | number}}</span></h6>
   </div>
 </div>
-
-<div class="" [hidden]="InvGen">
-  <button type="button" name="button"  class="btn btn-block btn-primary" (click)="submitInvoice()">Submit</button>
-</div>
-<div class="" [hidden]="!InvGen">
-  <button type="button" name="button"  class="btn btn-block btn-primary">Generate Invoice</button>
+<div class="row">
+  <div class="col align-self-center" [hidden]="InvGen">
+    <button type="button" name="button"  class="btn btn-block btn-success fntcss" (click)="submitInvoice()">Submit</button>
+  </div>
+  <div class="col align-self-center" [hidden]="!InvGen">
+    <button type="button" name="button" routerLink="/userData/generateInvoice"  class="btn btn-block btn-primary fntcss">Generate Invoice</button>
+  </div>
 </div>
 </div>
 </div>

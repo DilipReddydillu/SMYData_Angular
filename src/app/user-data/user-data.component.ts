@@ -1,4 +1,4 @@
-import { Component ,Input,Output, OnChanges } from '@angular/core';
+import { Component ,Input,Output, OnChanges, NgZone } from '@angular/core';
 import { DataService } from '../data.service';
 import {Observable} from 'rxjs/Rx';
 import {Router} from '@angular/router';
@@ -22,12 +22,15 @@ invoice;
 payables;
 receivables;
 profile;
+buPlanCss;
 
-
-  constructor(private _demoService: DataService, private router: Router, private cookieService: CookieService) { }
+  constructor(private _demoService: DataService, private router: Router, private cookieService: CookieService) {
+   }
   ngOnInit() {
     this._demoService.newBusinessVal.subscribe(newBusinessVal => this.addNewBusinessForm = newBusinessVal);
+    this._demoService.buPlanCssVal.subscribe(value => this.buPlanCss = value);
      this.showRegForm = this.addNewBusinessForm;
+     this.showBuList();
   }
 addNewBusiness(){
   this.showeditForm = false;
@@ -44,14 +47,13 @@ viewBusinessDetails(data){
   this.showbusinessList = false;
 }
 showBuList(){
-  this.showbusinessList = true;
   this._demoService.viewMyBusiness().subscribe(
      data => {
-       console.log('showBuList::'+data)
        this.businessList = data;
+         this._demoService.changeBusinessList(this.businessList);
      },
      error => {
-
+       alert("could not fetch BU data")
      }
   );
 }
@@ -59,7 +61,10 @@ showBuList(){
 sideNav(value){
   this[value] = true;
   this.profile = false;
-  console.log('show-'+value);
 }
+routeTo(url){
+  this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
+   this.router.navigate([url]));
 
+}
 }

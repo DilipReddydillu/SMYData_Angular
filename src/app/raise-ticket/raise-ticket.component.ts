@@ -14,6 +14,7 @@ description:string;
 
 constructor(private _demoService: DataService,private toastr:ToastsManager) {}
   ngOnInit() {
+    this._demoService.changebuPlanCss("0");
   }
 submit(){
   this._demoService.createTicket({subject:this.subject,description:this.description}).subscribe(
