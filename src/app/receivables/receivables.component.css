@@ -7,3 +7,43 @@
 .inps{
   width: 200px;
 }
+.ng2-smart-pagination {
+  color: red;
+  display: inline-flex;
+  font-size: .650em !important;
+  padding: 0;
+  .ng2-smart-page-item {
+    display: inline;
+    font-size: .650em !important;
+  }
+
+  .page-link-next, .page-link-prev {
+    /* font-size: 20px; */
+  }
+}
+
+:host /deep/ ng2-smart-table table{
+    border-style: inset;
+    border-color: initial;
+    border-image: initial;
+    border-width: 2px;
+    display: table;
+    border-spacing: 2px;
+    border-color: grey; /* border of the big table*/
+}
+/* grid lines */
+:host /deep/ ng2-smart-table table > tbody > tr > td {
+    box-sizing: border-box;
+    border: 1px solid grey;
+}
+
+/* headers grid color*/
+:host /deep/ ng2-smart-table thead > tr > th  {
+    border: 1px solid grey;
+    width: 50px;
+    /* background-color:#673ab7; */
+}
+/*font size*/
+:host /deep/ ng2-smart-table {
+    font-size:16px;
+}

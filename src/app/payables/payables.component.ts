@@ -28,7 +28,27 @@ dataSource: MatTableDataSource<any>;
 displayedColumns = ['invoice','mobile','date','amount','payoff'];
 @ViewChild(MatPaginator) paginator: MatPaginator;
 @ViewChild(MatSort) sort: MatSort;
-
+settings = {
+  actions: {
+    add: false,
+    edit: false,
+    delete: false,
+  },
+   columns: {
+   invoiceNumber: {
+     title: 'Invoice'
+   },
+   mobile: {
+     title: 'Mobile'
+   },
+   createDate: {
+     title: 'Date'
+   },
+   amount: {
+     title: 'Amount'
+   }
+ }
+};
   constructor(private _demoService: DataService,private billingService: BillingService,private toastr:ToastsManager) {
     this.newPayable={invoiceNumber:'',amount:'',desc:'',mobile:''};
   }

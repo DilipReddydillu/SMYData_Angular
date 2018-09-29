@@ -64,7 +64,15 @@ export class DataService {
     private buList = new BehaviorSubject<any>('');
     buListData = this.buList.asObservable();
      changeBusinessList(data) {
+       console.log(data)
        this.buList.next(data);
+     }
+
+    private selectedBU = new BehaviorSubject<any>('');
+    selectedBUVal = this.selectedBU.asObservable();
+     changeselectedBUVal(data) {
+       console.log(data)
+       this.selectedBU.next(data);
      }
     private invoiceData = new BehaviorSubject<any>('');
     invData = this.invoiceData.asObservable();

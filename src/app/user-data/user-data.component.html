@@ -1,5 +1,5 @@
 <div class="row textfamily">
-  <!-- <div class="col-md-2 col-sm-4 textStyle">
+  <div class="col-md-2 col-sm-4 textStyle p-0">
     <div class="list-group" id="list-tab" role="tablist" [style.margin-top.px]="buPlanCss">
       <a class="list-group-item list-group-item-action listcss"  data-toggle="list" role="tab" (click)="routeTo('/userData/invoice')" >Invoice</a>
       <a class="list-group-item list-group-item-action listcss"  data-toggle="list" role="tab" (click)="routeTo('/userData/payables')">Payables</a>
@@ -7,8 +7,8 @@
       <a class="list-group-item list-group-item-action listcss"  data-toggle="list" role="tab" (click)="routeTo('/userData/salesReport')">Sales Report</a>
       <a class="list-group-item list-group-item-action listcss"  data-toggle="list" role="tab" (click)="routeTo('/userData/raiseTicket')">Raise Ticket</a>
     </div>
-  </div> -->
-  <div class="col-md-12">
+  </div>
+  <div class="col-md-10 col-sm-8 p-0">
       <router-outlet class="tab-pane fade"></router-outlet>
   </div>
 </div>

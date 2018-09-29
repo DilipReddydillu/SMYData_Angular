@@ -3,6 +3,7 @@ import { DataService } from '../data.service';
 import {Observable} from 'rxjs/Rx';
 import {Router} from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { Location } from '@angular/common';
 
 
 @Component({
@@ -24,13 +25,15 @@ receivables;
 profile;
 buPlanCss;
 
-  constructor(private _demoService: DataService, private router: Router, private cookieService: CookieService) {
+  constructor(private _demoService: DataService, private router: Router,private location:Location, private cookieService: CookieService) {
    }
   ngOnInit() {
     this._demoService.newBusinessVal.subscribe(newBusinessVal => this.addNewBusinessForm = newBusinessVal);
     this._demoService.buPlanCssVal.subscribe(value => this.buPlanCss = value);
      this.showRegForm = this.addNewBusinessForm;
-     this.showBuList();
+     if (this.location.path() == "/userData") {
+       this.showBuList();
+     }
   }
 addNewBusiness(){
   this.showeditForm = false;
@@ -51,6 +54,7 @@ showBuList(){
      data => {
        this.businessList = data;
          this._demoService.changeBusinessList(this.businessList);
+         this._demoService.changeselectedBUVal(this.businessList.businessDetails[0].companyName);
      },
      error => {
        alert("could not fetch BU data")

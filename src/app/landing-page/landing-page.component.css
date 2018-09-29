@@ -7,13 +7,13 @@
   color: #0E2426;
 }
 .title{
-  font-size: 1.5rem;
+  font-size: 2.5rem;
   transition-property: font-size;
   transition-duration: 4s;
 }
-.title:hover{
+/* .title:hover{
   font-size: 8rem;
-}
+} */
 .img-rounded{
   border-radius: 50%;
 }

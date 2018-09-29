@@ -10,6 +10,9 @@ import {MatTableModule,MatPaginatorModule,MatSortModule } from '@angular/materia
 import {CdkTableModule} from '@angular/cdk/table';
 import {MatInputModule} from '@angular/material';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {AgGridModule} from 'ag-grid-angular';
+import { DataTableModule } from 'angular5-data-table';
+import { Ng2SmartTableModule } from 'ng2-smart-table';
 
 import { AppRoutingModule } from './app-routing/app-routing.module';
 import { AppComponent } from './app.component';
@@ -80,7 +83,9 @@ import { InvoiceGenerationComponent } from './invoice-generation/invoice-generat
     CdkTableModule,
     MatInputModule,
     MatTooltipModule,
-    AppRoutingModule,
+    AppRoutingModule,Ng2SmartTableModule,
+    AgGridModule.withComponents([]),
+    DataTableModule.forRoot(),
     ToastModule.forRoot()
   ],
   providers: [CookieService, DataService, BillingService,IndividualService,AuthGuard],

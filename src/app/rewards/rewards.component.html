@@ -11,9 +11,9 @@
   <li class="nav-item">
     <span class="nav-link listcss " id="nav-profile-tab" data-toggle="tab" routerLink="/userData/discounts" role="tab" aria-controls="nav-profile" aria-selected="false">Discounts</span>
   </li>
-  <li class="nav-item ">
+  <!-- <li class="nav-item ">
     <span class="nav-link listcss" id="nav-contact-tab" data-toggle="tab"routerLink="/userData/invoiceTemplate" role="tab" aria-controls="nav-contact" aria-selected="false">Invoice</span>
-  </li>
+  </li> -->
 </ul>
 </div>
   <div class="row cstyle pt-2">
@@ -36,7 +36,7 @@
            <div class="panel-body">
              <div class="">
              <dl>
-                <dt class=""> <h5 style="color:red">1.Rewards Points Value</h5> </dt>
+                <dt class=""> <h5>1.Rewards Points Value</h5> </dt>
                 <dd>
                   <span>
                     Rewards effective amount-<input class="rewardAmount" [(ngModel)]='rewards.effectiveAmount' />
@@ -60,7 +60,7 @@
 
               <div class="">
               <dl>
-                 <dt> <h5 style="color:red">2.Sign Up Bonus Reward Points</h5> </dt>
+                 <dt> <h5>2.Sign Up Bonus Reward Points</h5> </dt>
                  <dd>
                    <span>
                     New customer welcome points <input class="rewardAmount" [(ngModel)]='rewards.bonusPoints' />

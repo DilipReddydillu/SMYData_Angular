@@ -29,6 +29,8 @@ export class AppComponent {
            this.indProfile = indProfile)
          this._dataService.buListData.subscribe(buList =>
            this.businessList = buList);
+         this._dataService.selectedBUVal.subscribe(selectedBU =>
+           this.selectedBU = selectedBU);
          this.allCookies = this.cookieService.getAll();
          if(this.allCookies && this.allCookies.mobile){
           // this.showProfile = true;

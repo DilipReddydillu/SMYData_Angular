@@ -1,20 +1,13 @@
-<nav class="navbar fixed-top navStyles py-0" >
-  <a class="navbar-brand" routerLink="/home" *ngIf="!showProfile && !indProfile">SMYDATA</a>
+<nav class="navbar fixed-top navStyles py-0">
+  <a class="navbar-brand" routerLink="/home" >SMYDATA</a>
   <span *ngIf="showProfile && !indProfile">
-    <li class="nav-item dropdown" style="list-style:none">
+    <li class="nav-item dropdown" style="list-style:none;">
    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Welcome to {{selectedBU | uppercase}}</a>
    <div class="dropdown-menu">
-     <span class="dropdown-item" *ngFor="let bu of businessList.businessDetails" (click)="changeBU(bu)">{{bu.companyName | uppercase}}</span>
+     <span class="dropdown-item" style="cursor:pointer" *ngFor="let bu of businessList.businessDetails" (click)="changeBU(bu)">{{bu.companyName | uppercase}}</span>
    </div>
  </li>
-</span>
-<span class="" *ngIf="showProfile && !indProfile" style="display:inline-flex;list-style:none">
-<li class="mx-2 nav-link" routerLink="/userData/invoice">Invoice</li>
-<li class="mx-2 nav-link" routerLink="/userData/payables">Payables</li>
-<li class="mx-2 nav-link" routerLink="/userData/receivables">Receivablels</li>
-<li class="mx-2 nav-link" routerLink="/userData/salesReport">SalesReport</li>
-<li class="mx-2 nav-link" routerLink="/userData/raiseTicket">RaiseTicket</li>
-</span>
+  </span>
   <span class="navbar-text navRight loginsp" >
    <a class="nav-link" *ngIf="!showProfile && !indProfile">
      <span routerLink="/signIn">LOG IN</span>
@@ -27,7 +20,7 @@
          Profile
        </a>
        <div class="dropdown-menu" style="left:-80px;text-color:black;cursor:pointer" aria-labelledby="navbarDropdownMenuLink">
-         <!-- <span class="dropdown-item" routerLink="/userData/myInfo">View Business</span> -->
+         <span class="dropdown-item" routerLink="/userData/myInfo">View Business</span>
          <span class="dropdown-item" routerLink="/userData/addNew">Add Business</span>
          <span class="dropdown-item" routerLink="/userData/businessPlan">BusinessPlan</span>
          <span class="dropdown-item" (click)="logOut()">Logout</span>

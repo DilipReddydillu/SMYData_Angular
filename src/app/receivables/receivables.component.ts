@@ -23,12 +23,32 @@ addNew;
 customerMobile;
 newReceivable ={};
 
-
+data;
 dataSource: MatTableDataSource<any>;
 displayedColumns = ['invoice','mobile','date','amount','receive'];
 @ViewChild(MatPaginator) paginator: MatPaginator;
 @ViewChild(MatSort) sort: MatSort;
-
+settings = {
+  actions: {
+    add: false,
+    edit: false,
+    delete: false,
+  },
+   columns: {
+   invoiceNumber: {
+     title: 'Invoice'
+   },
+   mobile: {
+     title: 'Mobile'
+   },
+   createDate: {
+     title: 'Date'
+   },
+   amount: {
+     title: 'Amount'
+   }
+ }
+};
   constructor(private _demoService: DataService,private billingService: BillingService,private toastr:ToastsManager) {
     this.newReceivable={};
     this._demoService.changebuPlanCss("0");
@@ -51,6 +71,8 @@ displayedColumns = ['invoice','mobile','date','amount','receive'];
       if(data != null && Object.keys(data).length>=0){
         if(data[0] && data[0]['paybleReceivables'].length > 0){
         let dataObj  = data[0]['paybleReceivables'];
+        this.data = dataObj;
+        console.log(this.data)
         this.dataSource = new MatTableDataSource(dataObj);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
