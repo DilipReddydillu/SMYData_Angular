@@ -23,7 +23,7 @@ newPayable;
 model;
 addNew;
 customerMobile;
-
+data;
 dataSource: MatTableDataSource<any>;
 displayedColumns = ['invoice','mobile','date','amount','payoff'];
 @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -69,6 +69,7 @@ settings = {
       if(data != null){
         if(data[0] && data[0]['paybleReceivables'].length > 0){
          let dataObj = data[0]['paybleReceivables'];
+           this.data = dataObj;
          this.dataSource = new MatTableDataSource(dataObj);
          this.dataSource.paginator = this.paginator;
          this.dataSource.sort = this.sort;

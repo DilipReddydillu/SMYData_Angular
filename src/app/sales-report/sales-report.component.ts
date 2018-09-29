@@ -18,7 +18,7 @@ tickets:any;
 topCustomer:any;
 invoiceData:any;
 topCustomerRecords = 3;
-displayedColumns:any;
+displayedColumns:any;data;
 objData = {
   getUserDetails:['name','userMobile','email'],
   getTopCustomer:["name","userMobile","bv"],
@@ -27,11 +27,44 @@ objData = {
   getInvoice:["invoiceId","userMobile","total"],
  getTickets:["ticketId","subject","description","createDate"],
 }
+getUserDetails:{
+   name: {title: 'Name' },
+   userMobile: {title: 'Mobile'},
+  email: { title: 'Email' },
+};
+getTopCustomer:{
+  name: {title: 'Name' },
+  userMobile: {title: 'Mobile'},
+ bv: { title: 'BV' },
+};
+pay_rcv:{
+  invoiceId: {title: 'InvoiceId' },
+  userMobile: {title: 'Mobile'},
+ total: { title: 'Total' },
+};
+getInvoice:{
+  invoice: {title: 'Invoice' },
+  mobile: {title: 'Mobile'},
+ amount: { title: 'Amount' },
+};
+getTickets:{
+  ticketId: {title: 'Id' },
+  subject: {title: 'Subject'},
+ description: { title: 'Description' },
+ createDate: { title: 'Date' },
+};
  dataSource: MatTableDataSource<any>;
 
  @ViewChild(MatPaginator) paginator: MatPaginator;
  @ViewChild(MatSort) sort: MatSort;
-
+ settings = {
+   actions: {
+     add: false,
+     edit: false,
+     delete: false,
+   },
+    columns: {}
+ };
 constructor(private _demoService: DataService,private toastr:ToastsManager) {}
   ngOnInit() {
     this._demoService.changebuPlanCss("0");
@@ -46,10 +79,12 @@ applyFilter(filterValue: string) {
   request(type,val){
     let obj = {value:type,startDate:this.startDate,endDate:this.endDate};
     this.displayedColumns = this.objData[type];
+    this.settings.columns = this[type];
     this.report = this.payable_receivable = this.tickets = this.topCustomer = this.invoiceData = "";
     this._demoService.requestReport(obj,type).subscribe(
       data => {
          this[val] = data;
+         this.data = data;
          this.dataSource = new MatTableDataSource(this[val]);
          this.dataSource.paginator = this.paginator;
          this.dataSource.sort = this.sort;
