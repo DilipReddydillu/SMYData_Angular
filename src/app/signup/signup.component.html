@@ -1,4 +1,4 @@
-<div class="" *ngIf ='!showbusinessList &&   this.businessEditableForm'>
+<!-- <div class="" *ngIf ='!showbusinessList &&   this.businessEditableForm'>
   <button type="button"  class="btn btn-primary" name="button" (click)="showbusinessList = true">Show List</button>
 </div>
 <div  *ngIf ='showbusinessList' class="listItms">
@@ -6,7 +6,7 @@
 <ul class="list-group text-center" >
   <li class="list-group-item listBu" *ngFor="let item of businessList.businessDetails; let indexVal=index " (click)='viewBusinessDetails(indexVal)'>{{item.companyName}}</li>
 </ul>
-</div>
+</div> -->
 
 <div class="row justify-content-center">
 <div class="signUp col-6" *ngIf ='!showbusinessList' style="margin-top:35px">
@@ -17,9 +17,9 @@
   				<strong>{{registrationFailed}}</strong>
   			</div>
       <div class="form-group">
-         <label for="name">Company Name / Business Name</label>
+         <!-- <label for="name">Company Name / Business Name</label> -->
          <input type="text" class="form-control" id="name"
-         required
+         required placeholder="Company Name / Business Name*"
          [(ngModel)]="model.businessDetails[0].companyName" name="name"
          #name="ngModel"/>
          <div [hidden]="name.valid || name.pristine"
@@ -28,9 +28,9 @@
          </div>
       </div>
       <div class="form-group" *ngIf='!addNew'>
-         <label for="name">Owner Name / Manager Name</label>
+         <!-- <label for="name">Owner Name / Manager Name</label> -->
          <input type="text" class="form-control" id="ownername"
-         required
+         required placeholder="Owner Name / Manager Name*"
          [(ngModel)]="model.ownerName" name="ownername"
          #ownername="ngModel" />
          <div [hidden]="ownername.valid || ownername.pristine"
@@ -38,10 +38,10 @@
             Owner Name / Manager Name is required
          </div>
       </div>
-      <div class="form-group" *ngIf='!addNew'>
+      <!-- <div class="form-group" *ngIf='!addNew'>
          <label for="name">Mobile Number</label>
          <input type="text" class="form-control" maxlength="10"
-         required [readonly]="businessEditableForm"
+         required [readonly]="businessEditableForm" placeholder=""
          (blur)="doesUserExist(mobile.value);validation('pattern_mobile',mobile.value)"
          [(ngModel)]="model.mobile" name="mobile"
          #mobile="ngModel"/>
@@ -50,8 +50,8 @@
             <span *ngIf='!mobilecheck'>Enter valid mobile number! Should contain 10 digits.</span>
                   <span *ngIf='mobilecheck'>Mobile Number already exist</span>
          </div>
-      </div>
-      <div class="form-group" *ngIf='!addNew'>
+      </div> -->
+      <!-- <div class="form-group" *ngIf='!addNew'>
          <label for="name">Password</label>
          <input type="password" class="form-control" id="password" [readonly]="businessEditableForm"
          required   (blur)="validation('pattern_password',password.value)"
@@ -61,8 +61,8 @@
             class="alert alert-danger">
           Enter valid password ! Min 6 characters.Password must contain at least one capital alphabet and numeric digit.
          </div>
-      </div>
-      <div class="form-group" *ngIf='!addNew'>
+      </div> -->
+      <!-- <div class="form-group" *ngIf='!addNew'>
          <label for="alterEgo">Email Address</label>
          <input type="text" class="form-control" id="email" [readonly]="businessEditableForm"
          (blur)="validation('pattern_email',email.value)" required placeholder="Henry@gmail.com"
@@ -71,11 +71,11 @@
             class="alert alert-danger">
             Email you have entered is not correct
          </div>
-      </div>
+      </div> -->
       <div class="form-group">
-         <label for="name">Business Address</label>
+         <!-- <label for="name">Business Address</label> -->
          <input type="text" class="form-control" id="businessAddr"
-         required
+         required placeholder="Business Address*"
          [(ngModel)]="model.businessDetails[0].businessAddress" name="businessAddr"
          #businessAddr="ngModel"/>
          <div [hidden]="businessAddr.valid || businessAddr.pristine"
@@ -85,9 +85,9 @@
       </div>
       <div  class="flexDiv">
       <div class="form-group flex-item-buAdd">
-         <label for="name">PIN Code</label>
+         <!-- <label for="name">PIN Code</label> -->
          <input type="text" class="form-control" id="pin" maxlength="6"
-         required  (blur)="validation('pattern_pinCode',pin.value)" placeholder="500010"
+         required  (blur)="validation('pattern_pinCode',pin.value)" placeholder="PIN Code*"
          [(ngModel)]="model.businessDetails[0].pinCode" name="pin"
          #pin="ngModel"/>
          <div [hidden]="pin.valid || pin.pristine"
@@ -105,8 +105,8 @@
     </div>
       <div *ngIf="showAddr && model.businessDetails[0].pinCode" class="flexDiv">
          <div class="form-group flex-item">
-            <label for="city">City</label>
-            <input type="text" class="form-control" id="city" required
+            <!-- <label for="city">City</label> -->
+            <input type="text" class="form-control" id="city" required placeholder="City"
             [(ngModel)]="model.businessDetails[0].city" name="city" #city="ngModel"/>
             <div [hidden]="city.valid || city.pristine"
                class="alert alert-danger">
@@ -114,8 +114,8 @@
             </div>
          </div>
          <div class="form-group flex-item flex-item-middle">
-            <label for="state">State</label>
-            <input type="text" class="form-control" id="state" required
+            <!-- <label for="state">State</label> -->
+            <input type="text" class="form-control" id="state" required placeholder="State"
             [(ngModel)]="model.businessDetails[0].state" name="state" #state="ngModel"/>
             <div [hidden]="state.valid || state.pristine"
                class="alert alert-danger">
@@ -123,8 +123,8 @@
             </div>
          </div>
          <div class="form-group flex-item">
-            <label for="country">Country</label>
-            <input type="text" class="form-control" id="country" required
+            <!-- <label for="country">Country</label> -->
+            <input type="text" class="form-control" id="country" required placeholder="Country"
             [(ngModel)]="model.businessDetails[0].country" name="country" #country="ngModel"/>
             <div [hidden]="country.valid || country.pristine"
                class="alert alert-danger">
@@ -133,26 +133,26 @@
          </div>
       </div>
       <div class="form-group">
-         <label for="name">Website</label>
-         <input type="text" class="form-control" id="website"
+         <!-- <label for="name">Website</label> -->
+         <input type="text" class="form-control" id="website" placeholder="Website"
          [(ngModel)]="model.businessDetails[0].website" name="website"
          #website="ngModel"/>
       </div>
       <div class="dropdown-flex">
          <div class="form-group dropdown-category" >
-            <label for="name">Business Category</label>
+            <!-- <label for="name">Business Category</label> -->
             <select name="state" ngModel class="form-control" id="category"
             required
             [(ngModel)]="model.businessDetails[0].category" name="category"
             #category="ngModel">
-            <option value="" disabled>Select Category</option>
+            <option value="" disabled>Select Business Category</option>
             <option *ngFor="let data of categoryInfo" [ngValue]="data.id">
             {{ data.name }}
             </option>
             </select>
          </div>
          <div class="form-group dropdown-register" >
-            <label for="name">Registration Info</label>
+            <!-- <label for="name">Registration Info</label> -->
             <select name="reg" ngModel class="form-control" id="reg"
             required (change)="idProofValidate(model.businessDetails[0].reg)"
             [(ngModel)]="model.businessDetails[0].reg" name="reg"
@@ -165,8 +165,9 @@
          </div>
       </div>
       <div class="form-group" *ngIf='model.businessDetails[0].reg'>
-         <label for="name">Enter Id Proof Number</label>
+         <!-- <label for="name">Enter Id Proof Number</label> -->
          <input type="text" class="form-control" id="regDetails" [maxlength]="maxLn"
+         placeholder="Enter Id Proof Number"
          required (blur)="idProofValidate(model.businessDetails[0].reg,regDetails.value);"
          [(ngModel)]="model.businessDetails[0].regProof" name="regDetails"
          #regDetails="ngModel"/>

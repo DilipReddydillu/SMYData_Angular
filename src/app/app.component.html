@@ -1,5 +1,5 @@
 <nav class="navbar fixed-top navStyles py-0">
-  <a class="navbar-brand logo" routerLink="/home" >SMYDATA</a>
+  <a class="navbar-brand logo" *ngIf="!showProfile && !indProfile" routerLink="/home" >SMYDATA</a>
   <span *ngIf="showProfile && !indProfile">
     <li class="nav-item dropdown" style="list-style:none;font-size:1.6rem">
    <a class="nav-link dropdown-toggle" data-toggle="dropdown">Welcome to {{selectedBU}}</a>
