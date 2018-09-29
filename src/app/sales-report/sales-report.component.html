@@ -24,7 +24,7 @@
       <button type="button" class="list-group-item list-group-item-action font-weight-bold font-italic" (click)="request('getTickets','tickets')">Raised Tickets</button>
     </div>
   </div>
-  <div class="col-md-10">
+  <div class="col-md-10" *ngIf="data">
     <ng2-smart-table [settings]="settings" [source]="data" class="table table-bordered"></ng2-smart-table>
 
   <!-- <div class="" *ngIf="displayedColumns">

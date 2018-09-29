@@ -1,8 +1,4 @@
-.cstyle{
-  background-color: #ffffff;
-  border-radius: 10px;
-  margin: 2px;
-}
+
 .example-container {
   display: flex;
   flex-direction: column;
@@ -23,9 +19,7 @@
   overflow: auto;
   max-height: 500px;
 }
-.listPosition{
-  margin-top: 58px;
-}
+
 .ng2-smart-pagination {
   color: red;
   display: inline-flex;

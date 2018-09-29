@@ -1,11 +1,11 @@
-.navStyles{
-  background-color: #0E2426 !important;
+.navStyles, .logo{
+  background-color: #003B45 !important;
   color: #ECF0D0;
 }
 .renderPage{
   margin-top: 56px;
 }
-.nav-link:hover{
+.nav-link:hover,.logo:hover{
   cursor: pointer;
   color: #007bff !important;
 }

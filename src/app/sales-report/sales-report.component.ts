@@ -20,39 +20,40 @@ invoiceData:any;
 topCustomerRecords = 3;
 displayedColumns:any;data;
 objData = {
-  getUserDetails:['name','userMobile','email'],
-  getTopCustomer:["name","userMobile","bv"],
-  payable:["invoice","mobile","amount"],
-  receivable:["invoice","mobile","amount"],
-  getInvoice:["invoiceId","userMobile","total"],
- getTickets:["ticketId","subject","description","createDate"],
+  getUserDetails:{
+     userName: {title: 'Name' },
+     userMobile: {title: 'Mobile'},
+    email: { title: 'Email' },
+  },
+  getTopCustomer:{
+    name: {title: 'Name' },
+    userMobile: {title: 'Mobile'},
+   bv: { title: 'BV' },
+ },
+  pay_rcv:{
+    invoiceId: {title: 'InvoiceId' },
+    userMobile: {title: 'Mobile'},
+   total: { title: 'Total' },
+ },
+  getInvoice:{
+    invoice: {title: 'Invoice' },
+    mobile: {title: 'Mobile'},
+   amount: { title: 'Amount' },
+ },
+  getTickets:{
+    ticketId: {title: 'Id' },
+    subject: {title: 'Subject'},
+   description: { title: 'Description' },
+   createDate: { title: 'Date' },
+  }
+
+ //  getUserDetails:['name','userMobile','email'],
+ //  getTopCustomer:["name","userMobile","bv"],
+ //  payable:["invoice","mobile","amount"],
+ //  receivable:["invoice","mobile","amount"],
+ //  getInvoice:["invoiceId","userMobile","total"],
+ // getTickets:["ticketId","subject","description","createDate"],
 }
-getUserDetails:{
-   name: {title: 'Name' },
-   userMobile: {title: 'Mobile'},
-  email: { title: 'Email' },
-};
-getTopCustomer:{
-  name: {title: 'Name' },
-  userMobile: {title: 'Mobile'},
- bv: { title: 'BV' },
-};
-pay_rcv:{
-  invoiceId: {title: 'InvoiceId' },
-  userMobile: {title: 'Mobile'},
- total: { title: 'Total' },
-};
-getInvoice:{
-  invoice: {title: 'Invoice' },
-  mobile: {title: 'Mobile'},
- amount: { title: 'Amount' },
-};
-getTickets:{
-  ticketId: {title: 'Id' },
-  subject: {title: 'Subject'},
- description: { title: 'Description' },
- createDate: { title: 'Date' },
-};
  dataSource: MatTableDataSource<any>;
 
  @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -68,6 +69,7 @@ getTickets:{
 constructor(private _demoService: DataService,private toastr:ToastsManager) {}
   ngOnInit() {
     this._demoService.changebuPlanCss("0");
+    // this.data = [{userMobile: "8919998956", userName: "d1", email: "d",xx:"rtee"}]
   }
   ngAfterViewInit() {
 }
@@ -79,12 +81,14 @@ applyFilter(filterValue: string) {
   request(type,val){
     let obj = {value:type,startDate:this.startDate,endDate:this.endDate};
     this.displayedColumns = this.objData[type];
-    this.settings.columns = this[type];
+    this.settings.columns = this.objData[type];
     this.report = this.payable_receivable = this.tickets = this.topCustomer = this.invoiceData = "";
     this._demoService.requestReport(obj,type).subscribe(
       data => {
          this[val] = data;
          this.data = data;
+         console.log(this.settings)
+         console.log(this.data)
          this.dataSource = new MatTableDataSource(this[val]);
          this.dataSource.paginator = this.paginator;
          this.dataSource.sort = this.sort;

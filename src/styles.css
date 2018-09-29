@@ -6,7 +6,8 @@
 
 
 body{
-  background: linear-gradient(to right, rgb(211, 223, 228), rgb(214, 189, 166)); /* lightcrm */
+  background: #66A4AC;
+  /* background: linear-gradient(to right, rgb(211, 223, 228), rgb(214, 189, 166)); /* lightcrm */ */
   background-color: #F5F5F5; /* lightcrm */
   color: black;
 font-family: Rokkitt, serif;
@@ -25,7 +26,7 @@ h1{
   color: black;
 }
 .cstyle{
-  background-color: #ffffff;
+  background:#C4DFE6;
   border-radius: 10px;
   margin: 2px;
   padding: 10px;

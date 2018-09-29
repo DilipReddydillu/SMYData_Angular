@@ -3,7 +3,7 @@ import { Injectable, EventEmitter } from '@angular/core';
 import {HttpClientModule, HttpClient, HttpHeaders} from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import {environment} from '../environments/environment';
-
+import { BillingService } from './billing.service';
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json',"Access-Control-Allow-Origin": "*" })
 };
@@ -12,8 +12,8 @@ const key = 'AIzaSyBFcZOIYqk_s0-qilRmve1TjMCXhYxUP3c';
 console.log(environment)
 @Injectable()
 export class DataService {
-
-    constructor(private http: HttpClient) {}
+    businessId;
+    constructor(private http: HttpClient,private billingService: BillingService) {}
 
     private messageSource = new BehaviorSubject<number>(12345);
     cast = this.messageSource.asObservable();
@@ -64,6 +64,9 @@ export class DataService {
     private buList = new BehaviorSubject<any>('');
     buListData = this.buList.asObservable();
      changeBusinessList(data) {
+       this.businessId = data.businessDetails[0].businessDetailId
+       this.billingService.changeBusinessList(this.businessId);
+       console.log(this.businessId)
        console.log(data)
        this.buList.next(data);
      }
@@ -71,6 +74,11 @@ export class DataService {
     private selectedBU = new BehaviorSubject<any>('');
     selectedBUVal = this.selectedBU.asObservable();
      changeselectedBUVal(data) {
+       if (data.businessDetailId) {
+         this.businessId = data.businessDetailId;
+         this.billingService.changeBusinessList(this.businessId);
+       }
+       console.log(this.businessId)
        console.log(data)
        this.selectedBU.next(data);
      }
@@ -147,10 +155,10 @@ export class DataService {
     return this.http.get(url)
   }
 
-    changeMyBusiness(obj){
-   let url =  urlProvider + '/api/changeMyBusiness';
-    return this.http.post(url, obj, httpOptions)
-  }
+  //   changeMyBusiness(obj){
+  //  let url =  urlProvider + '/api/changeMyBusiness';
+  //   return this.http.post(url, obj, httpOptions)
+  // }
 
     logInUser(data,type) {
         console.log(data)
@@ -197,13 +205,13 @@ export class DataService {
     }
     createTicket(data){
       console.log(data)
-      var url =  urlProvider + '/api/createTicket';
+      var url =  urlProvider + '/api/createTicket/this.businessId';
       return this.http.post(url,data);
     }
     requestReport(data,type){
     console.log('Innn service strtDate: '+data.startDate +' endDate:'+data.endDate);
       console.log(data)
-      var url =  urlProvider + '/api/'+type+'/'+data.startDate+'/'+data.endDate;
+      var url =  urlProvider + '/api/'+type+'/'+data.startDate+'/'+data.endDate/this.businessId;
       console.log(url)
       return this.http.get(url,data);
     }

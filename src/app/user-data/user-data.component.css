@@ -10,7 +10,9 @@
 .myInfoDetails{
 width:200px;
 }
-
+.sub-view{
+  /* background-color:  #C3DEE5; */
+}
 .example-container {
   width: 400px;
   height: 200px;
@@ -25,8 +27,10 @@ width:200px;
 .listcss{
   padding: 17px;
   font-size: 1.5rem;
-  cursor: pointer;
+  background:#C3DEE5
 }
 .listcss:hover{
-  background-color: blue;
+  cursor: pointer;
+  background-color: #06575B;
+  color: #ECF0D0 !important;
 }
