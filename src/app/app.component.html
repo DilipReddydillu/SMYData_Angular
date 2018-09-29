@@ -1,6 +1,6 @@
 <nav class="navbar fixed-top navStyles py-0">
   <a class="navbar-brand logo" *ngIf="!showProfile && !indProfile" routerLink="/home" >SMYDATA</a>
-  <span *ngIf="showProfile && !indProfile">
+  <span *ngIf="showProfile && !indProfile" style="margin-left:500px">
     <li class="nav-item dropdown" style="list-style:none;font-size:1.6rem">
    <a class="nav-link dropdown-toggle" data-toggle="dropdown">Welcome to {{selectedBU}}</a>
    <div class="dropdown-menu">
@@ -23,6 +23,7 @@
          <span class="dropdown-item" routerLink="/userData/myInfo">View Business</span>
          <span class="dropdown-item" routerLink="/userData/addNew">Add Business</span>
          <span class="dropdown-item" routerLink="/userData/businessPlan">BusinessPlan</span>
+         <!-- <span class="dropdown-item" routerLink="/resetPswd">Reset Password</span> -->
          <span class="dropdown-item" (click)="logOut()">Logout</span>
        </div>
      </li>

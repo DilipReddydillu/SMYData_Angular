@@ -107,7 +107,7 @@
 										 </div>
                      <input type="password" name="password"  autocomplete="off"
                      matTooltipPosition="right" matTooltipClass="tooltipCss"
-                     matTooltip="Requires minimum 6 characters,at least 1 Uppercase, 1 Number and 1 of these special characters(!@#$%)"
+                     matTooltip="Requires minimum 6 characters,<br/>at least 1 Uppercase,<br/> 1 Number and 1 of these special characters(!@#$%)"
                      required placeholder="Password *" autocomplete="off"
                      pattern="^(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[!@#$%]).{6,15}$" maxlength="15"
                      (focus)="focusFunction(password.pristine,password.valid,'focus','focusPassword');pswdValidCheck=false"
@@ -130,8 +130,6 @@
 											 </div>
 										 </div>
                      <input type="password" name="passwordCnf"  autocomplete="off"
-                    [matTooltipPosition]="position.value" matTooltipClass="tooltipCss"
-                    matTooltip="Requires minimum 6 characters,at least 1 Uppercase, 1 Number and 1 of these special characters(!@#$%)"
                      pattern="^(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[!@#$%]).{6,15}$"
                      (focus)="focusFunction(passwordCnf.pristine,passwordCnf.valid,'focus','focusCnfPassword');pswdCnfValidCheck =false"
                      (focusout)="focusFunction(passwordCnf.pristine,passwordCnf.valid,'outfocus','focusCnfPassword');pswdCnfValidCheck =true"

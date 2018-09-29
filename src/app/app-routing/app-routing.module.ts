@@ -64,6 +64,7 @@ const appRoutes: Routes = [
       {path: 'addNew', component: SignupComponent}
     ]},
   { path: 'otpVerification', component: OtpAuthenticationComponent },
+  { path: 'resetPswd', component: OtpAuthenticationComponent },
   { path: '',
     redirectTo: 'home',
     pathMatch: 'full'

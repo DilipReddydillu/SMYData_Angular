@@ -5,6 +5,7 @@ import { CookieService } from 'ngx-cookie-service';
 import {FormControl} from '@angular/forms';
 import {TooltipPosition} from '@angular/material';
 import { ToastsManager } from 'ng5-toastr/ng5-toastr';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-otp-authentication',
@@ -31,9 +32,12 @@ export class OtpAuthenticationComponent {
   pswdResetSuccess:boolean;
   regDataObj:any;
   focusPassword;focusCnfPassword
-    constructor(private dataService: DataService, private router: Router,  private cookieService: CookieService, private toastr: ToastsManager) { }
+    constructor(private dataService: DataService,private location:Location, private router: Router,  private cookieService: CookieService, private toastr: ToastsManager) { }
   ngOnInit() {
     this.resetPwd = false;
+    if(this.location.path() == "/resetPwd"){
+      this.resetPwd = true;
+    }
     this.dataService.cast.subscribe(messageSource => this.messageSource = messageSource)
     this.dataService.mobileTemp.subscribe(mobileNum => this.mobileNumber = mobileNum)
     this.dataService.userTypeVal.subscribe(userType => this.userType = userType)
